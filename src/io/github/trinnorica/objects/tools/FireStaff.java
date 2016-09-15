@@ -13,7 +13,7 @@ public class FireStaff extends Tool {
 	}
 	
 	private void init(){
-		loadImage("objects/tools/fsword.png");
+		loadImage("objects/tools/fire-staff.png");
 		setImageDimensions(15, 15);
 	}
 	
@@ -27,7 +27,6 @@ public class FireStaff extends Tool {
 	
 	@Override
 	public void use(int x, int y, Velocity velocity){
-		System.out.println("1");
 		Main.addProjectile(new Fireball((int)x,(int)y,velocity));
 	}
 

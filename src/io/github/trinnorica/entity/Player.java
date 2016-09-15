@@ -139,9 +139,9 @@ public class Player extends Entity implements Moveable,Keyable {
 		utool = true;
 		utoolt = 100;
 		if(direction == Direction.LEFT){
-			tool.use(x,y,new Velocity(-8,0));
+			tool.use(x,y,new Velocity(-8,-2));
 		}
-		else tool.use(x,y,new Velocity(8,0));
+		else tool.use(x,y,new Velocity(8,-2));
 	}
 
 	@Override

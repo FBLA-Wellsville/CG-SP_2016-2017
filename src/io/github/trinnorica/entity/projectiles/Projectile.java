@@ -20,6 +20,8 @@ public class Projectile extends Entity implements Moveable{
 	public void move(){
 		x=(int) (x+vector.x);
 		y=(int) (y+vector.y);
+		vector.y = vector.y+0.2;
+//		velocity.x = velocity.x*0.02;
 		
 	}
 	
