@@ -37,6 +37,18 @@ public class Main {
 		
 		if(board == Board.MAIN){
 			screen.menuvar = 0;
+			screen.objects.clear();
+			screen.objects.add(new Floor(30*1,500));
+			screen.objects.add(new Floor(30*2,500-(7*1)));
+			screen.objects.add(new Floor(30*3,500-(7*2)));
+			screen.objects.add(new Floor(30*4,500-(7*3)));
+			screen.objects.add(new Floor(30*5,500-(7*4)));
+			screen.objects.add(new Floor(30*6,500-(7*5)));
+			screen.objects.add(new Floor(30*7,500-(7*6)));
+			screen.objects.add(new Floor(30*8,500-(7*7)));
+			
+			screen.objects.add(new Player(50,50));
+			
 			
 //			Button b = new Button(screen.getWidth()/4, screen.getHeight()/4 + screen.getHeight()/2, screen.getWidth()/8, 40, "Play", new Runnable(){
 //				
@@ -48,7 +60,7 @@ public class Main {
 //					
 //				}
 //			});
-//			b.select();
+//			b.select();d
 //			clickables.add(b);
 //
 //

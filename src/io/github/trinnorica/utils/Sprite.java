@@ -3,6 +3,7 @@ package io.github.trinnorica.utils;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Polygon;
+import java.awt.Rectangle;
 
 import res.ExternalFile;
 
@@ -87,24 +88,24 @@ public class Sprite {
     	
     }
     
-//    public Direction getIntercectingDirection(Rectangle r){
-//    	
-//    	
-//    	if (bounds.getBounds().getMaxY() - r.getY() >= 0 && bounds.getBounds().getMaxY() - r.getY() <= 10) {
-//    		return Direction.DOWN;
-//    	}
-//    	
-//    	if(bounds.getBounds().getMaxX() - r.getX() >= 1.0 && bounds.getBounds().getMaxX() - r.getX() <= 17.0){
-//    		return Direction.RIGHT;
-//    	}
-//    	if(bounds.getBounds().getX() - r.getMaxX() <= -1.0 && bounds.getBounds().getX() - r.getMaxX() >= -17.0){
-//    		return Direction.LEFT;
-//    	}
-//    	if(bounds.getBounds().getY() - r.getMaxY() <= -1.0){
-//    		return Direction.UP;
-//    	}
-//    	return null;
-//    }
+    public Direction getIntercectingDirection(Rectangle r){
+    	
+    	
+    	if (bounds.getBounds().getMaxY() - r.getY() >= 0 && bounds.getBounds().getMaxY() - r.getY() <= 10) {
+    		return Direction.DOWN;
+    	}
+    	
+    	if(bounds.getBounds().getMaxX() - r.getX() >= 1.0 && bounds.getBounds().getMaxX() - r.getX() <= 17.0){
+    		return Direction.RIGHT;
+    	}
+    	if(bounds.getBounds().getX() - r.getMaxX() <= -1.0 && bounds.getBounds().getX() - r.getMaxX() >= -17.0){
+    		return Direction.LEFT;
+    	}
+    	if(bounds.getBounds().getY() - r.getMaxY() <= -1.0){
+    		return Direction.UP;
+    	}
+    	return null;
+    }
     
     public void loadImage(Image image){
     	this.image = image;
@@ -171,7 +172,9 @@ public class Sprite {
 			g.drawImage(getImage(), x + width, y,-(width), height, null);
 		}
 	}
-	
+
+
+
 	
 
 

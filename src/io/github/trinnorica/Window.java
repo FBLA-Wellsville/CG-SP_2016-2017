@@ -24,7 +24,7 @@ public class Window extends JFrame {
 		add(new Screen());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(ExternalFile.loadTexture("logos/logo.png"));
-		setTitle("Trinnorica " + Utils.getVersion());
+		setTitle("Eldesith " + Utils.getVersion());
 		setVisible(true);
 		setResizable(false);
 	}

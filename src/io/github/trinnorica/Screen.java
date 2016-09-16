@@ -236,14 +236,12 @@ public class Screen extends JPanel implements ActionListener {
 			}
 			
 			if(key == KeyEvent.VK_P){
-				objects.clear();
-				objects.add(new Floor(50,500));
-				objects.add(new Player(50,50));
+				Main.setBoard(Board.MAIN);
 			}
 			
 			if(key == KeyEvent.VK_C){
 				objects.clear();
-				Main.setBoard(Board.CREDITS);	
+				Main.setBoard(Board.CREDITS);
 			}
 			
 			if (key == KeyEvent.VK_6) {

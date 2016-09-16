@@ -15,10 +15,10 @@ public class Sword extends Tool {
 	}
 	
 	public int getWidth(){
-		return 27;
+		return (int) (16*1.5);
 	}
 	public int getHeight(){
-		return 27;
+		return (int) (16*1.5);
 		
 	}
 
