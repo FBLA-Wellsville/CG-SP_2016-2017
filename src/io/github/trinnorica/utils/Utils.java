@@ -3,6 +3,7 @@ package io.github.trinnorica.utils;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 
 import io.github.trinnorica.Main;
 import res.ExternalFile;
@@ -69,6 +70,12 @@ public class Utils {
 		if((((g.getFontMetrics().getHeight())*i)+creditvar==-540)){
 			return true;
 		}
+		return false;
+	}
+
+
+	public static boolean getIntersectionDirection(Rectangle bounds, Rectangle bounds2) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
