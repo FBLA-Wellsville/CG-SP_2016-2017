@@ -19,7 +19,9 @@ import javax.swing.Timer;
 
 import io.github.trinnorica.entity.Player;
 import io.github.trinnorica.objects.Floor;
+import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.FireStaff;
+import io.github.trinnorica.objects.tools.Stick;
 import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.Backgrounds;
 import io.github.trinnorica.utils.Board;
@@ -255,6 +257,17 @@ public class Screen extends JPanel implements ActionListener {
 					}
 				}
 			}
+			
+			if (key == KeyEvent.VK_7) {
+				for (Sprite sprite : objects) {
+
+					if (sprite instanceof Player) {
+						Player player = (Player) sprite;
+						player.setTool(new Bow(0, 0));
+					}
+				}
+			}
+			
 			if (key == KeyEvent.VK_F3) {
 				if (debug)
 					debug = false;
