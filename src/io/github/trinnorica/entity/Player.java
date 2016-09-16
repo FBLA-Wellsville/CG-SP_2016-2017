@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import io.github.trinnorica.Main;
 import io.github.trinnorica.objects.Collidable;
 import io.github.trinnorica.utils.Direction;
+import io.github.trinnorica.utils.Images;
 import io.github.trinnorica.utils.Keyable;
 import io.github.trinnorica.utils.Moveable;
 import io.github.trinnorica.utils.Sprite;
@@ -129,7 +130,11 @@ public class Player extends Entity implements Moveable, Keyable {
 				if(utoolt == 0) utool = false;
 				if(utoolt>=90){
 					g.drawImage(ExternalFile.loadTexture("swipe.gif"), x+30+tool.width, y, 7*2, 15*2, null);
-					g.drawImage(tool.getImage(), x+20, y, tool.getWidth(), tool.getHeight(), null);
+					if(tool.getClass().getSimpleName().equalsIgnoreCase("Bow")){
+						g.drawImage(Images.rotate(tool.getImage(), 45.0), x+20, y, tool.getWidth(), tool.getHeight(), null);
+					} else 
+						
+						g.drawImage(tool.getImage(), x+20, y, tool.getWidth(), tool.getHeight(), null);
 				}
 				
 			}

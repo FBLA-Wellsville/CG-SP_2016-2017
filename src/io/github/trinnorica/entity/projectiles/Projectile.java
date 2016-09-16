@@ -3,9 +3,9 @@ package io.github.trinnorica.entity.projectiles;
 import java.awt.Graphics;
 
 import io.github.trinnorica.entity.Entity;
+import io.github.trinnorica.utils.Images;
 import io.github.trinnorica.utils.Moveable;
 import io.github.trinnorica.utils.Velocity;
-import res.ExternalFile;
 
 public class Projectile extends Entity implements Moveable{
 	
@@ -32,10 +32,11 @@ public class Projectile extends Entity implements Moveable{
 	@Override
 	public void draw(Graphics g){
 		if(vector.x > 0){
-			g.drawImage(getImage(), x, y, width, height, null);
+			g.drawImage(Images.rotate(Images.rotate(getImage(), 45), Math.toDegrees(Math.atan(vector.y/vector.x))), x, y, width, height, null);
+//			g.drawImage(Images.rotate(Images.rotate(getImage(), 45), Math.toDegrees(Math.atan(vector.y/vector.x))), x, y, getWidth(), getHeight(), null);
 			
 		} else {
-			g.drawImage(getImage(), x+getWidth(), y, - getWidth(), getHeight(), null);
+			g.drawImage(Images.rotate(Images.rotate(getImage(), 45), -Math.toDegrees(Math.atan(vector.y/vector.x))), x+getWidth(), y, - getWidth(), getHeight(), null);
 		}
 	}
 	
