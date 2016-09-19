@@ -12,16 +12,15 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.TimerTask;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import io.github.trinnorica.entity.Player;
-import io.github.trinnorica.objects.Floor;
 import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.FireStaff;
-import io.github.trinnorica.objects.tools.Stick;
 import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.Backgrounds;
 import io.github.trinnorica.utils.Board;
@@ -95,6 +94,15 @@ public class Screen extends JPanel implements ActionListener {
 	}
 
 	public void drawMenu(Graphics g) {
+		
+		boolean neg = new Random().nextBoolean();
+		if (neg)
+			Main.wind = new Random().nextDouble()*3;
+			else Main.wind = - new Random().nextDouble()*3;
+		if (neg)
+			Main.gravity = new Random().nextDouble()*3;
+			else Main.gravity = - new Random().nextDouble()*3;
+		
 
 		g.setFont(new Font("Helvetica", Font.PLAIN, getWidth() / 50));
 		Utils.drawOutlineString(g, "Loading...", getWidth() / 2 - g.getFontMetrics().stringWidth("Loading...") / 2,
@@ -102,6 +110,7 @@ public class Screen extends JPanel implements ActionListener {
 		if (board == Board.MAIN) {
 			menuvar = Utils.drawScrollingImage(g, Backgrounds.MAIN.getImage(), menuvar, 0, this.getWidth(),
 					this.getHeight(), 1);
+			Utils.drawOutlineString(g, Main.wind + ":", 10, 10, Color.WHITE, Color.BLACK, 1);
 			g.setFont(new Font("Helvetica", Font.BOLD, 35));
 			Utils.drawOutlineString(g, "Press 'P' to play!", getWidth()/2 - (g.getFontMetrics().stringWidth("Press 'P' to play!")/2), getHeight()/4 + getHeight()/2, Color.decode("#99db45"), Color.WHITE, 2);
 			g.setFont(new Font("Helvetica", Font.PLAIN, getWidth() / 50));

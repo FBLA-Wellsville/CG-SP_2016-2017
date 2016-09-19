@@ -13,6 +13,8 @@ import io.github.trinnorica.utils.Utils;
 
 public class Main {
 	
+	public static double gravity = 0.2;
+	public static double wind = 0.2;
 	private static List<Clickable> clickables = new ArrayList<>();
 	protected static List<Clickable> clickables_t = new ArrayList<>();
 	private static Screen screen;

@@ -2,6 +2,7 @@ package io.github.trinnorica.entity.projectiles;
 
 import java.awt.Graphics;
 
+import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.utils.Images;
 import io.github.trinnorica.utils.Moveable;
@@ -20,8 +21,8 @@ public class Projectile extends Entity implements Moveable{
 	public void move(){
 		x=(int) (x+vector.x);
 		y=(int) (y+vector.y);
-		vector.y = vector.y+0.2;
-//		velocity.x = velocity.x*0.02;
+		vector.y = vector.y+Main.gravity;
+		vector.x = vector.x-Main.wind;
 		
 	}
 	
