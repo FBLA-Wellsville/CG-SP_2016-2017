@@ -70,89 +70,102 @@ public class Player extends Entity implements Moveable, Keyable {
 
 	@Override
 	public void move() {
-//		if(falling) 
-//			dy=2;
-		if(y+height+29 >= 540 &! jumping){
+		// if(falling)
+		// dy=2;
+		if (y + height + 29 >= 540 & !jumping) {
 			onground = true;
-			y=540-height-29;
-		
+			y = 540 - height - 29;
+
 		} else {
 			onground = false;
 		}
 		getPolygon();
-		for(Sprite s : Main.getScreen().objects){
+		for (Sprite s : Main.getScreen().objects) {
 			s.getPolygon();
-			if(!(s instanceof Collidable)) continue;
-			if(!bounds.intersects(s.getPolygon().getBounds())) continue;
-			switch(getIntercectingDirection(s.getPolygon().getBounds())){
+			if (!(s instanceof Collidable))
+				continue;
+			if (!bounds.intersects(s.getPolygon().getBounds()))
+				continue;
+			switch (getIntercectingDirection(s.getPolygon().getBounds())) {
 			case DOWN:
-				if(!jumping){
-					y = s.getY()-getHeight()+1;
+				if (!jumping) {
+					y = s.getY() - getHeight() + 1;
 					onground = true;
-					
+
 				}
-				
-				break;	
-			default: break;
+
+				break;
+			default:
+				break;
 			}
-				
-			
-			
-			
+
 		}
 
-	// velocity.x = velocity.x*0.2;
-	if(!flying)velocity.y=velocity.y+0.2;else
+		// velocity.x = velocity.x*0.2;
+		if (!flying)
+			velocity.y = velocity.y + 0.2;
+		else
 
-	{
-		velocity.y = velocity.y * 0.2;
-		// velocity.x = velocity.x*0.02;
-	}
+		{
+			velocity.y = velocity.y * 0.2;
+			// velocity.x = velocity.x*0.02;
+		}
 
-	if(velocity.y<0)jumping=false;if(onground)
-	{
-		falling = false;
-		setVelocity("", 0);
-	}dy=velocity.y;dx=velocity.x;
+		if (velocity.y < 0)
+			jumping = false;
+		if (onground) {
+			falling = false;
+			setVelocity("", 0);
+		}
+		dy = velocity.y;
+		dx = velocity.x;
 
-	y=(int)(y+dy);x=(int)(x+dx);
+		y = (int) (y + dy);
+		x = (int) (x + dx);
 
-	dx=0;dy=0;
+		dx = 0;
+		dy = 0;
 
 	}
 
 	@Override
-	public void draw(Graphics g){
-		if(direction == Direction.RIGHT){
+	public void draw(Graphics g) {
+		if (direction == Direction.RIGHT) {
 			g.drawImage(getImage(), x, y, width, height, null);
-			if(utool){
-				utoolt=utoolt-1;
-				if(utoolt == 0) utool = false;
-				if(utoolt>=90){
-					g.drawImage(ExternalFile.loadTexture("swipe.gif"), x+30+tool.width, y, 7*2, 15*2, null);
-					if(tool.getClass().getSimpleName().equalsIgnoreCase("Bow")){
-						g.drawImage(Images.rotate(tool.getImage(), 45.0), x+20, y, tool.getWidth(), tool.getHeight(), null);
-					} else 
-						
-						g.drawImage(tool.getImage(), x+20, y, tool.getWidth(), tool.getHeight(), null);
+			if (utool) {
+				utoolt = utoolt - 1;
+				if (utoolt == 0)
+					utool = false;
+				if (utoolt >= 90) {
+					g.drawImage(ExternalFile.loadTexture("swipe.gif"), x + 30 + tool.width, y, 7 * 2, 15 * 2, null);
+					if (tool.getClass().getSimpleName().equalsIgnoreCase("Bow")) {
+						g.drawImage(Images.rotate(tool.getImage(), 45.0), x + 20, y, tool.getWidth(), tool.getHeight(),
+								null);
+					} else
+
+						g.drawImage(tool.getImage(), x + 20, y, tool.getWidth(), tool.getHeight(), null);
 				}
-				
+
 			}
-//			if(tool != null) g.drawImage(Images.rotate(tool.getImage(), 0.0), x+20, y, tool.getWidth(), tool.getHeight(), null);
+			// if(tool != null) g.drawImage(Images.rotate(tool.getImage(), 0.0),
+			// x+20, y, tool.getWidth(), tool.getHeight(), null);
 		} else {
-			g.drawImage(getImage(), x + width, y,-(width), height, null);
-			if(utool){
-				utoolt=utoolt-1;
-				if(utoolt == 0) utool = false;
-				if(utoolt>=90){
-					g.drawImage(ExternalFile.loadTexture("swipe.gif"), x+(7*2)-30, y, -(7*2), 15*2, null);
-					g.drawImage(tool.getImage(), x+tool.getWidth()-20, y, - tool.getWidth(), tool.getHeight(), null);
+			g.drawImage(getImage(), x + width, y, -(width), height, null);
+			if (utool) {
+				utoolt = utoolt - 1;
+				if (utoolt == 0)
+					utool = false;
+				if (utoolt >= 90) {
+					g.drawImage(ExternalFile.loadTexture("swipe.gif"), x + (7 * 2) - 30, y, -(7 * 2), 15 * 2, null);
+					g.drawImage(tool.getImage(), x + tool.getWidth() - 20, y, -tool.getWidth(), tool.getHeight(), null);
 				}
-				
-				
-//				g.drawImage(ExternalFile.loadTexture("swipe.gif"), x+30+tool.width, y, 7*2 * - tool.width, 15*2, null);
+
+				// g.drawImage(ExternalFile.loadTexture("swipe.gif"),
+				// x+30+tool.width, y, 7*2 * - tool.width, 15*2, null);
 			}
-//			if(tool != null) g.drawImage(Images.rotate(tool.getImage(), 0.0), x+tool.getWidth()-20, y, - tool.getWidth(), tool.getHeight(), null);
+			// if(tool != null) g.drawImage(Images.rotate(tool.getImage(), 0.0),
+			// x+tool.getWidth()-20, y, - tool.getWidth(), tool.getHeight(),
+			// null);
 		}
 	}
 
@@ -162,7 +175,7 @@ public class Player extends Entity implements Moveable, Keyable {
 		if (direction == Direction.LEFT) {
 			tool.use(x, y, new Velocity(-8, -2));
 		} else
-			tool.use(x, y, new Velocity(8, -2));
+			tool.use(x, y, new Velocity(8,-2));
 	}
 
 	@Override
