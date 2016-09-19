@@ -103,7 +103,7 @@ public class Player extends Entity implements Moveable, Keyable {
 
 		// velocity.x = velocity.x*0.2;
 		if (!flying)
-			velocity.y = velocity.y + 0.2;
+			velocity.y = velocity.y + Main.gravity;
 		else
 
 		{
