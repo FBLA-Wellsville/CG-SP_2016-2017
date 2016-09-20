@@ -31,6 +31,7 @@ public class Player extends Entity implements Moveable, Keyable {
 	private int s = 1;
 	private boolean utool = false;
 	private int utoolt = 0;
+	private int cooldown = 0;
 
 	public Player(int x, int y) {
 		super(x, y);
@@ -72,6 +73,8 @@ public class Player extends Entity implements Moveable, Keyable {
 	public void move() {
 		// if(falling)
 		// dy=2;
+		
+		
 		if (y + height + 29 >= 540 & !jumping) {
 			onground = true;
 			y = 540 - height - 29;
@@ -107,12 +110,13 @@ public class Player extends Entity implements Moveable, Keyable {
 		else
 
 		{
-			velocity.y = velocity.y * 0.2;
+//			velocity.y = velocity.y * 0.2;
 			// velocity.x = velocity.x*0.02;
 		}
 
-		if (velocity.y < 0)
-			jumping = false;
+		if(velocity.y < 0){
+			jumping = true;
+		} else jumping = false;
 		if (onground) {
 			falling = false;
 			setVelocity("", 0);
@@ -130,20 +134,19 @@ public class Player extends Entity implements Moveable, Keyable {
 
 	@Override
 	public void draw(Graphics g) {
+		if(cooldown > 0) cooldown = cooldown - 1;
 		if (direction == Direction.RIGHT) {
 			g.drawImage(getImage(), x, y, width, height, null);
-			if (utool) {
+			
+			if (utool && cooldown == 0) {
 				utoolt = utoolt - 1;
-				if (utoolt == 0)
+				if (utoolt == 0){
 					utool = false;
-				if (utoolt >= 90) {
-					g.drawImage(ExternalFile.loadTexture("swipe.gif"), x + 30 + tool.width, y, 7 * 2, 15 * 2, null);
-					if (tool.getClass().getSimpleName().equalsIgnoreCase("Bow")) {
-						g.drawImage(Images.rotate(tool.getImage(), 45.0), x + 20, y, tool.getWidth(), tool.getHeight(),
-								null);
-					} else
-
-						g.drawImage(tool.getImage(), x + 20, y, tool.getWidth(), tool.getHeight(), null);
+				} else {
+					
+					if (!tool.getClass().getSimpleName().equalsIgnoreCase("Bow")) 
+						g.drawImage(ExternalFile.loadTexture("swipe.gif"), x + 30 + tool.width, y, 7 * 2, 15 * 2, null);
+					g.drawImage(tool.getImage(), x + 20, y, tool.getWidth(), tool.getHeight(), null);
 				}
 
 			}
@@ -151,12 +154,13 @@ public class Player extends Entity implements Moveable, Keyable {
 			// x+20, y, tool.getWidth(), tool.getHeight(), null);
 		} else {
 			g.drawImage(getImage(), x + width, y, -(width), height, null);
-			if (utool) {
+			if (utool && cooldown == 0) {
 				utoolt = utoolt - 1;
 				if (utoolt == 0)
 					utool = false;
-				if (utoolt >= 90) {
-					g.drawImage(ExternalFile.loadTexture("swipe.gif"), x + (7 * 2) - 30, y, -(7 * 2), 15 * 2, null);
+				else {
+					if (!tool.getClass().getSimpleName().equalsIgnoreCase("Bow")) 
+						g.drawImage(ExternalFile.loadTexture("swipe.gif"), x + (7 * 2) - 30, y, -(7 * 2), 15 * 2, null);
 					g.drawImage(tool.getImage(), x + tool.getWidth() - 20, y, -tool.getWidth(), tool.getHeight(), null);
 				}
 
@@ -171,7 +175,8 @@ public class Player extends Entity implements Moveable, Keyable {
 
 	void useTool() {
 		utool = true;
-		utoolt = tool.getCooldown();
+		cooldown = tool.getCooldown();
+		utoolt = 10;
 		if (direction == Direction.LEFT) {
 			tool.use(x, y, new Velocity(-8, -2));
 		} else
@@ -235,7 +240,7 @@ public class Player extends Entity implements Moveable, Keyable {
 		}
 
 		if (key == KeyEvent.VK_2) {
-			loadImage(ExternalFile.loadTexture("entity/knight/knight.png"));
+			loadImage(ExternalFile.loadTexture("entity/knight/bobbing.gif"));
 			setImageDimensions(27 + s, 30 + s);
 		}
 	}
@@ -249,6 +254,12 @@ public class Player extends Entity implements Moveable, Keyable {
 		}
 		if (key == KeyEvent.VK_A) {
 			setVelocity(0, "");
+		}
+		if (key == KeyEvent.VK_W) {
+			if(flying)setVelocity("", 0);
+		}
+		if (key == KeyEvent.VK_S) {
+			if(flying)setVelocity("", 0);
 		}
 	}
 

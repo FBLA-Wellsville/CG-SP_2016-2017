@@ -41,7 +41,7 @@ public class Screen extends JPanel implements ActionListener {
 
 	Timer timer;
 	// java.util.Timer t;
-	int DELAY = 60;
+	int DELAY = 15;
 	boolean debug = false;
 	int board = 0;
 	int totalFrameCount = 0;
@@ -96,13 +96,7 @@ public class Screen extends JPanel implements ActionListener {
 	public void drawMenu(Graphics g) {
 		
 		
-		boolean neg = new Random().nextBoolean();
-		if (neg)
-			Main.wind = new Random().nextDouble()*3;
-			else Main.wind = - new Random().nextDouble()*3;
-		if (neg)
-			Main.gravity = new Random().nextDouble()*3;
-			else Main.gravity = - new Random().nextDouble()*3;
+	
 
 		g.setFont(new Font("Helvetica", Font.PLAIN, getWidth() / 50));
 		Utils.drawOutlineString(g, "Loading...", getWidth() / 2 - g.getFontMetrics().stringWidth("Loading...") / 2,
@@ -195,14 +189,14 @@ public class Screen extends JPanel implements ActionListener {
 			try {
 				for(Sprite s : objects){
 					if(!(s instanceof Player)) continue;
-					Utils.drawOutlineString(g, "Flying: " + ((Player)s).flying, 0, 100, Color.WHITE,
+					Utils.drawOutlineString(g, "Flying: " + ((Player)s).flying, 0, 80, Color.WHITE,
 							Color.BLACK, 1);
-					Utils.drawOutlineString(g, "Jumping: " + ((Player) s).jumping, 0, 120, Color.WHITE,
+					Utils.drawOutlineString(g, "Jumping: " + ((Player) s).jumping, 0, 100, Color.WHITE,
 							Color.BLACK, 1);
-					Utils.drawOutlineString(g, "Onground: " + ((Player) s).onground, 0, 140, Color.WHITE,
+					Utils.drawOutlineString(g, "Onground: " + ((Player) s).onground, 0, 120, Color.WHITE,
 							Color.BLACK, 1);
-					Utils.drawOutlineString(g, "Playing: True", 0, 160, Color.WHITE, Color.BLACK, 1);
-					Utils.drawOutlineString(g, "Tool: " + ((Player) s).getTool(), 0, 180, Color.WHITE,
+					Utils.drawOutlineString(g, "Playing: True", 0, 140, Color.WHITE, Color.BLACK, 1);
+					Utils.drawOutlineString(g, "Tool: " + ((Player) s).getTool(), 0, 160, Color.WHITE,
 							Color.BLACK, 1);
 					break;
 				}
