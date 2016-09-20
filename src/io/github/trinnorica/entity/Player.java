@@ -171,7 +171,7 @@ public class Player extends Entity implements Moveable, Keyable {
 
 	void useTool() {
 		utool = true;
-		utoolt = 100;
+		utoolt = tool.getCooldown();
 		if (direction == Direction.LEFT) {
 			tool.use(x, y, new Velocity(-8, -2));
 		} else

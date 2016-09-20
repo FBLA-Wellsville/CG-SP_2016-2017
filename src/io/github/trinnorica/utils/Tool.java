@@ -5,6 +5,7 @@ import java.awt.Graphics;
 public class Tool extends Sprite {
 	
 	protected int power = 5;
+	protected int cooldown = 1;
 
 	public Tool(int x, int y) {
 		super(x, y);
@@ -26,6 +27,9 @@ public class Tool extends Sprite {
 	}
 	public void setPower(int power){
 		this.power = power;
+	}
+	public int getCooldown(){
+		return cooldown;
 	}
 	
 	

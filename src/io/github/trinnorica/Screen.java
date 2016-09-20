@@ -41,7 +41,7 @@ public class Screen extends JPanel implements ActionListener {
 
 	Timer timer;
 	// java.util.Timer t;
-	int DELAY = 15;
+	int DELAY = 60;
 	boolean debug = false;
 	int board = 0;
 	int totalFrameCount = 0;
@@ -95,6 +95,7 @@ public class Screen extends JPanel implements ActionListener {
 
 	public void drawMenu(Graphics g) {
 		
+		
 		boolean neg = new Random().nextBoolean();
 		if (neg)
 			Main.wind = new Random().nextDouble()*3;
@@ -102,7 +103,6 @@ public class Screen extends JPanel implements ActionListener {
 		if (neg)
 			Main.gravity = new Random().nextDouble()*3;
 			else Main.gravity = - new Random().nextDouble()*3;
-		
 
 		g.setFont(new Font("Helvetica", Font.PLAIN, getWidth() / 50));
 		Utils.drawOutlineString(g, "Loading...", getWidth() / 2 - g.getFontMetrics().stringWidth("Loading...") / 2,
@@ -110,7 +110,6 @@ public class Screen extends JPanel implements ActionListener {
 		if (board == Board.MAIN) {
 			menuvar = Utils.drawScrollingImage(g, Backgrounds.MAIN.getImage(), menuvar, 0, this.getWidth(),
 					this.getHeight(), 1);
-			Utils.drawOutlineString(g, Main.wind + ":", 10, 10, Color.WHITE, Color.BLACK, 1);
 			g.setFont(new Font("Helvetica", Font.BOLD, 35));
 			Utils.drawOutlineString(g, "Press 'P' to play!", getWidth()/2 - (g.getFontMetrics().stringWidth("Press 'P' to play!")/2), getHeight()/4 + getHeight()/2, Color.decode("#99db45"), Color.WHITE, 2);
 			g.setFont(new Font("Helvetica", Font.PLAIN, getWidth() / 50));
@@ -193,17 +192,21 @@ public class Screen extends JPanel implements ActionListener {
 			Utils.drawOutlineString(g, "Clickables: " + Main.getClickables().size(), 0, 40, Color.WHITE, Color.BLACK,
 					1);
 			Utils.drawOutlineString(g, "Objects: " + objects.size(), 0, 60, Color.WHITE, Color.BLACK, 1);
-			Utils.drawOutlineString(g, "Rotation: " + r, 0, 80, Color.WHITE, Color.BLACK, 1);
 			try {
-				Utils.drawOutlineString(g, "Flying: " + ((Player) objects.get(1)).flying, 0, 100, Color.WHITE,
-						Color.BLACK, 1);
-				Utils.drawOutlineString(g, "Jumping: " + ((Player) objects.get(1)).jumping, 0, 120, Color.WHITE,
-						Color.BLACK, 1);
-				Utils.drawOutlineString(g, "Onground: " + ((Player) objects.get(1)).onground, 0, 140, Color.WHITE,
-						Color.BLACK, 1);
-				Utils.drawOutlineString(g, "Playing: True", 0, 160, Color.WHITE, Color.BLACK, 1);
-				Utils.drawOutlineString(g, "Tool: " + ((Player) objects.get(1)).getTool(), 0, 180, Color.WHITE,
-						Color.BLACK, 1);
+				for(Sprite s : objects){
+					if(!(s instanceof Player)) continue;
+					Utils.drawOutlineString(g, "Flying: " + ((Player)s).flying, 0, 100, Color.WHITE,
+							Color.BLACK, 1);
+					Utils.drawOutlineString(g, "Jumping: " + ((Player) s).jumping, 0, 120, Color.WHITE,
+							Color.BLACK, 1);
+					Utils.drawOutlineString(g, "Onground: " + ((Player) s).onground, 0, 140, Color.WHITE,
+							Color.BLACK, 1);
+					Utils.drawOutlineString(g, "Playing: True", 0, 160, Color.WHITE, Color.BLACK, 1);
+					Utils.drawOutlineString(g, "Tool: " + ((Player) s).getTool(), 0, 180, Color.WHITE,
+							Color.BLACK, 1);
+					break;
+				}
+				
 			} catch (IndexOutOfBoundsException ex) {
 				Utils.drawOutlineString(g, "Playing: False", 0, 100, Color.WHITE, Color.BLACK, 1);
 			}
