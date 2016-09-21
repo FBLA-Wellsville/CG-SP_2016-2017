@@ -20,6 +20,7 @@ import javax.swing.Timer;
 
 import io.github.trinnorica.entity.Player;
 import io.github.trinnorica.objects.tools.Bow;
+import io.github.trinnorica.objects.tools.FireDagger;
 import io.github.trinnorica.objects.tools.FireStaff;
 import io.github.trinnorica.objects.tools.IceDagger;
 import io.github.trinnorica.objects.tools.Sword;
@@ -287,6 +288,16 @@ public class Screen extends JPanel implements ActionListener {
 					if (sprite instanceof Player) {
 						Player player = (Player) sprite;
 						player.setTool(new IceDagger(0, 0));
+					}
+				}
+			}
+			
+			if (key == KeyEvent.VK_9) {
+				for (Sprite sprite : objects) {
+
+					if (sprite instanceof Player) {
+						Player player = (Player) sprite;
+						player.setTool(new FireDagger(0, 0));
 					}
 				}
 			}
