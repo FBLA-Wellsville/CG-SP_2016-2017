@@ -3,9 +3,11 @@ package io.github.trinnorica.utils;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Rectangle;
 
 import io.github.trinnorica.Main;
+import io.github.trinnorica.utils.particles.ParticleType;
 import res.ExternalFile;
 
 public class Utils {
@@ -77,6 +79,11 @@ public class Utils {
 	public static boolean getIntersectionDirection(Rectangle bounds, Rectangle bounds2) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+
+	public static void runParticles(Point point, ParticleFormat format, ParticleType type) {
+		format.run(point, type);
 	}
 
 

@@ -9,6 +9,7 @@ import io.github.trinnorica.objects.Floor;
 import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.Button;
 import io.github.trinnorica.utils.Clickable;
+import io.github.trinnorica.utils.Sprite;
 import io.github.trinnorica.utils.Utils;
 
 public class Main {
@@ -83,8 +84,8 @@ public class Main {
 		
 	}
 
-	public static void addProjectile(Projectile pro) {
-		screen.addSprites(pro);
+	public static void addSprite(Sprite s) {
+		screen.addSprites(s);
 	}
 
 }

@@ -21,6 +21,7 @@ import javax.swing.Timer;
 import io.github.trinnorica.entity.Player;
 import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.FireStaff;
+import io.github.trinnorica.objects.tools.IceDagger;
 import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.Backgrounds;
 import io.github.trinnorica.utils.Board;
@@ -30,6 +31,7 @@ import io.github.trinnorica.utils.Keyable;
 import io.github.trinnorica.utils.Moveable;
 import io.github.trinnorica.utils.Sprite;
 import io.github.trinnorica.utils.Utils;
+import io.github.trinnorica.utils.particles.formats.Particle;
 import res.ExternalFile;
 
 public class Screen extends JPanel implements ActionListener {
@@ -111,10 +113,18 @@ public class Screen extends JPanel implements ActionListener {
 				if (sprite instanceof Moveable) {
 					((Moveable) sprite).move();
 				}
-				sprite.draw(g);
+				if(!(sprite instanceof Particle)) sprite.draw(g);
 				
 				if(sprite.x < 0 || sprite.x > 2000 || sprite.y < 0){
 					objects_remove.add(sprite);
+				}
+				
+				if(sprite instanceof Particle){
+					Particle p = (Particle) sprite;
+					p.draw(g);
+					if(p.getLifetime() <=0){
+						objects_remove.add(p);
+					}
 				}
 			}
 			
@@ -268,6 +278,15 @@ public class Screen extends JPanel implements ActionListener {
 					if (sprite instanceof Player) {
 						Player player = (Player) sprite;
 						player.setTool(new Bow(0, 0));
+					}
+				}
+			}
+			if (key == KeyEvent.VK_8) {
+				for (Sprite sprite : objects) {
+
+					if (sprite instanceof Player) {
+						Player player = (Player) sprite;
+						player.setTool(new IceDagger(0, 0));
 					}
 				}
 			}
