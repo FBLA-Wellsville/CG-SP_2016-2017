@@ -7,6 +7,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import io.github.trinnorica.Main;
+import io.github.trinnorica.utils.particles.ParticleFormat;
 import io.github.trinnorica.utils.particles.ParticleType;
 import res.ExternalFile;
 

@@ -1,8 +1,6 @@
-package io.github.trinnorica.utils;
+package io.github.trinnorica.utils.particles;
 
 import java.awt.Point;
-
-import io.github.trinnorica.utils.particles.ParticleType;
 
 public interface ParticleFormat {
 	

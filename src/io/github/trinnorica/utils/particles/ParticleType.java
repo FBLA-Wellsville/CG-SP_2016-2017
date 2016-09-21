@@ -2,7 +2,8 @@ package io.github.trinnorica.utils.particles;
 
 public enum ParticleType {
 	
-	ICE("ice");
+	ICE("ice"),
+	FIRE("fire");
 	
 	String particle;
 	

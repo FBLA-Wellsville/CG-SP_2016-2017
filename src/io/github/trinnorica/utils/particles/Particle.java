@@ -1,14 +1,14 @@
-package io.github.trinnorica.utils.particles.formats;
+package io.github.trinnorica.utils.particles;
 
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.Random;
 
+import io.github.trinnorica.utils.Moveable;
 import io.github.trinnorica.utils.Sprite;
-import io.github.trinnorica.utils.particles.ParticleType;
 import res.ExternalFile;
 
-public class Particle extends Sprite {
+public class Particle extends Sprite implements Moveable {
 	
 	ParticleType type;
 	int lifetime;
@@ -21,7 +21,7 @@ public class Particle extends Sprite {
 	
 	public void init(){
 		lifetime = new Random().nextInt(100);
-		loadImage(ExternalFile.loadTexture("particles/ice.png"));
+		loadImage(ExternalFile.loadTexture("particles/" + type.getString() + ".png"));
 		setImageDimensions(15, 15);
 	}
 	
@@ -32,6 +32,11 @@ public class Particle extends Sprite {
 
 	public int getLifetime() {
 		return lifetime;
+	}
+
+	@Override
+	public void move() {
+		y=y-1;
 	}
 	
 

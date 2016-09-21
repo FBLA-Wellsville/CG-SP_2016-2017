@@ -2,12 +2,11 @@ package io.github.trinnorica.objects.tools;
 
 import java.awt.Point;
 
-import io.github.trinnorica.Main;
 import io.github.trinnorica.utils.Tool;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.particles.ParticleType;
-import io.github.trinnorica.utils.particles.formats.Testing;
+import io.github.trinnorica.utils.particles.formats.Random;
 
 public class FireDagger extends Tool {
 
@@ -31,7 +30,7 @@ public class FireDagger extends Tool {
 	
 	@Override
 	public void use(int x, int y, Velocity velocity){
-		Utils.runParticles(new Point(x,y), new Testing(), ParticleType.ICE);
+		Utils.runParticles(new Point(x,y), new Random(), ParticleType.FIRE);
 	}
 
 }

@@ -31,7 +31,7 @@ import io.github.trinnorica.utils.Keyable;
 import io.github.trinnorica.utils.Moveable;
 import io.github.trinnorica.utils.Sprite;
 import io.github.trinnorica.utils.Utils;
-import io.github.trinnorica.utils.particles.formats.Particle;
+import io.github.trinnorica.utils.particles.Particle;
 import res.ExternalFile;
 
 public class Screen extends JPanel implements ActionListener {
