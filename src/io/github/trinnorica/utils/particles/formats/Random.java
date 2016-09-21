@@ -25,7 +25,6 @@ public class Random implements ParticleFormat {
 			
 			Main.addSprite(new Particle(new Point(a,b),t));
 		}
-		Main.addSprite(new Particle(p, t));
 	}
 
 	
