@@ -29,6 +29,7 @@ import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.Clickable;
 import io.github.trinnorica.utils.Images;
 import io.github.trinnorica.utils.Keyable;
+import io.github.trinnorica.utils.LevelBuilder;
 import io.github.trinnorica.utils.Moveable;
 import io.github.trinnorica.utils.Sprite;
 import io.github.trinnorica.utils.Utils;
@@ -300,6 +301,13 @@ public class Screen extends JPanel implements ActionListener {
 						player.setTool(new FireDagger(0, 0));
 					}
 				}
+			}
+			if (key == KeyEvent.VK_0) {
+				Main.clearObjects();
+				LevelBuilder l = new LevelBuilder();
+				l.buildLevel(new char[]{
+						'A','B','C'
+				},3,1);
 			}
 			
 			if (key == KeyEvent.VK_F3) {

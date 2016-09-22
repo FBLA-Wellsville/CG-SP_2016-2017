@@ -87,5 +87,9 @@ public class Main {
 	public static void addSprite(Sprite s) {
 		screen.addSprites(s);
 	}
+	public static void clearObjects(){
+		for(Sprite s : screen.objects)
+			screen.objects_remove.add(s);
+	}
 
 }

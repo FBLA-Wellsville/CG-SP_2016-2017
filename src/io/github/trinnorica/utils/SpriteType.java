@@ -2,7 +2,8 @@ package io.github.trinnorica.utils;
 
 public enum SpriteType {
 	
-	FLOOR,
+	GRASS,
+	STONE,
 	FALLING_FLOOR,
 	COMPETITOR,
 	GATE,
@@ -21,14 +22,18 @@ public enum SpriteType {
 	OPEN_DOOR,
 	SPIKE, 
 	BOSS,
-	BOOTS, BOX;
+	BOOTS, 
+	BOX, 
+	CLOUD_BEGIN,
+	CLOUD_MIDDLE,
+	CLOUD_END;
 	
 	SpriteType() {
 		
 	}
 	
 	public SpriteSubType getSubType(){
-		if(this == FLOOR) return SpriteSubType.PARTIAL_COLLIDEABLE;
+		if(this == GRASS) return SpriteSubType.PARTIAL_COLLIDEABLE;
 		if(this == FALLING_FLOOR) return SpriteSubType.PARTIAL_COLLIDEABLE;
 		if(this == COMPETITOR) return SpriteSubType.ENEMY;
 		if(this == BOSS) return SpriteSubType.ENEMY;
