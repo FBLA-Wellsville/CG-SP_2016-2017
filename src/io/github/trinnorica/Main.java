@@ -9,6 +9,7 @@ import io.github.trinnorica.objects.Floor;
 import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.Button;
 import io.github.trinnorica.utils.Clickable;
+import io.github.trinnorica.utils.LevelBuilder;
 import io.github.trinnorica.utils.Sprite;
 import io.github.trinnorica.utils.Utils;
 
@@ -36,8 +37,9 @@ public class Main {
 	
 	public static void setBoard(int board){
 		clickables.clear();
-		screen.board = board;
 		
+		screen.board = board;
+		screen.objects.clear();
 		if(board == Board.MAIN){
 			screen.menuvar = 0;
 			screen.objects.clear();
@@ -75,6 +77,15 @@ public class Main {
 //				}
 //			}));
 		}
+		
+		if(board == Board.GAME){
+			System.out.println("this should only appear once.");
+			Main.clearObjects();
+
+			LevelBuilder l = new LevelBuilder();
+			int level = Utils.getLevel();
+			l.buildLevel(Utils.getLevelBlueprint(level),Utils.getLevelWidth(level),Utils.getLevelHeight(level));
+		}
 		if(board == Board.CREDITS){
 			screen.creditvar = 0;
 		}
@@ -90,6 +101,13 @@ public class Main {
 	public static void clearObjects(){
 		for(Sprite s : screen.objects)
 			screen.objects_remove.add(s);
+	}
+
+	public static Player getPlayer() {
+		for(Sprite sprite : screen.objects)
+			if(sprite instanceof Player) return ((Player) sprite);
+
+		return null;
 	}
 
 }

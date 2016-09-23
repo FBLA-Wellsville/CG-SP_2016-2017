@@ -9,7 +9,7 @@ public class Cloud extends Sprite {
 	SpriteType type;
 	public Cloud(int x, int y,SpriteType cloudtype){
 		super(x,y);
-		if(!cloudtype.equals(SpriteType.CLOUD_BEGIN) || !cloudtype.equals(SpriteType.CLOUD_MIDDLE) || !cloudtype.equals(SpriteType.CLOUD_END))
+		if(!(cloudtype.equals(SpriteType.CLOUD_BEGIN) || cloudtype.equals(SpriteType.CLOUD_MIDDLE) || cloudtype.equals(SpriteType.CLOUD_END)))
 			cloudtype = SpriteType.CLOUD_BEGIN;
 		type = cloudtype;
 		init();
@@ -26,7 +26,8 @@ public class Cloud extends Sprite {
 		case CLOUD_END:
 			loadImage(ExternalFile.loadTexture("clouds/end.png"));
 			break;
-		default: 
+		default:
+			
 			loadImage(ExternalFile.loadTexture("clouds/begin.png"));
 			break;
 		}

@@ -105,36 +105,15 @@ public class Screen extends JPanel implements ActionListener {
 		g.setFont(new Font("Helvetica", Font.PLAIN, getWidth() / 50));
 		Utils.drawOutlineString(g, "Loading...", getWidth() / 2 - g.getFontMetrics().stringWidth("Loading...") / 2,
 				getHeight() / 2, Color.RED, Color.BLACK, 1);
+		
+		//Main Menu
 		if (board == Board.MAIN) {
 			menuvar = Utils.drawScrollingImage(g, Backgrounds.MAIN.getImage(), menuvar, 0, this.getWidth(),
 					this.getHeight(), 1);
 			g.setFont(new Font("Helvetica", Font.BOLD, 35));
 			Utils.drawOutlineString(g, "Press 'P' to play!", getWidth()/2 - (g.getFontMetrics().stringWidth("Press 'P' to play!")/2), getHeight()/4 + getHeight()/2, Color.decode("#99db45"), Color.WHITE, 2);
 			g.setFont(new Font("Helvetica", Font.PLAIN, getWidth() / 50));
-			for (Sprite sprite : objects) {
-				if (sprite instanceof Moveable) {
-					((Moveable) sprite).move();
-				}
-				if(!(sprite instanceof Particle)) sprite.draw(g);
-				
-				if(sprite.x < 0 || sprite.x > 2000 || sprite.y < 0){
-					objects_remove.add(sprite);
-				}
-				
-				if(sprite instanceof Particle){
-					Particle p = (Particle) sprite;
-					p.draw(g);
-					if(p.getLifetime() <=0){
-						objects_remove.add(p);
-					}
-				}
-			}
 			
-			for(Sprite sprite : objects_remove){
-				objects.remove(sprite);
-			}
-			
-			objects_remove.clear();
 
 			g.drawImage(ExternalFile.loadTexture("entity/player/player.png"), getWidth() / 4, getHeight() / 2, 60, 60,
 					this);
@@ -147,6 +126,8 @@ public class Screen extends JPanel implements ActionListener {
 
 		}
 
+		
+		//Credits! :D
 		if (board == Board.CREDITS) {
 			g.drawImage(Backgrounds.CREDITS.getImage(), 0, 0, getWidth(), getHeight(), this);
 			Image dark = Images.makeImageTranslucent(Images.toBufferedImage(Images.createColorImage("#000000")), 0.5);
@@ -174,7 +155,47 @@ public class Screen extends JPanel implements ActionListener {
 			}
 
 		}
+		
+		
 
+		//This is where all the fun happens! :)
+		if (board == Board.GAME) {
+			g.drawImage(Backgrounds.MAIN.getImage(), 0, 0, getWidth(), getHeight(), this);
+			
+			for(Sprite sprite : objects_temp){
+				objects.add(sprite);
+			}
+			objects_temp.clear();
+				
+			for (Sprite sprite : objects) {
+				if (sprite instanceof Moveable) {
+					((Moveable) sprite).move();
+				}
+				if(!(sprite instanceof Particle)) sprite.draw(g);
+				
+				if(sprite.x < 0 || sprite.x > 2000 || sprite.y < 0){
+					objects_remove.add(sprite);
+				}
+				
+				if(sprite instanceof Particle){
+					Particle p = (Particle) sprite;
+					p.draw(g);
+					if(p.getLifetime() <=0){
+						objects_remove.add(p);
+					}
+				}
+			}
+			
+			for(Sprite sprite : objects_remove){
+				objects.remove(sprite);
+			}
+			
+			objects_remove.clear();
+			
+			
+		}
+		
+		//Testing only. This should be removed BEFORE official release!
 		if (board == Board.TEST) {
 			g.drawImage(Backgrounds.MAIN.getImage(), 0, 0, getWidth(), getHeight(), this);
 
@@ -256,7 +277,7 @@ public class Screen extends JPanel implements ActionListener {
 			}
 			
 			if(key == KeyEvent.VK_P){
-				Main.setBoard(Board.MAIN);
+				Main.setBoard(Board.GAME);
 			}
 			
 			if(key == KeyEvent.VK_C){
@@ -304,10 +325,10 @@ public class Screen extends JPanel implements ActionListener {
 			}
 			if (key == KeyEvent.VK_0) {
 				Main.clearObjects();
-				LevelBuilder l = new LevelBuilder();
-				l.buildLevel(new char[]{
-						'A','B','C'
-				},3,1);
+//				LevelBuilder l = new LevelBuilder();
+//				l.buildLevel(new char[]{
+//						'A','B','B','C','X','A','C','X','A','C',
+//				},10,1);
 			}
 			
 			if (key == KeyEvent.VK_F3) {
@@ -355,10 +376,10 @@ public class Screen extends JPanel implements ActionListener {
 				if (sprite instanceof Keyable)
 					((Keyable) sprite).keyPressed(e);
 			}
-			for(Sprite sprite : objects_temp){
-				objects.add(sprite);
-			}
-			objects_temp.clear();
+//			for(Sprite sprite : objects_temp){
+//				objects.add(sprite);
+//			}
+//			objects_temp.clear();
 
 		}
 	}

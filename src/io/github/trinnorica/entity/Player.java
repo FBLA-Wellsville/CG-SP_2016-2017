@@ -32,6 +32,7 @@ public class Player extends Entity implements Moveable, Keyable {
 	private boolean utool = false;
 	private int utoolt = 0;
 	private int cooldown = 0;
+	private int level = 1;
 
 	public Player(int x, int y) {
 		super(x, y);
@@ -272,8 +273,11 @@ public class Player extends Entity implements Moveable, Keyable {
 		return tool;
 	}
 
-	public void attack() {
-
+	public int getLevel(){
+		return level;
+	}
+	public void levelup(){
+		level = level+1;
 	}
 
 }

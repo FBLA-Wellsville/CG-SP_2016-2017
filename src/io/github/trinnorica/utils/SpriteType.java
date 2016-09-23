@@ -26,7 +26,8 @@ public enum SpriteType {
 	BOX, 
 	CLOUD_BEGIN,
 	CLOUD_MIDDLE,
-	CLOUD_END;
+	CLOUD_END,
+	AIR;
 	
 	SpriteType() {
 		

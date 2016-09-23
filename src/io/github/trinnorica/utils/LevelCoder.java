@@ -7,7 +7,8 @@ public enum LevelCoder {
 	
 	A('A',SpriteType.CLOUD_BEGIN),
 	B('B',SpriteType.CLOUD_MIDDLE),
-	C('C',SpriteType.CLOUD_END);
+	C('C',SpriteType.CLOUD_END),
+	X('X',SpriteType.AIR);
 	
 	SpriteType type;
 	char c;
@@ -30,20 +31,21 @@ public enum LevelCoder {
 				return l;
 			}
 		}
-		return A;
+		System.out.println("test");
+		return X;
 	}
 
 	public Sprite createSprite(int x, int y) {
 		switch(type){
 		case CLOUD_BEGIN:
-			return new Cloud(x,y,type);
+			return new Cloud(x,y,SpriteType.CLOUD_BEGIN);
 		case CLOUD_MIDDLE:
-			return new Cloud(x,y,type);
+			return new Cloud(x,y,SpriteType.CLOUD_MIDDLE);
 		case CLOUD_END:
-			return new Cloud(x,y,type);
+			return new Cloud(x,y,SpriteType.CLOUD_END);
 		default: break;
 		}
-		return null;
+		return new Sprite(x,y);
 	}
 
 }

@@ -88,6 +88,56 @@ public class Utils {
 	}
 
 
+	public static char[] getLevelBlueprint(int level) {
+		System.out.println("2");
+		switch(level){
+		case 1:
+			return new char[]{
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','A','B','B','C','X','X','X','X','X','X','A','B','C','X','X','X','X','A','B','B','B','C','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','A','B','C','X','X','X','X','X','X','X','A','C','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','A','C','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+			};
+		default: return null;
+		
+		}
+	}
+
+
+	public static int getLevelWidth(int level) {
+		switch(level){
+		case 1: return 32;
+		default: return 1;
+		}
+	}
+	
+	public static int getLevelHeight(int level) {
+		switch(level){
+		case 1: return 17;
+		default: return 1;
+		}
+	}
+
+
+	public static int getLevel() {
+		// TODO Auto-generated method stub
+		return 1;
+	}
+
+
 	
 
 	
