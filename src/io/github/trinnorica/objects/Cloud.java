@@ -1,7 +1,7 @@
 package io.github.trinnorica.objects;
 
-import io.github.trinnorica.utils.Sprite;
-import io.github.trinnorica.utils.SpriteType;
+import io.github.trinnorica.utils.sprites.Sprite;
+import io.github.trinnorica.utils.sprites.SpriteType;
 import res.ExternalFile;
 
 public class Cloud extends Sprite {

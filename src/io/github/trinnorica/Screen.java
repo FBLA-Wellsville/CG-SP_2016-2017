@@ -12,7 +12,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.TimerTask;
 
 import javax.swing.JPanel;
@@ -28,12 +27,12 @@ import io.github.trinnorica.utils.Backgrounds;
 import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.Clickable;
 import io.github.trinnorica.utils.Images;
-import io.github.trinnorica.utils.Keyable;
-import io.github.trinnorica.utils.LevelBuilder;
-import io.github.trinnorica.utils.Moveable;
-import io.github.trinnorica.utils.Sprite;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.particles.Particle;
+import io.github.trinnorica.utils.sprites.Empty;
+import io.github.trinnorica.utils.sprites.Keyable;
+import io.github.trinnorica.utils.sprites.Moveable;
+import io.github.trinnorica.utils.sprites.Sprite;
 import res.ExternalFile;
 
 public class Screen extends JPanel implements ActionListener {
@@ -54,7 +53,6 @@ public class Screen extends JPanel implements ActionListener {
 	public List<Sprite> objects = new ArrayList<>();
 	public List<Sprite> objects_temp = new ArrayList<>();
 	public List<Sprite> objects_remove = new ArrayList<>();
-	double r = 0.0;
 	boolean adding = false;
 	boolean test = false;
 
@@ -160,7 +158,7 @@ public class Screen extends JPanel implements ActionListener {
 
 		//This is where all the fun happens! :)
 		if (board == Board.GAME) {
-			g.drawImage(Backgrounds.MAIN.getImage(), 0, 0, getWidth(), getHeight(), this);
+			g.drawImage(Backgrounds.GRASS.getImage(), 0, 0, getWidth(), getHeight(), this);
 			
 			for(Sprite sprite : objects_temp){
 				objects.add(sprite);
@@ -168,6 +166,11 @@ public class Screen extends JPanel implements ActionListener {
 			objects_temp.clear();
 				
 			for (Sprite sprite : objects) {
+				
+				if(sprite instanceof Empty){
+					objects_remove.add(sprite);
+					continue;
+				}
 				if (sprite instanceof Moveable) {
 					((Moveable) sprite).move();
 				}
@@ -368,9 +371,7 @@ public class Screen extends JPanel implements ActionListener {
 //				System.out.println("4");
 //				Main.clickables_t.clear();
 //			}
-			if (key == KeyEvent.VK_RIGHT) {
-				r = r - 4;
-			}
+			
 
 			for (Sprite sprite : objects) {
 				if (sprite instanceof Keyable)

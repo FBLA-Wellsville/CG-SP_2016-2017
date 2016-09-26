@@ -8,12 +8,12 @@ import io.github.trinnorica.Main;
 import io.github.trinnorica.objects.Collidable;
 import io.github.trinnorica.utils.Direction;
 import io.github.trinnorica.utils.Images;
-import io.github.trinnorica.utils.Keyable;
-import io.github.trinnorica.utils.Moveable;
-import io.github.trinnorica.utils.Sprite;
-import io.github.trinnorica.utils.Tool;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
+import io.github.trinnorica.utils.sprites.Keyable;
+import io.github.trinnorica.utils.sprites.Moveable;
+import io.github.trinnorica.utils.sprites.Sprite;
+import io.github.trinnorica.utils.sprites.Tool;
 import res.ExternalFile;
 
 public class Player extends Entity implements Moveable, Keyable {

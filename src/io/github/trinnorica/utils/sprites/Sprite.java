@@ -1,10 +1,11 @@
-package io.github.trinnorica.utils;
+package io.github.trinnorica.utils.sprites;
 
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 
+import io.github.trinnorica.utils.Direction;
 import res.ExternalFile;
 
 public class Sprite {
@@ -35,6 +36,19 @@ public class Sprite {
         
     }
     
+    public Sprite(int x, int y, Image image, int width, int height) {
+    	this.sprite = this;
+        this.x = x;
+        this.y = y;
+        vis = true;
+        exists = true;
+        loadImage(image);
+        setImageDimensions(width, height);
+       
+        
+        
+    }
+    
 
 //	public void remove(){
 //		((GameBoard)Bridge.getGame().getBoard()).removeSprite(this);
@@ -44,7 +58,9 @@ public class Sprite {
 //		}
 //    }
     
-    public SpriteType getType(){return null;}
+    
+
+	public SpriteType getType(){return null;}
     
     
 

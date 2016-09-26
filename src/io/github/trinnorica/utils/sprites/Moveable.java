@@ -1,4 +1,4 @@
-package io.github.trinnorica.utils;
+package io.github.trinnorica.utils.sprites;
 
 public interface Moveable {
 	

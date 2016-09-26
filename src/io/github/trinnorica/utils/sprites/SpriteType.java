@@ -1,4 +1,4 @@
-package io.github.trinnorica.utils;
+package io.github.trinnorica.utils.sprites;
 
 public enum SpriteType {
 	
@@ -27,7 +27,14 @@ public enum SpriteType {
 	CLOUD_BEGIN,
 	CLOUD_MIDDLE,
 	CLOUD_END,
-	AIR;
+	AIR, 
+	DIRT,
+	DIRT_WALL_LEFT,
+	DIRT_WALL_RIGHT,
+	DIRT_ARCH_LEFT,
+	DIRT_ARCH_RIGHT,
+	DIRT_ARCH_MIDDLE, 
+	FLOOR;
 	
 	SpriteType() {
 		

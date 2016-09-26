@@ -4,8 +4,8 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.Random;
 
-import io.github.trinnorica.utils.Moveable;
-import io.github.trinnorica.utils.Sprite;
+import io.github.trinnorica.utils.sprites.Moveable;
+import io.github.trinnorica.utils.sprites.Sprite;
 import res.ExternalFile;
 
 public class Particle extends Sprite implements Moveable {

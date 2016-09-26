@@ -1,6 +1,7 @@
-package io.github.trinnorica.utils;
+package io.github.trinnorica.utils.levels;
 
 import io.github.trinnorica.Main;
+import io.github.trinnorica.utils.sprites.Sprite;
 
 public class LevelBuilder {
 	

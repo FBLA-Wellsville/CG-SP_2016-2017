@@ -1,6 +1,6 @@
 package io.github.trinnorica.objects;
 
-import io.github.trinnorica.utils.Sprite;
+import io.github.trinnorica.utils.sprites.Sprite;
 
 public class Collidable extends Sprite {
 

@@ -1,6 +1,6 @@
 package io.github.trinnorica.objects.tools;
 
-import io.github.trinnorica.utils.Tool;
+import io.github.trinnorica.utils.sprites.Tool;
 import res.ExternalFile;
 
 public class Stick extends Tool{

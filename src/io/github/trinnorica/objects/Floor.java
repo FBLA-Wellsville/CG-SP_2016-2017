@@ -11,7 +11,7 @@ public class Floor extends Collidable {
 
 	private void init() {
 		loadImage(ExternalFile.loadTexture("objects/floor/floor.png"));
-		setImageDimensions(30, 7);
+		setImageDimensions(30, 30);
 	}
 
 }

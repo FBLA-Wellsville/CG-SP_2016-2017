@@ -9,9 +9,9 @@ import io.github.trinnorica.objects.Floor;
 import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.Button;
 import io.github.trinnorica.utils.Clickable;
-import io.github.trinnorica.utils.LevelBuilder;
-import io.github.trinnorica.utils.Sprite;
 import io.github.trinnorica.utils.Utils;
+import io.github.trinnorica.utils.levels.LevelBuilder;
+import io.github.trinnorica.utils.sprites.Sprite;
 
 public class Main {
 	

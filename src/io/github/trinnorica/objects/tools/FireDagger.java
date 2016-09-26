@@ -2,11 +2,11 @@ package io.github.trinnorica.objects.tools;
 
 import java.awt.Point;
 
-import io.github.trinnorica.utils.Tool;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.particles.ParticleType;
 import io.github.trinnorica.utils.particles.formats.Random;
+import io.github.trinnorica.utils.sprites.Tool;
 
 public class FireDagger extends Tool {
 

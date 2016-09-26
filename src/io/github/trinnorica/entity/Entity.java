@@ -3,7 +3,7 @@ package io.github.trinnorica.entity;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import io.github.trinnorica.utils.Sprite;
+import io.github.trinnorica.utils.sprites.Sprite;
 
 public class Entity extends Sprite {
 

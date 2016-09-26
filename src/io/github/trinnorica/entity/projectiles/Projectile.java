@@ -5,8 +5,8 @@ import java.awt.Graphics;
 import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.utils.Images;
-import io.github.trinnorica.utils.Moveable;
 import io.github.trinnorica.utils.Velocity;
+import io.github.trinnorica.utils.sprites.Moveable;
 
 public class Projectile extends Entity implements Moveable{
 	

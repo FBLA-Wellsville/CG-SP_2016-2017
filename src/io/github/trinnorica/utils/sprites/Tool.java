@@ -1,6 +1,8 @@
-package io.github.trinnorica.utils;
+package io.github.trinnorica.utils.sprites;
 
 import java.awt.Graphics;
+
+import io.github.trinnorica.utils.Velocity;
 
 public class Tool extends Sprite {
 	

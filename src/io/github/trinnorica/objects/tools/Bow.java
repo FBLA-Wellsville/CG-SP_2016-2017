@@ -2,8 +2,8 @@ package io.github.trinnorica.objects.tools;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.projectiles.Arrow;
-import io.github.trinnorica.utils.Tool;
 import io.github.trinnorica.utils.Velocity;
+import io.github.trinnorica.utils.sprites.Tool;
 
 public class Bow extends Tool {
 

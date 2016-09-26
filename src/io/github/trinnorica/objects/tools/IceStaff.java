@@ -3,8 +3,8 @@ package io.github.trinnorica.objects.tools;
 import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.projectiles.Fireball;
 import io.github.trinnorica.entity.projectiles.IceSpike;
-import io.github.trinnorica.utils.Tool;
 import io.github.trinnorica.utils.Velocity;
+import io.github.trinnorica.utils.sprites.Tool;
 
 public class IceStaff extends Tool {
 
