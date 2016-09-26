@@ -8,7 +8,8 @@ public enum Backgrounds {
 	
 	MAIN("backgrounds/menu-background.png"),
 	CREDITS("backgrounds/credits-background.png"),
-	GRASS("backgrounds/grass-background.png");
+	GRASS("backgrounds/grass-background.png"), 
+	SKY("backgrounds/sky-background.png");
 	
 	String image;
 	
