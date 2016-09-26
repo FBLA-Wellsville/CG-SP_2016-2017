@@ -6,24 +6,26 @@ import res.ExternalFile;
 
 public class Cloud extends Sprite {
 	
-	SpriteType type;
-	public Cloud(int x, int y,SpriteType cloudtype){
+	public static final int BEGIN = 0;
+	public static final int MIDDLE = 1;
+	public static final int END = 2;
+	int type;
+	public Cloud(int x, int y, int cloudtype){
 		super(x,y);
-		if(!(cloudtype.equals(SpriteType.CLOUD_BEGIN) || cloudtype.equals(SpriteType.CLOUD_MIDDLE) || cloudtype.equals(SpriteType.CLOUD_END)))
-			cloudtype = SpriteType.CLOUD_BEGIN;
+		
 		type = cloudtype;
 		init();
 	}
 	
 	private void init(){
 		switch(type){
-		case CLOUD_BEGIN:
+		case 0:
 			loadImage(ExternalFile.loadTexture("clouds/begin.png"));
 			break;
-		case CLOUD_MIDDLE:
+		case 1:
 			loadImage(ExternalFile.loadTexture("clouds/middle.png"));
 			break;
-		case CLOUD_END:
+		case 2:
 			loadImage(ExternalFile.loadTexture("clouds/end.png"));
 			break;
 		default:

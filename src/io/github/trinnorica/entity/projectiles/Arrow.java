@@ -17,9 +17,4 @@ public class Arrow extends Projectile {
 		loadImage(ExternalFile.loadTexture("entity/projectiles/arrow.png"));
 		setImageDimensions(30, 30);
 	}
-	
-	
-	
-	
-
 }

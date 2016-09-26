@@ -34,7 +34,8 @@ public enum SpriteType {
 	DIRT_ARCH_LEFT,
 	DIRT_ARCH_RIGHT,
 	DIRT_ARCH_MIDDLE, 
-	FLOOR;
+	FLOOR, 
+	CLOUD;
 	
 	SpriteType() {
 		

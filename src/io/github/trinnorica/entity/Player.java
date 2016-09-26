@@ -179,9 +179,9 @@ public class Player extends Entity implements Moveable, Keyable {
 		cooldown = tool.getCooldown();
 		utoolt = 10;
 		if (direction == Direction.LEFT) {
-			tool.use(x, y, new Velocity(-8, -2));
+			tool.use(x, y, new Velocity(-8, -2+velocity.y));
 		} else
-			tool.use(x, y, new Velocity(8,-2));
+			tool.use(x, y, new Velocity(8,-2+velocity.y));
 	}
 
 	@Override

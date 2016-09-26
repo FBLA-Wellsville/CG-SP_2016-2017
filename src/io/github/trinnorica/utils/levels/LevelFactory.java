@@ -1,19 +1,12 @@
 package io.github.trinnorica.utils.levels;
 
-import io.github.trinnorica.objects.Cloud;
-import io.github.trinnorica.objects.Floor;
-import io.github.trinnorica.utils.sprites.Empty;
-import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.SpriteType;
-import res.ExternalFile;
 
 public enum LevelFactory {
 	
-	A('A',SpriteType.CLOUD_BEGIN),
-	B('B',SpriteType.CLOUD_MIDDLE),
-	C('C',SpriteType.CLOUD_END),
-	D('D',SpriteType.DIRT),
-	E('E',SpriteType.DIRT_WALL_LEFT),
+	A('A',SpriteType.CLOUD),
+	B('B',SpriteType.DIRT),
+	C('C',SpriteType.DIRT_WALL_LEFT),
 	F('F',SpriteType.DIRT_WALL_RIGHT),
 	G('G',SpriteType.DIRT_ARCH_LEFT),
 	H('H',SpriteType.DIRT_ARCH_RIGHT),
