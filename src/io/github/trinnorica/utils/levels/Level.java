@@ -40,16 +40,25 @@ public class Level {
 				if(!LevelFactory.decode(c[i-1]).getSpriteType().equals(SpriteType.DIRT)){
 					if(LevelFactory.decode(c[i-1]).getSpriteType().equals(SpriteType.DIRT_ARCH_MIDDLE)){
 						sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/dirt-arch-right.png"),30,30));
+						break;
 					}
-					else sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/dirt-wall-right.png"),30,30));
+					else {
+						sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/dirt-wall-right.png"),30,30));
+						break;
+					}
 				}
 				if(!LevelFactory.decode(c[i+1]).getSpriteType().equals(SpriteType.DIRT)){
 					if(LevelFactory.decode(c[i+1]).getSpriteType().equals(SpriteType.DIRT_ARCH_MIDDLE)){
 						sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/dirt-arch-left.png"),30,30));
+						break;
 					}
-					else sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/dirt-wall-left.png"),30,30));
+					else {
+						sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/dirt-wall-left.png"),30,30));
+						break;
+					}
 				}
-				else sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/dirt.png"),30,30));
+				
+				sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/dirt.png"),30,30));
 				break;
 			case DIRT_WALL_LEFT: 
 				sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/dirt-wall-left.png"),30,30));

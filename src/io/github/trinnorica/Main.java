@@ -1,5 +1,8 @@
 package io.github.trinnorica;
 
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +15,7 @@ import io.github.trinnorica.utils.Clickable;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.levels.LevelBuilder;
 import io.github.trinnorica.utils.sprites.Sprite;
+import res.ExternalFile;
 
 public class Main {
 	
@@ -20,12 +24,24 @@ public class Main {
 	private static List<Clickable> clickables = new ArrayList<>();
 	protected static List<Clickable> clickables_t = new ArrayList<>();
 	private static Screen screen;
+	private static Font pixel;
 	
 	
 	public static void main(String[] args){
+		try {
+		     GraphicsEnvironment ge = 
+		         GraphicsEnvironment.getLocalGraphicsEnvironment();
+		     pixel = Font.createFont(Font.TRUETYPE_FONT, ExternalFile.loadFont("pixeled.ttf"));
+		     ge.registerFont(pixel);
+		} catch (Exception ex) {
+		     //Handle exception
+		}
 		Utils.start();
 		new Window();
 		
+	}
+	public static Font getFont(){
+		return pixel;
 	}
 	
 	public static void setScreen(Screen screen){

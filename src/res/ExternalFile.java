@@ -91,6 +91,10 @@ public class ExternalFile {
 		    }
 	}
 
+	public static InputStream loadFont(String string) {
+		return ExternalFile.class.getResourceAsStream("/res/fonts/" + string);
+	}
+
 	
 	
 	

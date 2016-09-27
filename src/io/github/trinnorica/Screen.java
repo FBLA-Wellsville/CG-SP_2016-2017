@@ -97,10 +97,9 @@ public class Screen extends JPanel implements ActionListener {
 
 	public void drawMenu(Graphics g) {
 		
-		
 	
 
-		g.setFont(new Font("Helvetica", Font.PLAIN, getWidth() / 50));
+		g.setFont(Main.getFont().deriveFont((float) 20.0));
 		Utils.drawOutlineString(g, "Loading...", getWidth() / 2 - g.getFontMetrics().stringWidth("Loading...") / 2,
 				getHeight() / 2, Color.RED, Color.BLACK, 1);
 		
@@ -108,9 +107,7 @@ public class Screen extends JPanel implements ActionListener {
 		if (board == Board.MAIN) {
 			menuvar = Utils.drawScrollingImage(g, Backgrounds.SKY.getImage(), menuvar, 0, this.getWidth(),
 					this.getHeight(), 1);
-			g.setFont(new Font("Helvetica", Font.BOLD, 35));
-			Utils.drawOutlineString(g, "Press 'P' to play!", getWidth()/2 - (g.getFontMetrics().stringWidth("Press 'P' to play!")/2), getHeight()/4 + getHeight()/2, Color.decode("#99db45"), Color.WHITE, 2);
-			g.setFont(new Font("Helvetica", Font.PLAIN, getWidth() / 50));
+			Utils.drawOutlineString(g, "Press P to play!", getWidth()/2 - (g.getFontMetrics().stringWidth("Press P to play!")/2), getHeight()/4 + getHeight()/2, Color.decode("#99db45"), Color.WHITE, 1);
 			
 
 			g.drawImage(ExternalFile.loadTexture("entity/player/player.png"), getWidth() / 4, getHeight() / 2, 60, 60,
