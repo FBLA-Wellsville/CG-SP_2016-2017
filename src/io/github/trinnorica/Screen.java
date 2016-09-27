@@ -105,7 +105,7 @@ public class Screen extends JPanel implements ActionListener {
 		
 		//Main Menu
 		if (board == Board.MAIN) {
-			menuvar = Utils.drawScrollingImage(g, Backgrounds.SKY.getImage(), menuvar, 0, this.getWidth(),
+			menuvar = Utils.drawScrollingImage(g, Backgrounds.MAIN.getImage(), menuvar, 0, this.getWidth(),
 					this.getHeight(), 1);
 			Utils.drawOutlineString(g, "Press P to play!", getWidth()/2 - (g.getFontMetrics().stringWidth("Press P to play!")/2), getHeight()/4 + getHeight()/2, Color.decode("#99db45"), Color.WHITE, 1);
 			
@@ -155,7 +155,7 @@ public class Screen extends JPanel implements ActionListener {
 
 		//This is where all the fun happens! :)
 		if (board == Board.GAME) {
-			g.drawImage(Backgrounds.GRASS.getImage(), 0, 0, getWidth(), getHeight(), this);
+			g.drawImage(Backgrounds.SKY.getImage(), 0, 0, getWidth(), getHeight(), this);
 			
 			for(Sprite sprite : objects_temp){
 				objects.add(sprite);
