@@ -241,7 +241,7 @@ public class Player extends Entity implements Moveable, Keyable {
 		}
 
 		if (key == KeyEvent.VK_2) {
-			loadImage(ExternalFile.loadTexture("entity/player/ogre.png"));
+			loadImage(ExternalFile.loadTexture("entity/player/orge.png"));
 			setImageDimensions(27 + s, 30 + s);
 		}
 	}
