@@ -2,7 +2,11 @@ package io.github.trinnorica.entity;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Random;
 
+import io.github.trinnorica.Main;
+import io.github.trinnorica.utils.DamageReason;
+import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.sprites.Sprite;
 
 public class Entity extends Sprite {
@@ -34,35 +38,35 @@ public class Entity extends Sprite {
 //		return facing;
 //	}
 
-//	public void damage(int i, Entity damager, DamageReason reason) {
-//		health = health - i;
+	public void damage(int i, Entity damager, DamageReason reason) {
+		health = health - i;
 //		Utils.displayMessage(new Random().nextInt(), "-" + i, x, y, 100, "#FF0000", 15,Bridge.getGame().getFont());
 //		Utils.displayMessage(new Random().nextInt(), getHealth() + "/" + getMaxHealth(), x, y - 15, 100, "#FF0000", 15,Bridge.getGame().getFont());
-//		if (health <= 0) {
-//			this.kill(reason);
+		if (health <= 0) {
+			this.kill(reason);
 //			if (damager instanceof Player) {
 //				((Player) damager).addScore(score);
 //			}
-//		}
-//
-//	}
+		}
 
-//	public void damage(int i, DamageReason reason) {
-//		health = health - i;
+	}
+
+	public void damage(int i, DamageReason reason) {
+		health = health - i;
 //		Utils.displayMessage(new Random().nextInt(), "-" + i, x, y, 100, "#FF0000", 15,Bridge.getGame().getFont());
 //		Utils.displayMessage(new Random().nextInt(), getHealth() + "/" + getMaxHealth(), x, y - 15, 100, "#FF0000", 15,Bridge.getGame().getFont());
-//
-//		if (health <= 0) {
-//			this.kill(reason);
-//		}
-//
-//	}
 
-//	public void kill(DamageReason reason) {
-//		this.remove();
-//		dead = true;
+		if (health <= 0) {
+			this.kill(reason);
+		}
+
+	}
+
+	public void kill(DamageReason reason) {
+		Main.removeSprite(this);
+		dead = true;
 //		interact();
-//	}
+	}
 
 //	public Tool getTool() {
 //		return tool;
@@ -142,6 +146,7 @@ public class Entity extends Sprite {
 		g.setColor(c);
 
 	}
+
 	
 	
 //	public void interact(){

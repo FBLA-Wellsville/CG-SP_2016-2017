@@ -1,7 +1,7 @@
 package io.github.trinnorica.objects.tools;
 
 import io.github.trinnorica.Main;
-import io.github.trinnorica.entity.projectiles.Fireball;
+import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.entity.projectiles.IceSpike;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.sprites.Tool;
@@ -27,8 +27,8 @@ public class IceStaff extends Tool {
 	}
 	
 	@Override
-	public void use(int x, int y, Velocity velocity){
-		Main.addSprite(new IceSpike((int)x,(int)y,velocity));
+	public void use(int x, int y, Velocity velocity, Entity shooter){
+		Main.addSprite(new IceSpike((int)x,(int)y,velocity, shooter));
 	}
 
 }

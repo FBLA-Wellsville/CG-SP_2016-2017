@@ -1,8 +1,9 @@
 package io.github.trinnorica.utils.sprites;
 
-import java.awt.Graphics;
-
+import io.github.trinnorica.entity.Entity;
+import io.github.trinnorica.utils.Direction;
 import io.github.trinnorica.utils.Velocity;
+import io.github.trinnorica.utils.particles.ParticleFormat;
 
 public class Tool extends Sprite {
 	
@@ -19,7 +20,15 @@ public class Tool extends Sprite {
 //		
 //	}
 
-	public void use(int x, int y, Velocity velocity) {
+	public void use(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void use(int x, int y, Velocity velocity, Entity shooter) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void use(int x, int y, Direction d, ParticleFormat f) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -33,6 +42,9 @@ public class Tool extends Sprite {
 	public int getCooldown(){
 		return cooldown;
 	}
+
+
+	
 	
 	
 

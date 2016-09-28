@@ -6,9 +6,11 @@ import java.awt.event.KeyEvent;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.objects.Collidable;
+import io.github.trinnorica.objects.tools.Bow;
+import io.github.trinnorica.objects.tools.FireDagger;
+import io.github.trinnorica.objects.tools.FireStaff;
+import io.github.trinnorica.objects.tools.IceDagger;
 import io.github.trinnorica.utils.Direction;
-import io.github.trinnorica.utils.Images;
-import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.sprites.Keyable;
 import io.github.trinnorica.utils.sprites.Moveable;
@@ -178,10 +180,18 @@ public class Player extends Entity implements Moveable, Keyable {
 		utool = true;
 		cooldown = tool.getCooldown();
 		utoolt = 10;
+		if(tool instanceof FireDagger || tool instanceof IceDagger){
+			tool.use(x, y, direction,  new io.github.trinnorica.utils.particles.formats.Random());
+			return;
+		}
 		if (direction == Direction.LEFT) {
-			tool.use(x, y, new Velocity(-8, -2+velocity.y));
+			if(tool instanceof Bow||tool instanceof FireStaff)
+				tool.use(x, y, new Velocity(-8, -2+velocity.y), this);
+			
 		} else
-			tool.use(x, y, new Velocity(8,-2+velocity.y));
+			if(tool instanceof Bow||tool instanceof FireStaff)
+				tool.use(x, y, new Velocity(8, -2+velocity.y), this);
+			
 	}
 
 	@Override

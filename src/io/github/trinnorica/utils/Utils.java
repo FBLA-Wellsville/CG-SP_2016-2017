@@ -83,8 +83,8 @@ public class Utils {
 	}
 
 
-	public static void runParticles(Point point, ParticleFormat format, ParticleType type) {
-		format.run(point, type);
+	public static void runParticles(Point point, ParticleFormat format, ParticleType type, Direction d) {
+		format.run(point, type, d);
 	}
 
 

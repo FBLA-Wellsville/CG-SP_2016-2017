@@ -1,20 +1,25 @@
-package io.github.trinnorica.entity.projectiles;
+package io.github.trinnorica.utils.sprites;
 
 import java.awt.Graphics;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.Entity;
+import io.github.trinnorica.entity.Player;
+import io.github.trinnorica.objects.Collidable;
+import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Images;
 import io.github.trinnorica.utils.Velocity;
-import io.github.trinnorica.utils.sprites.Moveable;
 
 public class Projectile extends Entity implements Moveable{
 	
 	Velocity vector;
+	Entity shooter;
+	int power = 10;
 
-	public Projectile(int x, int y, Velocity vec) {
+	public Projectile(int x, int y, Velocity vec, Entity shooter) {
 		super(x, y);
 		vector = vec;
+		this.shooter = shooter;
 	}
 	
 	@Override
@@ -23,7 +28,22 @@ public class Projectile extends Entity implements Moveable{
 		y=(int) (y+vector.y);
 		vector.y = vector.y+Main.gravity;
 		vector.x = vector.x-Main.wind;
+		for(Sprite s : Main.getScreen().objects){
+			if(!bounds.intersects(s.getPolygon().getBounds())) continue;
+			if(s instanceof Collidable){ Main.removeSprite(this); continue; }
+			if(s instanceof Entity){
+				if(!(shooter instanceof Player)){
+					((Entity)s).damage(power,DamageReason.PROJECTILE);
+				}
+			}
+			
+			
+		}
 		
+	}
+	
+	public Entity getShooter(){
+		return shooter;
 	}
 	
 	public void updateVelocity(Velocity velocity){

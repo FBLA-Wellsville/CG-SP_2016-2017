@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.trinnorica.entity.Player;
-import io.github.trinnorica.entity.projectiles.Projectile;
 import io.github.trinnorica.objects.Floor;
 import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.Button;
 import io.github.trinnorica.utils.Clickable;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.levels.LevelBuilder;
+import io.github.trinnorica.utils.sprites.Projectile;
 import io.github.trinnorica.utils.sprites.Sprite;
 import res.ExternalFile;
 
@@ -125,5 +125,6 @@ public class Main {
 
 		return null;
 	}
+	public static void removeSprite(Sprite s) {screen.objects_remove.add(s);}
 
 }

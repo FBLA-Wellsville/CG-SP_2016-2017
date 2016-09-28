@@ -1,15 +1,14 @@
 package io.github.trinnorica.entity.projectiles;
 
-import java.awt.Graphics;
-
-import io.github.trinnorica.utils.Images;
+import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.utils.Velocity;
+import io.github.trinnorica.utils.sprites.Projectile;
 import res.ExternalFile;
 
 public class Arrow extends Projectile {
 
-	public Arrow(int x, int y, Velocity vec) {
-		super(x, y, vec);
+	public Arrow(int x, int y, Velocity vec, Entity shooter) {
+		super(x, y, vec, shooter);
 		init();
 	}
 	

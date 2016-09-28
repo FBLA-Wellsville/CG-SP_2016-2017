@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.Random;
 
+import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
 import res.ExternalFile;
@@ -12,11 +13,13 @@ public class Particle extends Sprite implements Moveable {
 	
 	ParticleType type;
 	int lifetime;
+	Velocity v;
 	
-	public Particle(Point p, ParticleType t) {
+	public Particle(Point p, ParticleType t, Velocity v) {
 		super(p.x, p.y);
 		type = t;
 		init();
+		this.v = v;
 	}
 	
 	public void init(){
@@ -36,7 +39,10 @@ public class Particle extends Sprite implements Moveable {
 
 	@Override
 	public void move() {
-		y=y-1;
+//		y=y-1;
+		x = (int) (x + v.x);
+		y = (int) (y + v.y);
+		
 	}
 	
 
