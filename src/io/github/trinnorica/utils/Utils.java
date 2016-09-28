@@ -14,6 +14,7 @@ import res.ExternalFile;
 public class Utils {
 	
 	private static Version version;
+	private static int level = 0;
 	
 	public static void start() {
 		version = ExternalFile.getVersion__BOOT_ONLY__();
@@ -91,7 +92,7 @@ public class Utils {
 	public static char[] getLevelBlueprint(int level) {
 		System.out.println("2");
 		switch(level){
-		case 1:
+		case 2:
 			return new char[]{
 					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
 					'X','A','A','A','A','X','X','X','X','X','X','A','A','A','X','X','X','X','A','A','A','A','A','X','X','X','X','X','X','X','X','X',
@@ -110,6 +111,26 @@ public class Utils {
 					'B','B','B','X','X','X','B','B','B','B','B','B','B','B','B','J','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
 					'B','B','B','X','X','X','B','B','B','B','B','B','B','B','B','B','J','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
 					'B','B','B','X','X','X','B','B','B','B','B','B','B','B','B','B','B','J','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+			};
+		case 1:
+			return new char[]{
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','K',
+					'A','A','A','A','A','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','K',
+					'X','X','X','X','X','A','A','X','A','A','A','X','A','A','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','A','A',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','A','A','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','A','A','A','X','X','X','X','X','X','X','X','A','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','A','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','A','A','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','A','A','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
+					'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
 			};
 		default: return null;
 		
@@ -133,8 +154,15 @@ public class Utils {
 
 
 	public static int getLevel() {
-		// TODO Auto-generated method stub
-		return 1;
+		return level;
+	}
+	public static void setLevel(int level){
+		Utils.level = level;
+	}
+
+
+	public static void debug(String message) {
+		System.out.print("DEBUG:\n" + message + "\n");
 	}
 
 

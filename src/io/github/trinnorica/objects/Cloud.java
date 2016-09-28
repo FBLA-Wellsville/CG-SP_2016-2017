@@ -4,7 +4,7 @@ import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.SpriteType;
 import res.ExternalFile;
 
-public class Cloud extends Sprite {
+public class Cloud extends Collidable {
 	
 	public static final int BEGIN = 0;
 	public static final int MIDDLE = 1;

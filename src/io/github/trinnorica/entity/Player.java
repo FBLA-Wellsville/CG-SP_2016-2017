@@ -3,14 +3,18 @@ package io.github.trinnorica.entity;
 import java.awt.Graphics;
 import java.awt.Polygon;
 import java.awt.event.KeyEvent;
+import java.util.ConcurrentModificationException;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.objects.Collidable;
+import io.github.trinnorica.objects.Flag;
 import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.FireDagger;
 import io.github.trinnorica.objects.tools.FireStaff;
 import io.github.trinnorica.objects.tools.IceDagger;
+import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.Direction;
+import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.sprites.Keyable;
 import io.github.trinnorica.utils.sprites.Moveable;
@@ -86,25 +90,32 @@ public class Player extends Entity implements Moveable, Keyable {
 			onground = false;
 		}
 		getPolygon();
-		for (Sprite s : Main.getScreen().objects) {
-			s.getPolygon();
-			if (!(s instanceof Collidable))
-				continue;
-			if (!bounds.intersects(s.getPolygon().getBounds()))
-				continue;
-			switch (getIntercectingDirection(s.getPolygon().getBounds())) {
-			case DOWN:
-				if (!jumping) {
-					y = s.getY() - getHeight() + 1;
-					onground = true;
+		try{
+			for (Sprite s : Main.getScreen().objects) {
+				if(!bounds.intersects(s.getPolygon().getBounds())) continue;
+				if(s instanceof Flag){
+					levelup();
+				}
+				if (!(s instanceof Collidable))
+					continue;
+				if (!bounds.intersects(s.getPolygon().getBounds()))
+					continue;
+				switch (getIntercectingDirection(s.getPolygon().getBounds())) {
+				case DOWN:
+					if (!jumping) {
+						y = s.getY() - getHeight() + 1;
+						onground = true;
 
+					}
+
+					break;
+				default:
+					break;
 				}
 
-				break;
-			default:
-				break;
 			}
-
+		} catch(ConcurrentModificationException ex){
+			Utils.debug("ConcurrentModificationException 1");
 		}
 
 		// velocity.x = velocity.x*0.2;
@@ -181,7 +192,7 @@ public class Player extends Entity implements Moveable, Keyable {
 		cooldown = tool.getCooldown();
 		utoolt = 10;
 		if(tool instanceof FireDagger || tool instanceof IceDagger){
-			tool.use(x, y, direction,  new io.github.trinnorica.utils.particles.formats.Random());
+			tool.use(x, y, direction,  new io.github.trinnorica.utils.particles.formats.Shoot());
 			return;
 		}
 		if (direction == Direction.LEFT) {
@@ -287,7 +298,8 @@ public class Player extends Entity implements Moveable, Keyable {
 		return level;
 	}
 	public void levelup(){
-		level = level+1;
+		Main.setBoard(Board.LEVELUP);
+		
 	}
 
 }

@@ -25,6 +25,8 @@ public class Main {
 	protected static List<Clickable> clickables_t = new ArrayList<>();
 	private static Screen screen;
 	private static Font pixel;
+	private static Player player;
+	private static int board;
 	
 	
 	public static void main(String[] args){
@@ -53,22 +55,12 @@ public class Main {
 	
 	public static void setBoard(int board){
 		clickables.clear();
-		
+		Main.board = board;
 		screen.board = board;
 		screen.objects.clear();
 		if(board == Board.MAIN){
 			screen.menuvar = 0;
 			screen.objects.clear();
-			screen.objects.add(new Floor(30*1,500));
-			screen.objects.add(new Floor(30*2,500-(7*1)));
-			screen.objects.add(new Floor(30*3,500-(7*2)));
-			screen.objects.add(new Floor(30*4,500-(7*3)));
-			screen.objects.add(new Floor(30*5,500-(7*4)));
-			screen.objects.add(new Floor(30*6,500-(7*5)));
-			screen.objects.add(new Floor(30*7,500-(7*6)));
-			screen.objects.add(new Floor(30*8,500-(7*7)));
-			
-			screen.objects.add(new Player(50,50));
 			
 			
 //			Button b = new Button(screen.getWidth()/4, screen.getHeight()/4 + screen.getHeight()/2, screen.getWidth()/8, 40, "Play", new Runnable(){
@@ -101,6 +93,8 @@ public class Main {
 			LevelBuilder l = new LevelBuilder();
 			int level = Utils.getLevel();
 			l.buildLevel(Utils.getLevelBlueprint(level),Utils.getLevelWidth(level),Utils.getLevelHeight(level));
+			
+			
 		}
 		if(board == Board.CREDITS){
 			screen.creditvar = 0;
@@ -120,11 +114,18 @@ public class Main {
 	}
 
 	public static Player getPlayer() {
-		for(Sprite sprite : screen.objects)
-			if(sprite instanceof Player) return ((Player) sprite);
-
-		return null;
+		if(player == null){
+			for(Sprite sprite : screen.objects)
+				if(sprite instanceof Player) return ((Player) sprite);
+		}
+		return player;
+	
 	}
 	public static void removeSprite(Sprite s) {screen.objects_remove.add(s);}
+	
+	
+	public static int getBoard() {
+		return board;
+	}
 
 }

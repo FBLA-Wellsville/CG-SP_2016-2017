@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.TimerTask;
 
@@ -162,28 +163,32 @@ public class Screen extends JPanel implements ActionListener {
 			}
 			objects_temp.clear();
 				
-			for (Sprite sprite : objects) {
-				
-				if(sprite instanceof Empty){
-					objects_remove.add(sprite);
-					continue;
-				}
-				if (sprite instanceof Moveable) {
-					((Moveable) sprite).move();
-				}
-				if(!(sprite instanceof Particle)) sprite.draw(g);
-				
-				if(sprite.x < 0 || sprite.x > 2000 || sprite.y < 0){
-					objects_remove.add(sprite);
-				}
-				
-				if(sprite instanceof Particle){
-					Particle p = (Particle) sprite;
-					p.draw(g);
-					if(p.getLifetime() <=0){
-						objects_remove.add(p);
+			try{
+				for (Sprite sprite : objects) {
+					
+					if(sprite instanceof Empty){
+						objects_remove.add(sprite);
+						continue;
+					}
+					if (sprite instanceof Moveable) {
+						((Moveable) sprite).move();
+					}
+					if(!(sprite instanceof Particle)) sprite.draw(g);
+					
+					if(sprite.x < 0 || sprite.x > 2000 || sprite.y < 0){
+						objects_remove.add(sprite);
+					}
+					
+					if(sprite instanceof Particle){
+						Particle p = (Particle) sprite;
+						p.draw(g);
+						if(p.getLifetime() <=0){
+							objects_remove.add(p);
+						}
 					}
 				}
+			} catch(ConcurrentModificationException ex){
+				Utils.debug("ConcurrentModificationException 2");
 			}
 			
 			for(Sprite sprite : objects_remove){
@@ -206,6 +211,14 @@ public class Screen extends JPanel implements ActionListener {
 			// controllable!
 
 			// g.drawImage(ExturnalFile.loadImage("image.png"), x, y, this);
+		}
+		
+		if (board == Board.LEVELUP) {
+			g.drawImage(Backgrounds.MAIN.getImage(), 0, 0, getWidth(), getHeight(), this);
+			
+			Utils.drawOutlineString(g, "You won level " + Utils.getLevel() + "!", getWidth()/2, getHeight()/3, Color.decode("#99db45"), Color.WHITE, 1);
+			Utils.drawOutlineString(g, "Press P to play!", getWidth()/2, getHeight()/2, Color.decode("#99db45"), Color.WHITE, 1);
+			
 		}
 
 		for (Clickable c : Main.getClickables()) {
@@ -277,7 +290,11 @@ public class Screen extends JPanel implements ActionListener {
 			}
 			
 			if(key == KeyEvent.VK_P){
+				if(!(Main.getBoard() == Board.GAME)){
+					Utils.setLevel(Utils.getLevel()+1);
 				Main.setBoard(Board.GAME);
+				}
+				
 			}
 			
 			if(key == KeyEvent.VK_C){
