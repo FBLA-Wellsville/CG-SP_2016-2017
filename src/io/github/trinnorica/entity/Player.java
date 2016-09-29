@@ -8,6 +8,7 @@ import java.util.ConcurrentModificationException;
 import io.github.trinnorica.Main;
 import io.github.trinnorica.objects.Collidable;
 import io.github.trinnorica.objects.Flag;
+import io.github.trinnorica.objects.Ladder;
 import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.FireDagger;
 import io.github.trinnorica.objects.tools.FireStaff;
@@ -31,14 +32,13 @@ public class Player extends Entity implements Moveable, Keyable {
 	private Velocity velocity = new Velocity(0, 0);
 	public boolean jumping = false;
 	public boolean flying = false;
-	private boolean climbing = false;
+	public boolean climbing = false;
 	private Polygon xbounds;
 	private Tool tool;
 	private int s = 1;
 	private boolean utool = false;
 	private int utoolt = 0;
 	private int cooldown = 0;
-	private int level = 1;
 
 	public Player(int x, int y) {
 		super(x, y);
@@ -78,8 +78,6 @@ public class Player extends Entity implements Moveable, Keyable {
 
 	@Override
 	public void move() {
-		// if(falling)
-		// dy=2;
 		
 		
 		if (y + height + 29 >= 540 & !jumping) {
@@ -95,38 +93,32 @@ public class Player extends Entity implements Moveable, Keyable {
 				if(!bounds.intersects(s.getPolygon().getBounds())) continue;
 				if(s instanceof Flag){
 					levelup();
-				}
-				if (!(s instanceof Collidable))
 					continue;
-				if (!bounds.intersects(s.getPolygon().getBounds()))
-					continue;
-				switch (getIntercectingDirection(s.getPolygon().getBounds())) {
-				case DOWN:
-					if (!jumping) {
-						y = s.getY() - getHeight() + 1;
-						onground = true;
-
-					}
-
-					break;
-				default:
-					break;
 				}
-
+				if(s instanceof Ladder){
+					climbing = true;
+				}
+				if(s instanceof Collidable){
+					switch (getIntercectingDirection(s.getPolygon().getBounds())) {
+					case DOWN:
+						if (!jumping) {
+							y = s.getY() - getHeight() + 1;
+							onground = true;
+						}
+						break;
+						default:
+							break;		
+					}	
+				}
 			}
 		} catch(ConcurrentModificationException ex){
-			Utils.debug("ConcurrentModificationException 1");
+			Utils.debug("ConcurrentModificationException 1 (Player)");
 		}
 
 		// velocity.x = velocity.x*0.2;
-		if (!flying)
+		if (!flying || !climbing)
 			velocity.y = velocity.y + Main.gravity;
-		else
-
-		{
-//			velocity.y = velocity.y * 0.2;
-			// velocity.x = velocity.x*0.02;
-		}
+		
 
 		if(velocity.y < 0){
 			jumping = true;
@@ -295,7 +287,7 @@ public class Player extends Entity implements Moveable, Keyable {
 	}
 
 	public int getLevel(){
-		return level;
+		return Utils.getLevel();
 	}
 	public void levelup(){
 		Main.setBoard(Board.LEVELUP);

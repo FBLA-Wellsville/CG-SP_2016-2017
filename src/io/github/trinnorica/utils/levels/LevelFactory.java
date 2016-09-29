@@ -9,6 +9,8 @@ public enum LevelFactory {
 	C('C',SpriteType.DIRT_ARCH_DOWN),
 	J('J',SpriteType.FLOOR),
 	K('K',SpriteType.GATE),
+	L('L',SpriteType.STONE),
+	M('M',SpriteType.LADDER),
 	X('X',SpriteType.AIR);
 	
 	SpriteType type;

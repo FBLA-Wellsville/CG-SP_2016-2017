@@ -188,7 +188,7 @@ public class Screen extends JPanel implements ActionListener {
 					}
 				}
 			} catch(ConcurrentModificationException ex){
-				Utils.debug("ConcurrentModificationException 2");
+				Utils.debug("ConcurrentModificationException 2 (Screen)");
 			}
 			
 			for(Sprite sprite : objects_remove){
@@ -242,7 +242,8 @@ public class Screen extends JPanel implements ActionListener {
 					Utils.drawOutlineString(g, "Onground: " + ((Player) s).onground, 0, 120, Color.WHITE,
 							Color.BLACK, 1);
 					Utils.drawOutlineString(g, "Playing: True", 0, 140, Color.WHITE, Color.BLACK, 1);
-					Utils.drawOutlineString(g, "Tool: " + ((Player) s).getTool(), 0, 160, Color.WHITE,
+					Utils.drawOutlineString(g, "Climbing: " + ((Player) s).climbing, 0, 160, Color.WHITE, Color.BLACK, 1);
+					Utils.drawOutlineString(g, "Tool: " + ((Player) s).getTool(), 0, 180, Color.WHITE,
 							Color.BLACK, 1);
 					break;
 				}

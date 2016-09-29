@@ -87,7 +87,7 @@ public class Main {
 		}
 		
 		if(board == Board.GAME){
-			System.out.println("this should only appear once.");
+			
 			Main.clearObjects();
 
 			LevelBuilder l = new LevelBuilder();

@@ -2,11 +2,14 @@ package io.github.trinnorica.utils.levels;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import io.github.trinnorica.entity.Player;
 import io.github.trinnorica.objects.Cloud;
 import io.github.trinnorica.objects.Flag;
 import io.github.trinnorica.objects.Floor;
+import io.github.trinnorica.objects.Ladder;
+import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.sprites.Empty;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.SpriteType;
@@ -21,6 +24,7 @@ public class Level {
 	public Level(char[] c, int width, int height) {
 		
 		for(int i=0;i!=c.length;i++){
+			Utils.debug("X= " + x + "\nY= " + y);
 			if(x>=width){
 				x=0;
 				y=y+1;
@@ -81,6 +85,9 @@ public class Level {
 					sprites.add(new Flag(x*30,y*30,Flag.POLE));
 				}
 				else sprites.add(new Flag(x*30,y*30,Flag.FLAG));
+				break;
+			case LADDER:
+				sprites.add(new Ladder(x*30,y*30));
 				break;
 				
 			default: break;
