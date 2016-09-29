@@ -39,6 +39,8 @@ public class Player extends Entity implements Moveable, Keyable {
 	private boolean utool = false;
 	private int utoolt = 0;
 	private int cooldown = 0;
+	private boolean left = false;
+	private boolean right = false;
 
 	public Player(int x, int y) {
 		super(x, y);
@@ -107,6 +109,8 @@ public class Player extends Entity implements Moveable, Keyable {
 							onground = true;
 						}
 						break;
+					case LEFT:
+						if(left)velocity.x = 0;
 						default:
 							break;		
 					}	
@@ -226,10 +230,12 @@ public class Player extends Entity implements Moveable, Keyable {
 
 		if (key == KeyEvent.VK_D) {
 			direction = Direction.RIGHT;
+			right = true;
 			setVelocity(3, "");
 		}
 		if (key == KeyEvent.VK_A) {
 			direction = Direction.LEFT;
+			left = true;
 			setVelocity(-3, "");
 		}
 		if (key == KeyEvent.VK_SHIFT) {
@@ -277,9 +283,11 @@ public class Player extends Entity implements Moveable, Keyable {
 		int key = e.getKeyCode();
 
 		if (key == KeyEvent.VK_D) {
+			right = false;
 			setVelocity(0, "");
 		}
 		if (key == KeyEvent.VK_A) {
+			left = false;
 			setVelocity(0, "");
 		}
 		if (key == KeyEvent.VK_W) {

@@ -56,6 +56,7 @@ public class Screen extends JPanel implements ActionListener {
 	public List<Sprite> objects_remove = new ArrayList<>();
 	boolean adding = false;
 	boolean test = false;
+	private int timeri=0;
 
 	public Screen() {
 		init();
@@ -98,11 +99,18 @@ public class Screen extends JPanel implements ActionListener {
 
 	public void drawMenu(Graphics g) {
 		
-	
-
 		g.setFont(Main.getFont().deriveFont((float) 20.0));
-		Utils.drawOutlineString(g, "Loading...", getWidth() / 2 - g.getFontMetrics().stringWidth("Loading...") / 2,
-				getHeight() / 2, Color.RED, Color.BLACK, 1);
+		if ( (timeri & 1) == 0 ) {
+			Utils.drawOutlineString(g, "Loading...", getWidth() / 2 - g.getFontMetrics().stringWidth("Loading...") / 2, getHeight() / 2, Color.RED, Color.BLACK, 1);
+		} else {
+			Utils.drawOutlineString(g, "Loading..", getWidth() / 2 - g.getFontMetrics().stringWidth("Loading...") / 2, getHeight() / 2, Color.RED, Color.BLACK, 1);
+		}
+
+		if(timeri <=500){
+			timeri+=1;
+			return;
+		}
+		
 		
 		//Main Menu
 		if (board == Board.MAIN) {
