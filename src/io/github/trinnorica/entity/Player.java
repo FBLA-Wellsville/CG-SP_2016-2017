@@ -88,6 +88,7 @@ public class Player extends Entity implements Moveable, Keyable {
 			onground = false;
 		}
 		getPolygon();
+		climbing = false;
 		try{
 			for (Sprite s : Main.getScreen().objects) {
 				if(!bounds.intersects(s.getPolygon().getBounds())) continue;
@@ -101,7 +102,7 @@ public class Player extends Entity implements Moveable, Keyable {
 				if(s instanceof Collidable){
 					switch (getIntercectingDirection(s.getPolygon().getBounds())) {
 					case DOWN:
-						if (!jumping) {
+						if (!jumping && !climbing) {
 							y = s.getY() - getHeight() + 1;
 							onground = true;
 						}
@@ -116,25 +117,37 @@ public class Player extends Entity implements Moveable, Keyable {
 		}
 
 		// velocity.x = velocity.x*0.2;
-		if (!flying || !climbing)
+		if (!flying && !climbing)
 			velocity.y = velocity.y + Main.gravity;
 		
+		if(flying || climbing){
+			dy = velocity.y;
+			dx = velocity.x;
 
-		if(velocity.y < 0){
-			jumping = true;
-		} else jumping = false;
-		if (onground) {
-			falling = false;
-			setVelocity("", 0);
+			y = (int) (y + dy);
+			x = (int) (x + dx);
+
+			dx = 0;
+			dy = 0;
 		}
-		dy = velocity.y;
-		dx = velocity.x;
 
-		y = (int) (y + dy);
-		x = (int) (x + dx);
+		else {
+			if(velocity.y < 0){
+				jumping = true;
+			} else jumping = false;
+			if (onground) {
+				falling = false;
+				setVelocity("", 0);
+			}
+			dy = velocity.y;
+			dx = velocity.x;
 
-		dx = 0;
-		dy = 0;
+			y = (int) (y + dy);
+			x = (int) (x + dx);
+
+			dx = 0;
+			dy = 0;
+		}
 
 	}
 
@@ -270,10 +283,10 @@ public class Player extends Entity implements Moveable, Keyable {
 			setVelocity(0, "");
 		}
 		if (key == KeyEvent.VK_W) {
-			if(flying)setVelocity("", 0);
+			if(flying || climbing)setVelocity("", 0);
 		}
 		if (key == KeyEvent.VK_S) {
-			if(flying)setVelocity("", 0);
+			if(flying || climbing)setVelocity("", 0);
 		}
 	}
 
