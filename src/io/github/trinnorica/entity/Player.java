@@ -14,6 +14,7 @@ import io.github.trinnorica.objects.tools.FireDagger;
 import io.github.trinnorica.objects.tools.FireStaff;
 import io.github.trinnorica.objects.tools.IceDagger;
 import io.github.trinnorica.utils.Board;
+import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Direction;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
@@ -39,8 +40,8 @@ public class Player extends Entity implements Moveable, Keyable {
 	private boolean utool = false;
 	private int utoolt = 0;
 	private int cooldown = 0;
-	private boolean left = false;
-	private boolean right = false;
+	public boolean left = false;
+	public boolean right = false;
 
 	public Player(int x, int y) {
 		super(x, y);
@@ -82,10 +83,8 @@ public class Player extends Entity implements Moveable, Keyable {
 	public void move() {
 		
 		
-		if (y + height + 29 >= 540 & !jumping) {
-			onground = true;
-			y = 540 - height - 29;
-
+		if (y + height + 29 >= 570 & !jumping) {
+			kill(DamageReason.VOID);
 		} else {
 			onground = false;
 		}
@@ -111,6 +110,10 @@ public class Player extends Entity implements Moveable, Keyable {
 						break;
 					case LEFT:
 						if(left)velocity.x = 0;
+						break;
+					case RIGHT:
+						if(right)velocity.x = 0;
+						break;
 						default:
 							break;		
 					}	

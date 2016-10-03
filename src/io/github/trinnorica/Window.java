@@ -15,7 +15,7 @@ public class Window extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	public Window(){
-		
+		setResizable(false);
 		setPreferredSize(new Dimension(1920/2, 1080/2));
 		
 		pack();
@@ -26,7 +26,7 @@ public class Window extends JFrame {
 		setIconImage(ExternalFile.loadTexture("logos/logo.png"));
 		setTitle("Eldesith " + Utils.getVersion());
 		setVisible(true);
-		setResizable(false);
+		
 		setLocationRelativeTo(null);
 	}
 

@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
+import java.util.Random;
 import java.util.TimerTask;
 
 import javax.swing.JPanel;
@@ -46,6 +47,7 @@ public class Screen extends JPanel implements ActionListener {
 	Timer timer;
 	// java.util.Timer t;
 	int DELAY = 15;
+	int INITIALDELAY = 200;
 	boolean debug = false;
 	int board = 0;
 	int totalFrameCount = 0;
@@ -57,6 +59,8 @@ public class Screen extends JPanel implements ActionListener {
 	boolean adding = false;
 	boolean test = false;
 	private int timeri=0;
+	private int timeril=1;
+	private boolean loading = true;
 
 	public Screen() {
 		init();
@@ -64,7 +68,7 @@ public class Screen extends JPanel implements ActionListener {
 
 	public void init() {
 
-		timer = new Timer(DELAY, this);
+		timer = new Timer(INITIALDELAY, this);
 		timer.start();
 
 		addKeyListener(new TAdapter());
@@ -100,16 +104,34 @@ public class Screen extends JPanel implements ActionListener {
 	public void drawMenu(Graphics g) {
 		
 		g.setFont(Main.getFont().deriveFont((float) 20.0));
-		if ( (timeri & 1) == 0 ) {
-			Utils.drawOutlineString(g, "Loading...", getWidth() / 2 - g.getFontMetrics().stringWidth("Loading...") / 2, getHeight() / 2, Color.RED, Color.BLACK, 1);
-		} else {
-			Utils.drawOutlineString(g, "Loading..", getWidth() / 2 - g.getFontMetrics().stringWidth("Loading...") / 2, getHeight() / 2, Color.RED, Color.BLACK, 1);
-		}
+		
+		if(loading){
+			if(timeril == 1){
+				Utils.drawOutlineString(g, "Loading.", getWidth() / 2 - g.getFontMetrics().stringWidth("Loading...") / 2, getHeight() / 2, Color.RED, Color.BLACK, 1);
+			}
+			if(timeril == 2){
+				Utils.drawOutlineString(g, "Loading..", getWidth() / 2 - g.getFontMetrics().stringWidth("Loading...") / 2, getHeight() / 2, Color.RED, Color.BLACK, 1);
+			}
+			if(timeril == 3){
+				Utils.drawOutlineString(g, "Loading...", getWidth() / 2 - g.getFontMetrics().stringWidth("Loading...") / 2, getHeight() / 2, Color.RED, Color.BLACK, 1);
+			}
 
-		if(timeri <=500){
-			timeri+=1;
-			return;
+			timeril+=1;
+			if(timeril >3){
+				timeril = 1;
+			}
+			if(timeri <=new Random().nextInt(20)){
+				timeri+=1;
+				return;
+			}
+			
+			
+			timer.setDelay(DELAY);
+			loading = false;
+			
 		}
+		
+		
 		
 		
 		//Main Menu
@@ -251,8 +273,9 @@ public class Screen extends JPanel implements ActionListener {
 							Color.BLACK, 1);
 					Utils.drawOutlineString(g, "Playing: True", 0, 140, Color.WHITE, Color.BLACK, 1);
 					Utils.drawOutlineString(g, "Climbing: " + ((Player) s).climbing, 0, 160, Color.WHITE, Color.BLACK, 1);
-					Utils.drawOutlineString(g, "Tool: " + ((Player) s).getTool(), 0, 180, Color.WHITE,
-							Color.BLACK, 1);
+					Utils.drawOutlineString(g, "Tool: " + ((Player) s).getTool(), 0, 180, Color.WHITE, Color.BLACK, 1);
+					Utils.drawOutlineString(g, "Left: " + ((Player) s).left, 0, 200, Color.WHITE, Color.BLACK, 1);
+					Utils.drawOutlineString(g, "Right: " + ((Player) s).right, 0, 210, Color.WHITE, Color.BLACK, 1);
 					break;
 				}
 				
