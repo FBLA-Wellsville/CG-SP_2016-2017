@@ -12,9 +12,9 @@ import io.github.trinnorica.utils.Velocity;
 
 public class Projectile extends Entity implements Moveable{
 	
-	Velocity vector;
-	Entity shooter;
-	int power = 10;
+	protected Velocity vector;
+	protected Entity shooter;
+	protected int power = 10;
 
 	public Projectile(int x, int y, Velocity vec, Entity shooter) {
 		super(x, y);
