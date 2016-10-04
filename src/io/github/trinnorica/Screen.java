@@ -205,7 +205,7 @@ public class Screen extends JPanel implements ActionListener {
 					}
 					if(!(sprite instanceof Particle)) sprite.draw(g);
 					
-					if(sprite.x < 0 || sprite.x > 2000 || sprite.y < 0){
+					if(sprite.x < -100 || sprite.x > 2000){
 						objects_remove.add(sprite);
 					}
 					
@@ -221,6 +221,15 @@ public class Screen extends JPanel implements ActionListener {
 				Utils.debug("ConcurrentModificationException 2 (Screen)");
 			}
 			
+			
+			for(int i=0;i!=Main.getPlayer().getMaxLives();i++){
+				if(i<Main.getPlayer().getLives()){
+					g.drawImage(ExternalFile.loadTexture("heart.png"), i*30, 0, 30, 30, this);
+				} else {
+					g.drawImage(ExternalFile.loadTexture("broken-heart.png"), i*30, 0, 30, 30, this);
+				}
+			}
+			
 			for(Sprite sprite : objects_remove){
 				objects.remove(sprite);
 			}
@@ -230,18 +239,7 @@ public class Screen extends JPanel implements ActionListener {
 			
 		}
 		
-		//Testing only. This should be removed BEFORE official release!
-		if (board == Board.TEST) {
-			g.drawImage(Backgrounds.MAIN.getImage(), 0, 0, getWidth(), getHeight(), this);
-
-			// Put your code here Blake. Press R to get back to the main menu.
-			// If you press T it will bring you to the test board. I want you to
-			// create an image, display it here, and have it move. To move it
-			// use variables, and if you wanna get really fancy, make it
-			// controllable!
-
-			// g.drawImage(ExturnalFile.loadImage("image.png"), x, y, this);
-		}
+		
 		
 		if (board == Board.LEVELUP) {
 			g.drawImage(Backgrounds.MAIN.getImage(), 0, 0, getWidth(), getHeight(), this);
@@ -389,9 +387,7 @@ public class Screen extends JPanel implements ActionListener {
 			if (key == KeyEvent.VK_R) {
 				Main.setBoard(Board.MAIN);
 			}
-			if (key == KeyEvent.VK_T) {
-				Main.setBoard(Board.TEST);
-			}
+			
 
 //			if (key == KeyEvent.VK_LEFT) {
 //				System.out.println("1");

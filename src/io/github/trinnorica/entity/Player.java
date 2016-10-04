@@ -42,6 +42,8 @@ public class Player extends Entity implements Moveable, Keyable {
 	private int cooldown = 0;
 	public boolean left = false;
 	public boolean right = false;
+	private final int MAXLIVES = 5;
+	private int lives = MAXLIVES;
 
 	public Player(int x, int y) {
 		super(x, y);
@@ -316,6 +318,13 @@ public class Player extends Entity implements Moveable, Keyable {
 	public void levelup(){
 		Main.setBoard(Board.LEVELUP);
 		
+	}
+
+	public int getMaxLives() {
+		return MAXLIVES;
+	}
+	public int getLives() {
+		return lives;
 	}
 
 }
