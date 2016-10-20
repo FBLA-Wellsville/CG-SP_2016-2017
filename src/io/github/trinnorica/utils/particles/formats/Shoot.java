@@ -16,15 +16,15 @@ public class Shoot implements ParticleFormat {
 		int a = p.x;
 		int b = p.y;
 		int r = new java.util.Random().nextInt(20)+10;
-		int g = 10;
+		int g = 5;
 		
 		for(int i=0;i!=r;i++){
 			boolean f = new java.util.Random().nextBoolean();
 			boolean e = new java.util.Random().nextBoolean();
-			if(f)a=p.x-new java.util.Random().nextInt(40)+10;
-			else a=p.x+new java.util.Random().nextInt(40)+10;
-			if(e)b=p.y-new java.util.Random().nextInt(40)+10;
-			else b=p.y+new java.util.Random().nextInt(40)+10;
+			if(f)a=p.x-new java.util.Random().nextInt(10+i)+10;
+			else a=p.x+new java.util.Random().nextInt(10+i)+10;
+			if(e)b=p.y-new java.util.Random().nextInt(10+i)+10;
+			else b=p.y+new java.util.Random().nextInt(10+i)+10;
 			
 			if(d.equals(Direction.LEFT)) {
 				if(g>0)g=-g;

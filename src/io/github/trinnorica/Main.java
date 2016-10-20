@@ -127,5 +127,5 @@ public class Main {
 	public static int getBoard() {
 		return board;
 	}
-
+	
 }

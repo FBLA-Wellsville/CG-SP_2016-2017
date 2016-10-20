@@ -6,6 +6,7 @@ import java.awt.Polygon;
 import java.awt.Rectangle;
 
 import io.github.trinnorica.utils.Direction;
+import io.github.trinnorica.utils.Utils;
 import res.ExternalFile;
 
 public class Sprite {
@@ -187,6 +188,10 @@ public class Sprite {
 		} else {
 			g.drawImage(getImage(), x + width, y,-(width), height, null);
 		}
+	}
+
+	public void damage(int power) {
+		Utils.debug("HIT!");
 	}
 
 

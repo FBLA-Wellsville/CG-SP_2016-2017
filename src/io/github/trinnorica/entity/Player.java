@@ -1,10 +1,5 @@
 package io.github.trinnorica.entity;
 
-import java.awt.Graphics;
-import java.awt.Polygon;
-import java.awt.event.KeyEvent;
-import java.util.ConcurrentModificationException;
-
 import io.github.trinnorica.Main;
 import io.github.trinnorica.objects.Collidable;
 import io.github.trinnorica.objects.Flag;
@@ -18,10 +13,18 @@ import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Direction;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
+import io.github.trinnorica.utils.sprites.Empty;
 import io.github.trinnorica.utils.sprites.Keyable;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.Tool;
+
+import java.awt.Graphics;
+import java.awt.Polygon;
+import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
+import java.util.ConcurrentModificationException;
+
 import res.ExternalFile;
 
 public class Player extends Entity implements Moveable, Keyable {
@@ -35,6 +38,7 @@ public class Player extends Entity implements Moveable, Keyable {
 	public boolean flying = false;
 	public boolean climbing = false;
 	private Polygon xbounds;
+	private Rectangle sbounds;
 	private Tool tool;
 	private int s = 1;
 	private boolean utool = false;
@@ -209,14 +213,35 @@ public class Player extends Entity implements Moveable, Keyable {
 			tool.use(x, y, direction,  new io.github.trinnorica.utils.particles.formats.Shoot());
 			return;
 		}
+		Utils.debug("1");
 		if (direction == Direction.LEFT) {
+			Utils.debug("2");
 			if(tool instanceof Bow||tool instanceof FireStaff)
 				tool.use(x, y, new Velocity(-8, -2+velocity.y), this);
+			Utils.debug("3");
+			for(Sprite s : Main.getScreen().objects){
+				if(getStrikeRange().getBounds().intersects(s.getPolygon().getBounds())){
+					Utils.debug("4");
+					s.damage(tool.getPower());
+				}
+			}
 			
 		} else
 			if(tool instanceof Bow||tool instanceof FireStaff)
 				tool.use(x, y, new Velocity(8, -2+velocity.y), this);
 			
+	}
+
+	private Rectangle getStrikeRange() {
+		if(direction == Direction.LEFT){
+			sbounds = new Rectangle(x-30, y, 30, 30);
+			return sbounds;
+		}
+		if(direction == Direction.RIGHT){
+			sbounds = new Rectangle(x+30, y, 30, 30);
+			return sbounds;
+		}
+		return null;
 	}
 
 	@Override
@@ -272,13 +297,16 @@ public class Player extends Entity implements Moveable, Keyable {
 				flying = true;
 		}
 
+		if(key == KeyEvent.VK_L){
+			Main.addSprite(new TestEntity(x,y));
+		}
 		if (key == KeyEvent.VK_1) {
 			loadImage(ExternalFile.loadTexture("entity/player/player.png"));
 			setImageDimensions(27 + s, 30 + s);
 		}
 
 		if (key == KeyEvent.VK_2) {
-			loadImage(ExternalFile.loadTexture("entity/player/ogre.png"));
+			loadImage(ExternalFile.loadTexture("entity/knight/knight.png"));
 			setImageDimensions(27 + s, 30 + s);
 		}
 	}
