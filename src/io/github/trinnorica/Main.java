@@ -1,6 +1,7 @@
 package io.github.trinnorica;
 
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.ArrayList;
@@ -126,6 +127,9 @@ public class Main {
 	
 	public static int getBoard() {
 		return board;
+	}
+	public static Graphics getGraphics() {
+		return Screen.graphics;
 	}
 	
 }

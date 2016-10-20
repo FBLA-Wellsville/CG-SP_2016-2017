@@ -53,6 +53,7 @@ public class Screen extends JPanel implements ActionListener {
 	int totalFrameCount = 0;
 	double menuvar = 0;
 	int creditvar = 0;
+	static Graphics graphics;
 	public List<Sprite> objects = new ArrayList<>();
 	public List<Sprite> objects_temp = new ArrayList<>();
 	public List<Sprite> objects_remove = new ArrayList<>();
@@ -102,6 +103,7 @@ public class Screen extends JPanel implements ActionListener {
 	}
 
 	public void drawMenu(Graphics g) {
+		graphics = g;
 		
 		g.setFont(Main.getFont().deriveFont((float) 20.0));
 		

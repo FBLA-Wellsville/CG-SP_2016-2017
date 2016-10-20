@@ -13,9 +13,10 @@ import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Direction;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
-import io.github.trinnorica.utils.sprites.Empty;
+import io.github.trinnorica.utils.particles.Particle;
 import io.github.trinnorica.utils.sprites.Keyable;
 import io.github.trinnorica.utils.sprites.Moveable;
+import io.github.trinnorica.utils.sprites.Projectile;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.Tool;
 
@@ -213,26 +214,32 @@ public class Player extends Entity implements Moveable, Keyable {
 			tool.use(x, y, direction,  new io.github.trinnorica.utils.particles.formats.Shoot());
 			return;
 		}
-		Utils.debug("1");
 		if (direction == Direction.LEFT) {
-			Utils.debug("2");
 			if(tool instanceof Bow||tool instanceof FireStaff)
 				tool.use(x, y, new Velocity(-8, -2+velocity.y), this);
-			Utils.debug("3");
 			for(Sprite s : Main.getScreen().objects){
+				if(!(s instanceof Particle || s instanceof Projectile))
 				if(getStrikeRange().getBounds().intersects(s.getPolygon().getBounds())){
-					Utils.debug("4");
 					s.damage(tool.getPower());
 				}
 			}
 			
-		} else
+		} else{
+			
 			if(tool instanceof Bow||tool instanceof FireStaff)
 				tool.use(x, y, new Velocity(8, -2+velocity.y), this);
-			
+			for(Sprite s : Main.getScreen().objects){
+				if(!(s instanceof Particle || s instanceof Projectile))
+				if(getStrikeRange().getBounds().intersects(s.getPolygon().getBounds())){
+					s.damage(tool.getPower());
+				}
+			}
+		}
 	}
 
 	private Rectangle getStrikeRange() {
+		
+		
 		if(direction == Direction.LEFT){
 			sbounds = new Rectangle(x-30, y, 30, 30);
 			return sbounds;
