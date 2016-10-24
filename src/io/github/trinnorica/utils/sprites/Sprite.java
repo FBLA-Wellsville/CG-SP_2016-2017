@@ -190,9 +190,7 @@ public class Sprite {
 		}
 	}
 
-	public void damage(int power) {
-		Utils.debug("HIT!");
-	}
+	
 
 
 

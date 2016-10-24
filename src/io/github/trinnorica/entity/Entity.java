@@ -2,22 +2,31 @@ package io.github.trinnorica.entity;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Random;
+import java.util.ConcurrentModificationException;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Utils;
+import io.github.trinnorica.utils.Velocity;
+import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
 
-public class Entity extends Sprite {
+public class Entity extends Sprite implements Moveable {
 
 	public double health;
 	public double maxhealth;
 	protected boolean dead = false;
 	public boolean invisible = false;
+	boolean onground = false;
+	boolean falling = false;
+	
+	double dx = 0;
+	double dy = 0;
+	
 	protected int score;
 //	protected Tool tool;
 	public boolean walking;
+	Velocity velocity = new Velocity(0,0);
 //	protected Direction direction = Direction.RIGHT;
 //	protected Direction facing = Direction.RIGHT;
 //	protected Interaction interact;
@@ -40,6 +49,7 @@ public class Entity extends Sprite {
 
 	public void damage(int i, Entity damager, DamageReason reason) {
 		health = health - i;
+		setVelocity(new Velocity(0, -1));
 //		Utils.displayMessage(new Random().nextInt(), "-" + i, x, y, 100, "#FF0000", 15,Bridge.getGame().getFont());
 //		Utils.displayMessage(new Random().nextInt(), getHealth() + "/" + getMaxHealth(), x, y - 15, 100, "#FF0000", 15,Bridge.getGame().getFont());
 		if (health <= 0) {
@@ -51,15 +61,33 @@ public class Entity extends Sprite {
 
 	}
 
-	public void damage(int i, DamageReason reason) {
+	public void damage(int i, DamageReason reason, Entity damager) {
 		health = health - i;
+		setVelocity(new Velocity(0, -5));
 //		Utils.displayMessage(new Random().nextInt(), "-" + i, x, y, 100, "#FF0000", 15,Bridge.getGame().getFont());
 //		Utils.displayMessage(new Random().nextInt(), getHealth() + "/" + getMaxHealth(), x, y - 15, 100, "#FF0000", 15,Bridge.getGame().getFont());
+//
+//		if (health <= 0) {
+//			this.kill(reason);
+//		}
 
-		if (health <= 0) {
-			this.kill(reason);
-		}
+	}
 
+	public void setVelocity(Velocity v) {
+		velocity = v;
+
+	}
+
+	public void setVelocity(double x, double y) {
+		velocity = new Velocity(x, y);
+	}
+
+	public void setVelocity(double x, String y) {
+		velocity = new Velocity(x, velocity.y);
+	}
+
+	public void setVelocity(String x, double y) {
+		velocity = new Velocity(velocity.x, y);
 	}
 
 	public void kill(DamageReason reason) {
@@ -144,6 +172,42 @@ public class Entity extends Sprite {
 		g.fillRect(x, y, bar, height);
 
 		g.setColor(c);
+
+	}
+
+	@Override
+	public void move() {
+		
+
+		onground = false;
+		
+		
+		getPolygon();
+		
+		try{
+			for (Sprite s : Main.getScreen().objects) {
+				if(s == this) continue;
+				if(!bounds.intersects(s.getPolygon().getBounds())) continue;
+				else onground = true;
+			}
+		} catch(ConcurrentModificationException ex){
+			Utils.debug("ConcurrentModificationException 1 (Entity)");
+		}
+
+		if (!onground)
+			setVelocity("", velocity.y-0.5);
+		if (onground) {
+			falling = false;
+			setVelocity("", 0);
+		}
+		dy = velocity.y;
+		dx = velocity.x;
+
+		y = (int) (y + dy);
+		x = (int) (x + dx);
+
+		dx = 0;
+		dy = 0;
 
 	}
 

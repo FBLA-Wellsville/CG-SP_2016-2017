@@ -33,7 +33,7 @@ public class Projectile extends Entity implements Moveable{
 			if(s instanceof Collidable){ Main.removeSprite(this); continue; }
 			if(s instanceof Entity){
 				if(!(shooter instanceof Player)){
-					((Entity)s).damage(power,DamageReason.PROJECTILE);
+					((Entity)s).damage(power,DamageReason.PROJECTILE, this);
 				}
 			}
 			

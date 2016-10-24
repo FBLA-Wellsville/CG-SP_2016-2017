@@ -1,6 +1,7 @@
 package io.github.trinnorica.entity;
 
 import io.github.trinnorica.Main;
+import io.github.trinnorica.objects.Floor;
 import io.github.trinnorica.objects.tools.Stick;
 import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Direction;
@@ -41,25 +42,33 @@ public class TestEntity extends Entity implements Moveable {
 
 	@Override
 	public void move() {
-		
 		onground = false;
-		
-		
-		getPolygon();
-		
-		try{
-			for (Sprite s : Main.getScreen().objects) {
-				if(s == this) continue;
-				if(!bounds.intersects(s.getPolygon().getBounds())) continue;
-				else onground = true;
+//		if(velocity.y > 0){
+			for(Sprite s : Main.getScreen().objects){
+				if(!getPolygon().intersects(s.getPolygon().getBounds())) continue;
+			
+				if(s instanceof Floor)onground = true;	
 			}
-		} catch(ConcurrentModificationException ex){
-			Utils.debug("ConcurrentModificationException 1 (TestEntity)");
-		}
+//		}
 		
-		if(!onground)y=y+1;
+		
+	
+		
+		dy = velocity.y;
+		dx = velocity.x;
 
+		y = (int) (y + dy);
+		x = (int) (x + dx);
 
+		dx = 0;
+		dy = 0;
+		
+		if(!onground)velocity.y = velocity.y + 0.2;
+		
+		Utils.debug("X: " + velocity.x + "\nY: " + velocity.y);
+		if(!onground) setVelocity("", 2);
+		else setVelocity("", 0);
+		
 	}
 
 	@Override
@@ -71,7 +80,8 @@ public class TestEntity extends Entity implements Moveable {
 				
 
 			}
-			
+		
+		
 		
 	}
 

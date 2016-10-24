@@ -34,7 +34,6 @@ public class Player extends Entity implements Moveable, Keyable {
 	double dy = 0;
 	boolean falling = false;
 	public boolean onground = false;
-	private Velocity velocity = new Velocity(0, 0);
 	public boolean jumping = false;
 	public boolean flying = false;
 	public boolean climbing = false;
@@ -70,21 +69,7 @@ public class Player extends Entity implements Moveable, Keyable {
 				4);
 	}
 
-	public void setVelocity(Velocity v) {
-		velocity = v;
-	}
-
-	public void setVelocity(double x, double y) {
-		velocity = new Velocity(x, y);
-	}
-
-	public void setVelocity(double x, String y) {
-		velocity = new Velocity(x, velocity.y);
-	}
-
-	public void setVelocity(String x, double y) {
-		velocity = new Velocity(velocity.x, y);
-	}
+	
 
 	@Override
 	public void move() {
@@ -220,7 +205,7 @@ public class Player extends Entity implements Moveable, Keyable {
 			for(Sprite s : Main.getScreen().objects){
 				if(!(s instanceof Particle || s instanceof Projectile))
 				if(getStrikeRange().getBounds().intersects(s.getPolygon().getBounds())){
-					s.damage(tool.getPower());
+					if(s instanceof Entity) ((Entity)s).damage(tool.getPower(), DamageReason.PROJECTILE, this);
 				}
 			}
 			
@@ -231,7 +216,7 @@ public class Player extends Entity implements Moveable, Keyable {
 			for(Sprite s : Main.getScreen().objects){
 				if(!(s instanceof Particle || s instanceof Projectile))
 				if(getStrikeRange().getBounds().intersects(s.getPolygon().getBounds())){
-					s.damage(tool.getPower());
+					if(s instanceof Entity) ((Entity)s).damage(tool.getPower(), DamageReason.PROJECTILE, this);
 				}
 			}
 		}
