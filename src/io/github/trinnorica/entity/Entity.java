@@ -47,23 +47,37 @@ public class Entity extends Sprite implements Moveable {
 //		return facing;
 //	}
 
-	public void damage(int i, Entity damager, DamageReason reason) {
-		health = health - i;
-		setVelocity(new Velocity(0, -1));
-//		Utils.displayMessage(new Random().nextInt(), "-" + i, x, y, 100, "#FF0000", 15,Bridge.getGame().getFont());
-//		Utils.displayMessage(new Random().nextInt(), getHealth() + "/" + getMaxHealth(), x, y - 15, 100, "#FF0000", 15,Bridge.getGame().getFont());
-		if (health <= 0) {
-			this.kill(reason);
-//			if (damager instanceof Player) {
-//				((Player) damager).addScore(score);
-//			}
-		}
-
-	}
+//	public void damage(int i, Entity damager, DamageReason reason) {
+//		health = health - i;
+//		setVelocity(new Velocity(0, -1));
+////		Utils.displayMessage(new Random().nextInt(), "-" + i, x, y, 100, "#FF0000", 15,Bridge.getGame().getFont());
+////		Utils.displayMessage(new Random().nextInt(), getHealth() + "/" + getMaxHealth(), x, y - 15, 100, "#FF0000", 15,Bridge.getGame().getFont());
+//		if (health <= 0) {
+//			this.kill(reason);
+////			if (damager instanceof Player) {
+////				((Player) damager).addScore(score);
+////			}
+//		}
+//
+//	}
 
 	public void damage(int i, DamageReason reason, Entity damager) {
 		health = health - i;
-		setVelocity(new Velocity(0, -5));
+		if(damager.x - x >= 0)
+			setVelocity(new Velocity(-2, -3));
+		else 
+			setVelocity(new Velocity(2, -3));
+//		Utils.displayMessage(new Random().nextInt(), "-" + i, x, y, 100, "#FF0000", 15,Bridge.getGame().getFont());
+//		Utils.displayMessage(new Random().nextInt(), getHealth() + "/" + getMaxHealth(), x, y - 15, 100, "#FF0000", 15,Bridge.getGame().getFont());
+//
+//		if (health <= 0) {
+//			this.kill(reason);
+//		}
+
+	}
+	public void damage(int i, DamageReason reason, Entity damager, Velocity v) {
+		health = health - i;
+		setVelocity(v);
 //		Utils.displayMessage(new Random().nextInt(), "-" + i, x, y, 100, "#FF0000", 15,Bridge.getGame().getFont());
 //		Utils.displayMessage(new Random().nextInt(), getHealth() + "/" + getMaxHealth(), x, y - 15, 100, "#FF0000", 15,Bridge.getGame().getFont());
 //
@@ -210,6 +224,8 @@ public class Entity extends Sprite implements Moveable {
 		dy = 0;
 
 	}
+
+	
 
 	
 	

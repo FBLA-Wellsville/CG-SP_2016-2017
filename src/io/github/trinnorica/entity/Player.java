@@ -201,7 +201,7 @@ public class Player extends Entity implements Moveable, Keyable {
 		}
 		if (direction == Direction.LEFT) {
 			if(tool instanceof Bow||tool instanceof FireStaff)
-				tool.use(x, y, new Velocity(-8, -2+velocity.y), this);
+				tool.use(x, y, new Velocity(-8, -2), this);
 			for(Sprite s : Main.getScreen().objects){
 				if(!(s instanceof Particle || s instanceof Projectile))
 				if(getStrikeRange().getBounds().intersects(s.getPolygon().getBounds())){
@@ -212,7 +212,7 @@ public class Player extends Entity implements Moveable, Keyable {
 		} else{
 			
 			if(tool instanceof Bow||tool instanceof FireStaff)
-				tool.use(x, y, new Velocity(8, -2+velocity.y), this);
+				tool.use(x, y, new Velocity(8, -2), this);
 			for(Sprite s : Main.getScreen().objects){
 				if(!(s instanceof Particle || s instanceof Projectile))
 				if(getStrikeRange().getBounds().intersects(s.getPolygon().getBounds())){

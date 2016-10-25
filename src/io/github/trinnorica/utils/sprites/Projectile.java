@@ -32,8 +32,9 @@ public class Projectile extends Entity implements Moveable{
 			if(!bounds.intersects(s.getPolygon().getBounds())) continue;
 			if(s instanceof Collidable){ Main.removeSprite(this); continue; }
 			if(s instanceof Entity){
-				if(!(shooter instanceof Player)){
-					((Entity)s).damage(power,DamageReason.PROJECTILE, this);
+				if(!(s instanceof Player)){
+					((Entity)s).damage(power,DamageReason.PROJECTILE, this, new Velocity(vector.x/3,-3));
+//					Main.removeSprite(this);
 				}
 			}
 			
