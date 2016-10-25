@@ -8,6 +8,7 @@ import io.github.trinnorica.entity.Player;
 import io.github.trinnorica.objects.Collidable;
 import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Images;
+import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
 
 public class Projectile extends Entity implements Moveable{
@@ -28,16 +29,19 @@ public class Projectile extends Entity implements Moveable{
 		y=(int) (y+vector.y);
 		vector.y = vector.y+Main.gravity;
 		vector.x = vector.x-Main.wind;
+		
 		for(Sprite s : Main.getScreen().objects){
 			if(!bounds.intersects(s.getPolygon().getBounds())) continue;
-			if(s instanceof Collidable){ Main.removeSprite(this); continue; }
-			if(s instanceof Entity){
-				if(!(s instanceof Player)){
-					((Entity)s).damage(power,DamageReason.PROJECTILE, this, new Velocity(vector.x/3,-3));
-//					Main.removeSprite(this);
-				}
-			}
+			if(s instanceof Projectile) continue;
+			if(shooter instanceof Player && s instanceof Player) continue;
+				
 			
+			if(s instanceof Entity)
+				((Entity)s).damage(power,DamageReason.PROJECTILE, this, new Velocity(vector.x/3,-3));
+					
+				
+			
+			Main.removeSprite(this);
 			
 		}
 		

@@ -1,5 +1,6 @@
 package io.github.trinnorica.entity;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import io.github.trinnorica.Main;
@@ -31,6 +32,8 @@ public class TestEntity extends Entity implements Moveable {
 		loadImage(ExternalFile.loadTexture("entity/ogre/ogre.png"));
 		setImageDimensions(27 + s, 30 + s);
 		setTool(new Stick(0,0));
+		health = 10;
+		maxhealth = health;
 	}
 
 
@@ -80,6 +83,13 @@ public class TestEntity extends Entity implements Moveable {
 
 			}
 		
+		g.drawRect(x-50+(getWidth()/2), y-20, 100, 5);
+		
+		
+		if((int) (health/maxhealth*100) > 66)g.setColor(Color.green);
+		if((int) (health/maxhealth*100) < 66 && (int) (health/maxhealth*100) > 33)g.setColor(Color.YELLOW);
+		if((int) (health/maxhealth*100) < 33) g.setColor(Color.RED);
+		g.fillRect(x-50+(getWidth()/2), y-20, (int) (health/maxhealth*100), 5);
 		
 		
 	}

@@ -70,9 +70,9 @@ public class Entity extends Sprite implements Moveable {
 //		Utils.displayMessage(new Random().nextInt(), "-" + i, x, y, 100, "#FF0000", 15,Bridge.getGame().getFont());
 //		Utils.displayMessage(new Random().nextInt(), getHealth() + "/" + getMaxHealth(), x, y - 15, 100, "#FF0000", 15,Bridge.getGame().getFont());
 //
-//		if (health <= 0) {
-//			this.kill(reason);
-//		}
+		if (health <= 0) {
+			this.kill(reason);
+		}
 
 	}
 	public void damage(int i, DamageReason reason, Entity damager, Velocity v) {
@@ -81,9 +81,9 @@ public class Entity extends Sprite implements Moveable {
 //		Utils.displayMessage(new Random().nextInt(), "-" + i, x, y, 100, "#FF0000", 15,Bridge.getGame().getFont());
 //		Utils.displayMessage(new Random().nextInt(), getHealth() + "/" + getMaxHealth(), x, y - 15, 100, "#FF0000", 15,Bridge.getGame().getFont());
 //
-//		if (health <= 0) {
-//			this.kill(reason);
-//		}
+		if (health <= 0) {
+			this.kill(reason);
+		}
 
 	}
 
@@ -106,7 +106,8 @@ public class Entity extends Sprite implements Moveable {
 
 	public void kill(DamageReason reason) {
 		Main.removeSprite(this);
-		dead = true;
+//		dead = true;
+//		Utils.debug("DEATH");
 //		interact();
 	}
 
