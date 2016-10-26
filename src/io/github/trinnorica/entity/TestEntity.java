@@ -1,19 +1,15 @@
 package io.github.trinnorica.entity;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 import io.github.trinnorica.Main;
-import io.github.trinnorica.objects.Floor;
+import io.github.trinnorica.objects.Collidable;
 import io.github.trinnorica.objects.tools.Stick;
-import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Direction;
-import io.github.trinnorica.utils.Utils;
-import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.Tool;
-
-import java.awt.Graphics;
-import java.util.ConcurrentModificationException;
-
 import res.ExternalFile;
 
 public class TestEntity extends Entity implements Moveable {
@@ -36,6 +32,8 @@ public class TestEntity extends Entity implements Moveable {
 		loadImage(ExternalFile.loadTexture("entity/ogre/ogre.png"));
 		setImageDimensions(27 + s, 30 + s);
 		setTool(new Stick(0,0));
+		health = 10;
+		maxhealth = health;
 	}
 
 
@@ -43,14 +41,19 @@ public class TestEntity extends Entity implements Moveable {
 	@Override
 	public void move() {
 		onground = false;
+		
 //		if(velocity.y > 0){
 			for(Sprite s : Main.getScreen().objects){
 				if(!getPolygon().intersects(s.getPolygon().getBounds())) continue;
 			
-				if(s instanceof Floor)onground = true;	
+				if(s instanceof Collidable){
+					onground = true;
+					y=s.getY()-this.getHeight()+1;
+					
+				}
 			}
 //		}
-		
+			if(velocity.y <= 0) onground = false;
 		
 	
 		
@@ -65,9 +68,8 @@ public class TestEntity extends Entity implements Moveable {
 		
 		if(!onground)velocity.y = velocity.y + 0.2;
 		
-		Utils.debug("X: " + velocity.x + "\nY: " + velocity.y);
-		if(!onground) setVelocity("", 2);
-		else setVelocity("", 0);
+//		Utils.debug("X: " + velocity.x + "\nY: " + velocity.y);
+		if(onground) setVelocity(0, 0);
 		
 	}
 
@@ -81,6 +83,13 @@ public class TestEntity extends Entity implements Moveable {
 
 			}
 		
+		g.drawRect(x-50+(getWidth()/2), y-20, 100, 5);
+		
+		
+		if((int) (health/maxhealth*100) > 66)g.setColor(Color.green);
+		if((int) (health/maxhealth*100) < 66 && (int) (health/maxhealth*100) > 33)g.setColor(Color.YELLOW);
+		if((int) (health/maxhealth*100) < 33) g.setColor(Color.RED);
+		g.fillRect(x-50+(getWidth()/2), y-20, (int) (health/maxhealth*100), 5);
 		
 		
 	}
