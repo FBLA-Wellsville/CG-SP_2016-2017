@@ -15,21 +15,17 @@ public class Tool extends Sprite {
 	}
 
 	
-//	public void use() {
-//		// TODO Auto-generated method stub
-//		
-//	}
 
 	public void use(int x, int y) {
-		// TODO Auto-generated method stub
+		//Different in each tool class
 		
 	}
 	public void use(int x, int y, Velocity velocity, Entity shooter) {
-		// TODO Auto-generated method stub
+		//Different in each tool class
 		
 	}
 	public void use(int x, int y, Direction d, ParticleFormat f) {
-		// TODO Auto-generated method stub
+		//Different in each tool class
 		
 	}
 	

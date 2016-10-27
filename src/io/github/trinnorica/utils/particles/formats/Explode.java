@@ -34,7 +34,7 @@ public class Explode implements ParticleFormat {
 				e = new java.util.Random().nextInt(5*power) + 5;
 			
 
-			Main.addSprite(new Particle(new Point(p.x, p.y), t, new Velocity(e, -2)));
+			Main.addSprite(new Particle(new Point(p.x, p.y), t, new Velocity(e, -2),true));
 		}
 	}
 

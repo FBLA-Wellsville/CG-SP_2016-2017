@@ -64,27 +64,6 @@ public class Main {
 			screen.objects.clear();
 			
 			
-//			Button b = new Button(screen.getWidth()/4, screen.getHeight()/4 + screen.getHeight()/2, screen.getWidth()/8, 40, "Play", new Runnable(){
-//				
-//				@Override
-//				public void run(){
-//					screen.objects.clear();
-//					screen.objects.add(new Floor(50,500));
-//					screen.objects.add(new Player(50,50));
-//					
-//				}
-//			});
-//			b.select();d
-//			clickables.add(b);
-//
-//
-//			clickables.add(new Button(screen.getWidth()/4 + screen.getWidth()/2, screen.getHeight()/4 + screen.getHeight()/2, screen.getWidth()/8, 40, "Credits", new Runnable(){	
-//				@Override
-//				public void run(){
-//					screen.objects.clear();
-//					setBoard(Board.CREDITS);	
-//				}
-//			}));
 		}
 		
 		if(board == Board.GAME){

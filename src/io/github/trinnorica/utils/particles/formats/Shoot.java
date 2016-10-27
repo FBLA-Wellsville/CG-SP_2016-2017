@@ -30,7 +30,7 @@ public class Shoot implements ParticleFormat {
 				if(g>0)g=-g;
 			}
 			
-			Main.addSprite(new Particle(new Point(a,b),t,new Velocity(g, 0)));
+			Main.addSprite(new Particle(new Point(a,b),t,new Velocity(g, 0),false));
 		}
 	}
 

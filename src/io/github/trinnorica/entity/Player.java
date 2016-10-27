@@ -48,6 +48,7 @@ public class Player extends Entity implements Moveable, Keyable {
 	public boolean right = false;
 	private final int MAXLIVES = 5;
 	private int lives = MAXLIVES;
+	private boolean sprint = false;
 
 	public Player(int x, int y) {
 		super(x, y);
@@ -144,7 +145,8 @@ public class Player extends Entity implements Moveable, Keyable {
 			}
 			dy = velocity.y;
 			dx = velocity.x;
-
+			
+			if(sprint) dx = dx*1.5;
 			y = (int) (y + dy);
 			x = (int) (x + dx);
 
@@ -243,6 +245,10 @@ public class Player extends Entity implements Moveable, Keyable {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
+		
+		if(key == KeyEvent.VK_CONTROL){
+			sprint = true;
+		}
 
 		if (key == KeyEvent.VK_W) {
 			if (flying || climbing)
@@ -324,6 +330,9 @@ public class Player extends Entity implements Moveable, Keyable {
 		}
 		if (key == KeyEvent.VK_S) {
 			if(flying || climbing)setVelocity("", 0);
+		}
+		if(key == KeyEvent.VK_CONTROL){
+			sprint = false;
 		}
 	}
 

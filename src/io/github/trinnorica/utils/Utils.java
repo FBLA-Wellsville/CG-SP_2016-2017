@@ -78,10 +78,7 @@ public class Utils {
 	}
 
 
-	public static boolean getIntersectionDirection(Rectangle bounds, Rectangle bounds2) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 
 
 	public static void runParticles(Point point, ParticleFormat format, ParticleType type, Direction d) {

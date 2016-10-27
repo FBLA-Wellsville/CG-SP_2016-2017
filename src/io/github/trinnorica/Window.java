@@ -19,8 +19,6 @@ public class Window extends JFrame {
 		setPreferredSize(new Dimension(1920/2, 1080/2));
 		
 		pack();
-//		setSize(new Dimension(1920/2, 1080/2));
-//		setMinimumSize(new Dimension(1920/2, 1080/2));
 		add(new Screen());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(ExternalFile.loadTexture("logos/logo.png"));

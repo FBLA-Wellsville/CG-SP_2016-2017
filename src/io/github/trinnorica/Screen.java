@@ -273,9 +273,11 @@ public class Screen extends JPanel implements ActionListener {
 							Color.BLACK, 1);
 					Utils.drawOutlineString(g, "Playing: True", 0, 140, Color.WHITE, Color.BLACK, 1);
 					Utils.drawOutlineString(g, "Climbing: " + ((Player) s).climbing, 0, 160, Color.WHITE, Color.BLACK, 1);
-					Utils.drawOutlineString(g, "Tool: " + ((Player) s).getTool(), 0, 180, Color.WHITE, Color.BLACK, 1);
+					if(((Player)s).getTool() != null)Utils.drawOutlineString(g, "Tool: " + ((Player) s).getTool().getClass().getSimpleName(), 0, 180, Color.WHITE, Color.BLACK, 1);
+					else Utils.drawOutlineString(g, "Tool: null", 0, 180, Color.WHITE, Color.BLACK, 1);
 					Utils.drawOutlineString(g, "Left: " + ((Player) s).left, 0, 200, Color.WHITE, Color.BLACK, 1);
-					Utils.drawOutlineString(g, "Right: " + ((Player) s).right, 0, 210, Color.WHITE, Color.BLACK, 1);
+					Utils.drawOutlineString(g, "Right: " + ((Player) s).right, 0, 220, Color.WHITE, Color.BLACK, 1);
+					Utils.drawOutlineString(g, "Location: " + ((Player) s).getLocation(), 0, 240, Color.WHITE, Color.BLACK, 1);
 					break;
 				}
 				
@@ -391,85 +393,15 @@ public class Screen extends JPanel implements ActionListener {
 			}
 			
 
-//			if (key == KeyEvent.VK_LEFT) {
-//				System.out.println("1");
-//				for(Clickable c : Main.getClickables()){
-//					System.out.println("2");
-//					if(Main.clickables_t.isEmpty()){
-//						System.out.println("3");
-//						if(c.selected()){
-//							System.out.println("4");
-//							Main.clickables_t.add(c);
-//							System.out.println("5");
-//						}
-//					} else {
-//						Main.clickables_t.add(c);
-//						System.out.println("6");
-//						break;
-//					}
-//					
-//				}
-//				Main.clickables_t.get(0).deselect();
-//				System.out.println("3");
-//				Main.clickables_t.get(1).select();
-//				System.out.println("4");
-//				Main.clickables_t.clear();
-//			}
-			
-
+		
 			for (Sprite sprite : objects) {
 				if (sprite instanceof Keyable)
 					((Keyable) sprite).keyPressed(e);
 			}
-//			for(Sprite sprite : objects_temp){
-//				objects.add(sprite);
-//			}
-//			objects_temp.clear();
 
 		}
 	}
 
-//	private class MMListener extends MouseMotionAdapter {
-//
-//		public void mouseMoved(MouseEvent e) {
-//			for (Clickable c : Main.getClickables()) {
-//				if (c.getPolygon().contains(e.getPoint()))
-//					c.mouseEntered(e);
-//				else
-//					c.mouseExited(e);
-//			}
-//
-//		}
-//
-//		public void mouseDragged(MouseEvent e) {
-//
-//		}
-//	}
-
-//	private class MListener extends MouseAdapter {
-//
-//		public void mouseClicked(MouseEvent e) {
-//
-//		}
-//
-//		public void mousePressed(MouseEvent e) {
-//			try {
-//				for (Clickable c : Main.getClickables())
-//					if (c.getPolygon().contains(e.getPoint()))
-//						c.mousePressed(e);
-//			} catch (ConcurrentModificationException ex) {
-//				return;
-//			}
-//
-//		}
-//
-//		public void mouseReleased(MouseEvent e) {
-//			for (Clickable c : Main.getClickables())
-//				if (c.getPolygon().contains(e.getPoint()))
-//					c.mouseReleased(e);
-//
-//		}
-//	}
 
 	public void addSprites(Sprite sprite) {
 		objects_temp.add(sprite);

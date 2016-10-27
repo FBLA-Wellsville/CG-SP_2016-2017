@@ -15,10 +15,13 @@ public class Particle extends Sprite implements Moveable {
 	ParticleType type;
 	int lifetime;
 	Velocity v;
+	boolean g = false;
+	double f = 0.90;
 	
-	public Particle(Point p, ParticleType t, Velocity v) {
+	public Particle(Point p, ParticleType t, Velocity v, boolean gravity) {
 		super(p.x, p.y);
 		type = t;
+		g = gravity;
 		init();
 		this.v = v;
 	}
@@ -41,8 +44,8 @@ public class Particle extends Sprite implements Moveable {
 	@Override
 	public void move() {
 //		y=y-1;
-		v.y = v.y + Main.gravity;
-		v.x = v.x/2;
+		if(g)v.y = v.y + Main.gravity;
+		if(g) v.x = v.x *0.6;
 		x = (int) (x + v.x);
 		y = (int) (y + v.y);
 		

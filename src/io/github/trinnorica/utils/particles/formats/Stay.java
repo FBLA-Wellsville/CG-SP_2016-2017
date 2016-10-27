@@ -23,7 +23,7 @@ public class Stay implements ParticleFormat {
 		if(f) b=b+r;
 		else b=b-r;
 		
-		Main.addSprite(new Particle(new Point(a,b),t,new Velocity(0, 0)));
+		Main.addSprite(new Particle(new Point(a,b),t,new Velocity(0, 0),false));
 		
 	}
 

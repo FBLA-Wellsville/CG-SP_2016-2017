@@ -6,7 +6,8 @@ public enum ParticleType {
 	
 	ICE("ice"),
 	FIRE("fire"), 
-	BLOOD("blood-1:blood-2");
+	BLOOD("blood-1:blood-2"),
+	HEART("heart");
 	
 	String particle;
 	

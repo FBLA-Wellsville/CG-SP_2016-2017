@@ -25,7 +25,7 @@ public class Random implements ParticleFormat {
 			if(e)b=p.y-new java.util.Random().nextInt(40)+10;
 			else b=p.y+new java.util.Random().nextInt(40)+10;
 			
-			Main.addSprite(new Particle(new Point(a,b),t,new Velocity(0, -2)));
+			Main.addSprite(new Particle(new Point(a,b),t,new Velocity(0, -2),false));
 		}
 	}
 

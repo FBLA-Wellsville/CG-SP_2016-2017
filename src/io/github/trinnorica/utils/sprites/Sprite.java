@@ -51,13 +51,6 @@ public class Sprite {
     }
     
 
-//	public void remove(){
-//		((GameBoard)Bridge.getGame().getBoard()).removeSprite(this);
-//		exists = false;
-//		if(getType() == SpriteType.KEY){
-//			((Key)this).removeTool((Tool) this);
-//		}
-//    }
     
     
 
@@ -169,13 +162,6 @@ public class Sprite {
 	public int getHeight() {
 		return height;
 	}
-
-
-//	public void drawInfo(int x, int y, Graphics g) {
-//		String name = sprite.getType().name();
-//		GameBoard.drawOutlineString(name, x, y, g, Color.WHITE, Color.BLACK);
-//		
-//	}
 	
 	public boolean exists(){
 		return exists;
@@ -189,19 +175,6 @@ public class Sprite {
 			g.drawImage(getImage(), x + width, y,-(width), height, null);
 		}
 	}
-
-	
-
-
-
-	
-
-
-//	public void add() {
-//		exists = ((GameBoard)Bridge.getGame().getBoard()).addSprite(this);
-//		
-//	}
-
 
 	
 
