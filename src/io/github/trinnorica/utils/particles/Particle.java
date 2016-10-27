@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.Random;
 
+import io.github.trinnorica.Main;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
@@ -40,6 +41,8 @@ public class Particle extends Sprite implements Moveable {
 	@Override
 	public void move() {
 //		y=y-1;
+		v.y = v.y + Main.gravity;
+		v.x = v.x/2;
 		x = (int) (x + v.x);
 		y = (int) (y + v.y);
 		

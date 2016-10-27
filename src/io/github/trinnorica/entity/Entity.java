@@ -2,12 +2,16 @@ package io.github.trinnorica.entity;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.ConcurrentModificationException;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
+import io.github.trinnorica.utils.particles.ParticleType;
+import io.github.trinnorica.utils.particles.formats.Explode;
+import io.github.trinnorica.utils.particles.formats.Stay;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
 
@@ -67,6 +71,7 @@ public class Entity extends Sprite implements Moveable {
 			setVelocity(new Velocity(-2, -3));
 		else 
 			setVelocity(new Velocity(2, -3));
+		
 //		Utils.displayMessage(new Random().nextInt(), "-" + i, x, y, 100, "#FF0000", 15,Bridge.getGame().getFont());
 //		Utils.displayMessage(new Random().nextInt(), getHealth() + "/" + getMaxHealth(), x, y - 15, 100, "#FF0000", 15,Bridge.getGame().getFont());
 //
@@ -105,6 +110,7 @@ public class Entity extends Sprite implements Moveable {
 	}
 
 	public void kill(DamageReason reason) {
+		Utils.runParticles(new Point(x,y), new Explode(2), ParticleType.BLOOD, null);
 		Main.removeSprite(this);
 //		dead = true;
 //		Utils.debug("DEATH");

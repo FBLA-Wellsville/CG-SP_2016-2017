@@ -11,6 +11,7 @@ import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageFilter;
 import java.awt.image.ImageProducer;
 import java.awt.image.RGBImageFilter;
+import java.awt.image.WritableRaster;
 
 public class Images {
 	
@@ -163,6 +164,24 @@ public class Images {
 		image.setRGB(0, 0, new Color(r, g, b).getRGB());
 		return image;
 	}
+	
+	public static BufferedImage colorImage(BufferedImage image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        WritableRaster raster = image.getRaster();
+
+        for (int xx = 0; xx < width; xx++) {
+            for (int yy = 0; yy < height; yy++) {
+                int[] pixels = raster.getPixel(xx, yy, (int[]) null);
+                pixels[0] = 0;
+                pixels[1] = 0;
+                pixels[2] = 255;
+                raster.setPixel(xx, yy, pixels);
+            }
+        }
+        return image;
+    }
+	
 	
 //	public static void setPolygon(Polygon p, Image image){
 //		BufferedImage i = toBufferedImage(image);
