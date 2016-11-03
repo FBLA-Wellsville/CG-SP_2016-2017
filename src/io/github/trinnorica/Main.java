@@ -35,6 +35,7 @@ public class Main {
 		     GraphicsEnvironment ge = 
 		         GraphicsEnvironment.getLocalGraphicsEnvironment();
 		     pixel = Font.createFont(Font.TRUETYPE_FONT, ExternalFile.loadFont("pixeled.ttf"));
+		     
 		     ge.registerFont(pixel);
 		} catch (Exception ex) {
 		     //Handle exception

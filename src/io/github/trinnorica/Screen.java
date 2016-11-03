@@ -224,13 +224,15 @@ public class Screen extends JPanel implements ActionListener {
 			}
 			
 			
-			for(int i=0;i!=Main.getPlayer().getMaxLives();i++){
-				if(i<Main.getPlayer().getLives()){
-					g.drawImage(ExternalFile.loadTexture("heart.png"), i*30, 0, 30, 30, this);
-				} else {
-					g.drawImage(ExternalFile.loadTexture("broken-heart.png"), i*30, 0, 30, 30, this);
-				}
-			}
+			try{
+				for(int i=0;i!=Main.getPlayer().getMaxLives();i++){
+					if(i<Main.getPlayer().getLives()){
+						g.drawImage(ExternalFile.loadTexture("heart.png"), i*30, 0, 30, 30, this);
+						} else {
+							g.drawImage(ExternalFile.loadTexture("broken-heart.png"), i*30, 0, 30, 30, this);
+						}
+					}
+			} catch(NullPointerException ex){}
 			
 			for(Sprite sprite : objects_remove){
 				objects.remove(sprite);
@@ -238,6 +240,17 @@ public class Screen extends JPanel implements ActionListener {
 			
 			objects_remove.clear();
 			
+			//Draw Leaderboard
+			
+			g.drawImage(Images.makeImageTranslucent(Images.toBufferedImage(Images.createColorImage("#000000")), 0.5), getWidth()-200, getHeight()/3, 200, 110, this);
+			g.setFont(Main.getFont().deriveFont(10f));
+			
+			Utils.drawOutlineString(g, "Leaderboard", (getWidth()-100)-(g.getFontMetrics().stringWidth("Leaderboard")/2), getHeight()/3+(Main.getFont().getSize()*12), Color.YELLOW, Color.WHITE, 0);
+			String[] highscores = new String[]{"1","2","3","4","5","6"};
+			for(int l=0;l!=highscores.length;l++){
+				Utils.drawOutlineString(g, highscores[l], (getWidth()-100)-(g.getFontMetrics().stringWidth(highscores[l])/2), (getHeight()/3+(Main.getFont().getSize()*12))+(((Main.getFont().getSize()*12)*(l+1))+(l*4)), Color.WHITE, Color.WHITE, 0);
+				
+			}
 			
 		}
 		
