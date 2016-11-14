@@ -4,14 +4,16 @@ import io.github.trinnorica.utils.sprites.SpriteType;
 
 public enum LevelFactory {
 	
-	A('A',SpriteType.CLOUD),
-	B('B',SpriteType.DIRT),
-	C('C',SpriteType.DIRT_ARCH_DOWN),
-	D('D',SpriteType.STONE),
-	E('E',SpriteType.FLOOR),
-	K('K',SpriteType.GATE),
-	M('M',SpriteType.LADDER),
-	X('X',SpriteType.AIR);
+	CLOUD('A',SpriteType.CLOUD),
+	DIRT('B',SpriteType.DIRT),
+	DYNAMIC('C',SpriteType.DIRT_ARCH_DOWN),
+	GRASS('G',SpriteType.GRASS),
+	STONE('D',SpriteType.STONE),
+	FLOOR('E',SpriteType.FLOOR),
+	GATE('K',SpriteType.GATE),
+	LADDER('M',SpriteType.LADDER),
+	AIR('X',SpriteType.AIR);
+	
 	
 	SpriteType type;
 	char c;
@@ -34,7 +36,7 @@ public enum LevelFactory {
 				return l;
 			}
 		}
-		return X;
+		return AIR;
 	}
 
 	

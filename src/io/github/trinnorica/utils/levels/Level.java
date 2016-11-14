@@ -112,6 +112,9 @@ public class Level {
 				if(LevelFactory.decode(c[i-width]).getSpriteType().equals(SpriteType.DIRT))
 					sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/stone-dirt-down.png"), 30, 30));
 				else sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/stone.png"), 30, 30));
+				break;
+			case GRASS:
+				sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/grass.png"), 30, 30));
 			default: break;
 			}
 			sprites.add(new Empty(x*30,y*30));
