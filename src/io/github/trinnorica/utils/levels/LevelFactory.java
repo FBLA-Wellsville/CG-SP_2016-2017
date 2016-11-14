@@ -6,10 +6,14 @@ public enum LevelFactory {
 	
 	CLOUD('A',SpriteType.CLOUD),
 	DIRT('B',SpriteType.DIRT),
-	DYNAMIC('C',SpriteType.DIRT_ARCH_DOWN),
-	GRASS('G',SpriteType.GRASS),
+	DIRT_ARCH_DOWN('C',SpriteType.DIRT_ARCH_DOWN),
 	STONE('D',SpriteType.STONE),
 	FLOOR('E',SpriteType.FLOOR),
+	DYNAMIC_DIRT('F',SpriteType.DYNAMIC_DIRT),
+	GRASS('G',SpriteType.GRASS),
+	
+	
+	
 	GATE('K',SpriteType.GATE),
 	LADDER('M',SpriteType.LADDER),
 	AIR('X',SpriteType.AIR);

@@ -31,7 +31,7 @@ public enum SpriteType {
 	DIRT, 
 	FLOOR, 
 	CLOUD, 
-	DIRT_ARCH_DOWN;
+	DIRT_ARCH_DOWN, DYNAMIC_DIRT;
 	
 	SpriteType() {
 		
