@@ -57,7 +57,7 @@ public class Player extends Entity implements Moveable, Keyable {
 	}
 
 	private void initPlayer() {
-		loadImage(ExternalFile.loadTexture("entity/player/player.png"));
+		loadImage(ExternalFile.loadTexture("entity/player/bobbing.gif"));
 		setImageDimensions(27 + s, 30 + s);
 		xbounds = new Polygon(
 				new int[] { (int) (bounds.getBounds().getX() - 1),
@@ -76,9 +76,9 @@ public class Player extends Entity implements Moveable, Keyable {
 	public void move() {
 		
 		if(velocity.x != 0){
-			loadImage(ExternalFile.loadTexture("entity/ogre/walk.gif"));
+			loadImage(ExternalFile.loadTexture("entity/knight/dark/walk.gif"));
 		} else {
-			loadImage(ExternalFile.loadTexture("entity/ogre/ogre.png"));
+			loadImage(ExternalFile.loadTexture("entity/knight/dark/bobbing.gif"));
 		}
 		if (y + height + 29 >= 570 & !jumping) {
 			kill(DamageReason.VOID);
