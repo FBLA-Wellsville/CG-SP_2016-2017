@@ -75,11 +75,11 @@ public class Player extends Entity implements Moveable, Keyable {
 	@Override
 	public void move() {
 		
-		if(velocity.x != 0){
-			loadImage(ExternalFile.loadTexture("entity/knight/dark/walk.gif"));
-		} else {
-			loadImage(ExternalFile.loadTexture("entity/knight/dark/bobbing.gif"));
-		}
+//		if(velocity.x != 0){
+//			loadImage(ExternalFile.loadTexture("entity/knight/dark/walk.gif"));
+//		} else {
+//			loadImage(ExternalFile.loadTexture("entity/knight/dark/bobbing.gif"));
+//		}
 		if (y + height + 29 >= 570 & !jumping) {
 			kill(DamageReason.VOID);
 		} else {
