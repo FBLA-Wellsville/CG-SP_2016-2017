@@ -8,6 +8,7 @@ public class Floor extends Collidable {
 	public static final int STONE = 1;
 	public static final int STONE_DIRT = 2;
 	public static final int GRASS = 3;
+	public static final int DIRT_BACKGROUND = 4;
 	
 	private int type;
 	

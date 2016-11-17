@@ -86,7 +86,12 @@ public class Level {
 				}
 			
 			case FLOOR:
+				
 				try{
+					
+					if(LevelFactory.decode(c[i+width]).getSpriteType().equals(SpriteType.FLOOR)){
+						sprites.add(new Floor(x*30,y*30,Floor.DIRT_BACKGROUND));
+					}
 					if(LevelFactory.decode(c[i+width]).getSpriteType().equals(SpriteType.STONE)){
 						if(LevelFactory.decode(c[i-1]).getSpriteType().equals(SpriteType.STONE) || LevelFactory.decode(c[i+1]).getSpriteType().equals(SpriteType.STONE)){
 							sprites.add(new Floor(x*30,y*30,Floor.STONE));
@@ -111,10 +116,15 @@ public class Level {
 				sprites.add(new Ladder(x*30,y*30));
 				break;
 			case STONE:
-				if(LevelFactory.decode(c[i-width]).getSpriteType().equals(SpriteType.DIRT))
-					sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/stone-dirt-down.png"), 30, 30));
-				else sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/stone.png"), 30, 30));
-				break;
+				try{
+					if(LevelFactory.decode(c[i-width]).getSpriteType().equals(SpriteType.DIRT))
+						sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/stone-dirt-down.png"), 30, 30));
+					else sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/stone.png"), 30, 30));
+					break;
+				} catch(ArrayIndexOutOfBoundsException ex){
+					sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/stone.png"), 30, 30));
+				}
+				
 			case GRASS:
 				sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/grass.png"), 30, 30));
 			default: break;

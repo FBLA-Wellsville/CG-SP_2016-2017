@@ -240,6 +240,10 @@ public class Screen extends JPanel implements ActionListener {
 			
 			objects_remove.clear();
 			
+			//Draw Info
+			g.setFont(Main.getFont().deriveFont(15f));
+			Utils.drawOutlineString(g, "Level: " + Utils.getLevel(), getWidth()-(g.getFontMetrics().stringWidth("Level: " + Utils.getLevel())), 20, Color.decode("#99db45"), Color.WHITE, 1);
+			
 			//Draw Leaderboard
 			
 			g.drawImage(Images.makeImageTranslucent(Images.toBufferedImage(Images.createColorImage("#000000")), 0.5), getWidth()-200, getHeight()/3, 200, 110, this);
@@ -251,6 +255,8 @@ public class Screen extends JPanel implements ActionListener {
 				Utils.drawOutlineString(g, highscores[l], (getWidth()-100)-(g.getFontMetrics().stringWidth(highscores[l])/2), (getHeight()/3+(Main.getFont().getSize()*12))+(((Main.getFont().getSize()*12)*(l+1))+(l*4)), Color.WHITE, Color.WHITE, 0);
 				
 			}
+			
+			
 			
 		}
 		
