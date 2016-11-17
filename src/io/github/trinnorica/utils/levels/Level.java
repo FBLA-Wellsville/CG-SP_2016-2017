@@ -107,10 +107,15 @@ public class Level {
 				
 				break;
 			case GATE:
-				if(LevelFactory.decode(c[i-width]).getSpriteType().equals(SpriteType.GATE)){
-					sprites.add(new Flag(x*30,y*30,Flag.POLE));
+				try{
+					if(LevelFactory.decode(c[i-width]).getSpriteType().equals(SpriteType.GATE)){
+						sprites.add(new Flag(x*30,y*30,Flag.POLE));
+					}
+					else sprites.add(new Flag(x*30,y*30,Flag.FLAG));
+				} catch(ArrayIndexOutOfBoundsException ex){
+					sprites.add(new Flag(x*30,y*30,Flag.FLAG));
 				}
-				else sprites.add(new Flag(x*30,y*30,Flag.FLAG));
+				
 				break;
 			case LADDER:
 				sprites.add(new Ladder(x*30,y*30));
