@@ -92,6 +92,26 @@ public class Level {
 					if(LevelFactory.decode(c[i+width]).getSpriteType().equals(SpriteType.FLOOR)){
 						sprites.add(new Floor(x*30,y*30,Floor.DIRT_BACKGROUND));
 					}
+					
+					if(LevelFactory.decode(c[i+width+1]).getSpriteType().equals(SpriteType.FLOOR) && LevelFactory.decode(c[i+width-1]).getSpriteType().equals(SpriteType.FLOOR)){
+						sprites.add(new Floor(x*30,y*30,Floor.DIRT_WALL_BOTH));
+						break;
+						
+					}
+					
+					
+					if(LevelFactory.decode(c[i+width+1]).getSpriteType().equals(SpriteType.FLOOR)){
+						sprites.add(new Floor(x*30,y*30,Floor.DIRT_WALL_LEFT));
+						break;
+						
+					}
+					
+					if(LevelFactory.decode(c[i+width-1]).getSpriteType().equals(SpriteType.FLOOR)){
+						sprites.add(new Floor(x*30,y*30,Floor.DIRT_WALL_RIGHT));
+						break;
+						
+					}
+					
 					if(LevelFactory.decode(c[i+width]).getSpriteType().equals(SpriteType.STONE)){
 						if(LevelFactory.decode(c[i-1]).getSpriteType().equals(SpriteType.STONE) || LevelFactory.decode(c[i+1]).getSpriteType().equals(SpriteType.STONE)){
 							sprites.add(new Floor(x*30,y*30,Floor.STONE));

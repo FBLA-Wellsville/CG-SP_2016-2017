@@ -57,7 +57,7 @@ public class Player extends Entity implements Moveable, Keyable {
 	}
 
 	private void initPlayer() {
-		loadImage(ExternalFile.loadTexture("entity/player/bobbing.gif"));
+		loadImage(ExternalFile.loadTexture("entity/player/player.png"));
 		setImageDimensions(27 + s, 30 + s);
 		xbounds = new Polygon(
 				new int[] { (int) (bounds.getBounds().getX() - 1),
