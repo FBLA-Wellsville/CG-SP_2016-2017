@@ -24,7 +24,6 @@ public class Level {
 	public Level(char[] c, int width, int height) {
 		
 		for(int i=0;i!=c.length;i++){
-			Utils.debug("X= " + x + "\nY= " + y);
 			if(x>=width){
 				x=0;
 				y=y+1;

@@ -138,7 +138,7 @@ public class Screen extends JPanel implements ActionListener {
 		
 		//Main Menu
 		if (board == Board.MAIN) {
-			menuvar = Utils.drawScrollingImage(g, Backgrounds.MAIN.getImage(), menuvar, 0, this.getWidth(),
+			menuvar = Utils.drawScrollingImage(g, Backgrounds.MAIN.getImage(), menuvar, (int)0, this.getWidth(),
 					this.getHeight(), 1);
 			Utils.drawOutlineString(g, "Press P to play!", getWidth()/2 - (g.getFontMetrics().stringWidth("Press P to play!")/2), getHeight()/4 + getHeight()/2, Color.decode("#99db45"), Color.WHITE, 1);
 			
@@ -157,7 +157,9 @@ public class Screen extends JPanel implements ActionListener {
 		
 		//Credits! :D
 		if (board == Board.CREDITS) {
-			g.drawImage(Backgrounds.CREDITS.getImage(), 0, 0, getWidth(), getHeight(), this);
+			Utils.drawScrollingImage(g, Backgrounds.MAIN.getImage(), menuvar, (int)0, this.getWidth(),
+					this.getHeight(), 1);
+			
 			Image dark = Images.makeImageTranslucent(Images.toBufferedImage(Images.createColorImage("#000000")), 0.5);
 			g.drawImage(dark, 0, 0, getWidth(), getHeight(), this);
 			dark = null;
@@ -168,17 +170,28 @@ public class Screen extends JPanel implements ActionListener {
 			Utils.drawCredit(g, "Blake Ohlmeier", creditvar, 3, Color.BLACK, Color.WHITE, 1);
 
 			g.setFont(new Font("Helvetica", Font.BOLD, getWidth() / 50));
-			Utils.drawCredit(g, "Artists and Concept designers", creditvar, 5, Color.BLACK, Color.WHITE, 1);
+			Utils.drawCredit(g, "Artists and Concept designers:", creditvar, 5, Color.BLACK, Color.WHITE, 1);
 			g.setFont(new Font("Helvetica", Font.PLAIN, getWidth() / 50));
 			Utils.drawCredit(g, "Herb Yeliab (Head Artist)", creditvar, 6, Color.BLACK, Color.WHITE, 1);
+			Utils.drawCredit(g, "Blake Ohlmeier", creditvar, 7, Color.BLACK, Color.WHITE, 1);
+			
+			g.setFont(new Font("Helvetica", Font.BOLD, getWidth() / 50));
+			Utils.drawCredit(g, "Beta Testers:", creditvar, 9, Color.BLACK, Color.WHITE, 1);
+			g.setFont(new Font("Helvetica", Font.PLAIN, getWidth() / 50));
+			Utils.drawCredit(g, "Sean Becker", creditvar, 10, Color.BLACK, Color.WHITE, 1);
+			Utils.drawCredit(g, "Joey Phillips", creditvar, 11, Color.BLACK, Color.WHITE, 1);
+			Utils.drawCredit(g, "Carsyn Stephenson", creditvar, 12, Color.BLACK, Color.WHITE, 1);
+			Utils.drawCredit(g, "Chris Green", creditvar, 13, Color.BLACK, Color.WHITE, 1);
+			
+			
 
 			Image logo = ExternalFile.loadTexture("logos/logo-title.png");
 
-			Utils.drawCreditImage(g, logo, creditvar, 8);
+			Utils.drawCreditImage(g, logo, creditvar, 16);
 
 			creditvar -= 1;
 
-			if (Utils.creditsOver(g, creditvar, 8)) {
+			if (Utils.creditsOver(g, creditvar, 20)) {
 				Main.setBoard(Board.MAIN);
 			}
 

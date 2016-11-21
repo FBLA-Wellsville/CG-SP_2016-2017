@@ -86,17 +86,8 @@ public class Utils {
 	}
 
 
-	//Level Key:
-	/*
-	 * X = Empty
-	 * A = Cloud (Must have at least 2)
-	 * B = Dirt background
-	 * C = Top Dirt Arch
-	 * D = 
-	 * 
-	 */
+	
 	public static char[] getLevelBlueprint(int level) {
-		System.out.println("2");
 		switch(level){
 		case 1:
 			return new char[]{
@@ -248,7 +239,7 @@ public class Utils {
 					'X','X','E','E','X','X','X','X','X','X','E','X','X','X','X','X','E','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X',
 					'X','X','D','D','X','X','X','X','X','X','D','X','X','X','X','X','D','X','X','X','X','X','X','E','X','X','X','X','X','X','X','X',
 					'X','X','E','D','X','X','X','X','X','X','D','X','X','X','X','X','D','X','X','X','X','X','X','D','X','X','X','X','X','X','X','X',
-					'X','X','D','E','X','X','X','E','X','X','D','X','X','X','X','X','D','X','X','X','X','X','X','D','X','X','X','X','X','X','X','X',
+					'X','X','B','E','X','X','X','E','X','X','D','X','X','X','X','X','D','X','X','X','X','X','X','D','X','X','X','X','X','X','X','X',
 					'X','X','D','D','X','X','X','D','X','X','D','X','X','X','X','X','D','X','X','X','X','X','X','D','X','X','X','X','X','X','X','X',
 					'X','X','D','D','X','X','X','D','X','X','D','E','X','X','X','X','D','X','X','E','X','X','X','D','X','X','X','X','X','X','X','X',
 					'X','X','D','D','X','X','X','D','X','X','D','D','X','X','X','X','D','X','X','D','X','X','X','D','X','X','X','X','X','X','X','X',

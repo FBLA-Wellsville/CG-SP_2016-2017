@@ -71,6 +71,15 @@ public class Player extends Entity implements Moveable, Keyable {
 	}
 
 	
+	public void kill(DamageReason reason){
+		x=0;
+		y=0;
+		lives = lives-1;
+		if(lives == 0){
+			Main.setBoard(Board.CREDITS);
+		}
+		setVelocity(0,0);
+	}
 
 	@Override
 	public void move() {
