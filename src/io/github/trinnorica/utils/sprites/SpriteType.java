@@ -31,7 +31,7 @@ public enum SpriteType {
 	DIRT, 
 	FLOOR, 
 	CLOUD, 
-	DIRT_ARCH_DOWN, DYNAMIC_DIRT;
+	DIRT_ARCH_DOWN, DYNAMIC_DIRT, TEST_ENTITY;
 	
 	SpriteType() {
 		
@@ -40,7 +40,7 @@ public enum SpriteType {
 	public SpriteSubType getSubType(){
 		if(this == GRASS) return SpriteSubType.PARTIAL_COLLIDEABLE;
 		if(this == FALLING_FLOOR) return SpriteSubType.PARTIAL_COLLIDEABLE;
-		if(this == COMPETITOR) return SpriteSubType.ENEMY;
+		if(this == TEST_ENTITY) return SpriteSubType.ENEMY;
 		if(this == BOSS) return SpriteSubType.ENEMY;
 		if(this == SPIKE) return SpriteSubType.BAD_THINGS;
 		if(this == GATE) return SpriteSubType.NON_COLLIDEABLE;

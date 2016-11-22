@@ -11,6 +11,10 @@ public class LevelBuilder {
 		for(Sprite s : l.sprites){
 			Main.addSprite(s);
 		}
+		for(Sprite s : l.entities){
+			Main.addSprite(s);
+		}
+		
 		return l;
 	}
 

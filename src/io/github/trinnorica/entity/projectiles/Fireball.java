@@ -5,6 +5,7 @@ import java.awt.Point;
 import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.entity.Player;
+import io.github.trinnorica.objects.Collidable;
 import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
@@ -41,12 +42,17 @@ public class Fireball extends Projectile {
 			if(shooter instanceof Player && s instanceof Player) continue;
 				
 			
-			if(s instanceof Entity)
+			if(s instanceof Entity){
 				((Entity)s).damage(power,DamageReason.PROJECTILE, this, new Velocity(vector.x/3,-3));
+				Main.removeSprite(this);
+				return;
+			}
 					
-				
+			if(s instanceof Collidable){
+				Main.removeSprite(this);
+			}
 			
-			Main.removeSprite(this);
+			
 			
 		}
 		

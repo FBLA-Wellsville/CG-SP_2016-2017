@@ -2,14 +2,14 @@ package io.github.trinnorica.utils.levels;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
+import io.github.trinnorica.entity.Enemy;
+import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.entity.Player;
 import io.github.trinnorica.objects.Cloud;
 import io.github.trinnorica.objects.Flag;
 import io.github.trinnorica.objects.Floor;
 import io.github.trinnorica.objects.Ladder;
-import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.sprites.Empty;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.SpriteType;
@@ -18,6 +18,7 @@ import res.ExternalFile;
 public class Level {
 	
 	List<Sprite> sprites = new ArrayList<>();
+	List<Entity> entities = new ArrayList<>();
 
 	int y = 0;
 	int x = 0;
@@ -38,6 +39,9 @@ public class Level {
 				else sprites.add(new Cloud(x*30,y*30,Cloud.BEGIN));
 				
 		
+				break;
+			case TEST_ENTITY:
+				entities.add(new Enemy(x*30, y*30));
 				break;
 			case DIRT:
 				sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/dirt.png"),30,30));

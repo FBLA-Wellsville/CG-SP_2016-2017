@@ -309,7 +309,7 @@ public class Player extends Entity implements Moveable, Keyable {
 		}
 
 		if(key == KeyEvent.VK_L){
-			Main.addSprite(new TestEntity(x,y));
+			Main.addSprite(new Enemy(x,y));
 		}
 		if (key == KeyEvent.VK_1) {
 			loadImage(ExternalFile.loadTexture("entity/player/player.png"));
