@@ -294,7 +294,8 @@ public class Screen extends JPanel implements ActionListener {
 			g.drawImage(Backgrounds.MAIN.getImage(), 0, 0, getWidth(), getHeight(), this);
 			
 			Utils.drawOutlineString(g, "YOU WON!", getWidth()/2-(g.getFontMetrics().stringWidth("YOU WON!")/2), getHeight()/3, Color.decode("#99db45"), Color.WHITE, 1);
-			Utils.drawOutlineString(g, "Press P to play again. Press C for credits. Press ESC to go back to the main menu.", getWidth()/2 - (g.getFontMetrics().stringWidth("Press P to play again. Press C for credits. Press ESC to go back to the main menu.")/2), getHeight()/2, Color.decode("#99db45"), Color.WHITE, 1);
+			g.setFont(Main.getFont().deriveFont(15f));
+			Utils.drawOutlineString(g, "Press P to play again.\nPress C for credits.\nPress ESC to go back to the main menu.", getWidth()/2, getHeight()/2, Color.decode("#99db45"), Color.BLACK, 1);
 		}
 
 		for (Clickable c : Main.getClickables()) {

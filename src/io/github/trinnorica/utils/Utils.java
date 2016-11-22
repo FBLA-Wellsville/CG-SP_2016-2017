@@ -22,16 +22,33 @@ public class Utils {
 
 
 	public static void drawOutlineString(Graphics g, String string, int x, int y, Color text, Color outline, int thickness){
-		g.setColor(outline);
-		for(int i=1;i!=thickness+1;i++){
-			g.drawString(string, x-i, y-i);
-			g.drawString(string, x-i, y+i);
-			g.drawString(string, x+i, y-i);
-			g.drawString(string, x+i, y+i);
+		if(string.contains("\n")){
+			String[] a = string.split("\n");
+			for(int i=0;i!=a.length;i++){
+				g.setColor(outline);
+				for(int ii=1;ii!=thickness+1;ii++){
+					g.drawString(a[i], x-(g.getFontMetrics().stringWidth(a[i])/2)-ii, y+(i*g.getFontMetrics().getHeight())-ii);
+					g.drawString(a[i], x-(g.getFontMetrics().stringWidth(a[i])/2)-ii, y+(i*g.getFontMetrics().getHeight())+ii);
+					g.drawString(a[i], x-(g.getFontMetrics().stringWidth(a[i])/2)+ii, y+(i*g.getFontMetrics().getHeight())-ii);
+					g.drawString(a[i], x-(g.getFontMetrics().stringWidth(a[i])/2)+ii, y+(i*g.getFontMetrics().getHeight())+ii);
+				}
+				g.setColor(text);
+				g.drawString(a[i], x-(g.getFontMetrics().stringWidth(a[i])/2), y+(i*g.getFontMetrics().getHeight()));
+			}
+		} else {
+			g.setColor(outline);
+			for(int i=1;i!=thickness+1;i++){
+				g.drawString(string, x-i, y-i);
+				g.drawString(string, x-i, y+i);
+				g.drawString(string, x+i, y-i);
+				g.drawString(string, x+i, y+i);
+			}
+			
+			g.setColor(text);
+			
+			g.drawString(string, x, y);
 		}
 		
-		g.setColor(text);
-		g.drawString(string, x, y);
 	}
 
 
