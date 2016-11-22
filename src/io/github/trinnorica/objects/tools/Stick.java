@@ -14,6 +14,7 @@ public class Stick extends Tool{
 	public void init(){
 		loadImage(ExternalFile.loadTexture("objects/tools/stick.png"));
 		setImageDimensions(16, 16);
+		registerXBounds();
 	}
 	
 	public int getWidth(){

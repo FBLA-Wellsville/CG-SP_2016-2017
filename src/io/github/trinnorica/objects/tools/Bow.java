@@ -18,6 +18,7 @@ public class Bow extends Tool {
 	private void init(){
 		loadImage("objects/tools/bow-1.png");
 		setImageDimensions(15, 15);
+		registerXBounds();
 	}
 	
 	public int getWidth(){

@@ -1,10 +1,17 @@
 package io.github.trinnorica.entity;
 
+import java.awt.Graphics;
+import java.awt.Polygon;
+import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
+import java.util.ConcurrentModificationException;
+
 import io.github.trinnorica.Main;
 import io.github.trinnorica.objects.Collidable;
 import io.github.trinnorica.objects.Flag;
 import io.github.trinnorica.objects.Ladder;
 import io.github.trinnorica.objects.tools.Bow;
+import io.github.trinnorica.objects.tools.DarkSword;
 import io.github.trinnorica.objects.tools.FireDagger;
 import io.github.trinnorica.objects.tools.FireStaff;
 import io.github.trinnorica.objects.tools.IceDagger;
@@ -19,13 +26,6 @@ import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Projectile;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.Tool;
-
-import java.awt.Graphics;
-import java.awt.Polygon;
-import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
-import java.util.ConcurrentModificationException;
-
 import res.ExternalFile;
 
 public class Player extends Entity implements Moveable, Keyable {
@@ -49,6 +49,7 @@ public class Player extends Entity implements Moveable, Keyable {
 	private final int MAXLIVES = 5;
 	private int lives = MAXLIVES;
 	private boolean sprint = false;
+	private boolean tooling = false;
 
 	public Player(int x, int y) {
 		super(x, y);
@@ -76,7 +77,7 @@ public class Player extends Entity implements Moveable, Keyable {
 		y=0;
 		lives = lives-1;
 		if(lives == 0){
-			Main.setBoard(Board.CREDITS);
+			Main.setBoard(Board.GAME_OVER);
 		}
 		setVelocity(0,0);
 	}
@@ -105,6 +106,27 @@ public class Player extends Entity implements Moveable, Keyable {
 				}
 				if(s instanceof Ladder){
 					climbing = true;
+				}
+				if(s instanceof Tool){
+					if(!tooling){
+						tooling = true;
+						try{
+							
+							getTool().x = x;
+							getTool().y = y-30;
+							tool.velocity.y = -2;
+							if(direction.equals(Direction.LEFT))
+								tool.velocity.x = 2;
+							else tool.velocity.x = -2;
+							Main.addSprite(getTool());
+						} catch(NullPointerException ex){
+							//This just means that the player doesn't have a tool in their hand.
+						}
+						setTool((Tool) s);
+						
+						tooling = false;
+					}
+					
 				}
 				if(s instanceof Collidable){
 					switch (getIntercectingDirection(s.getPolygon().getBounds())) {
@@ -311,6 +333,9 @@ public class Player extends Entity implements Moveable, Keyable {
 		if(key == KeyEvent.VK_L){
 			Main.addSprite(new Enemy(x,y));
 		}
+		if(key == KeyEvent.VK_K){
+			Main.addSprite(new DarkSword(x+100,y));
+		}
 		if (key == KeyEvent.VK_1) {
 			loadImage(ExternalFile.loadTexture("entity/player/player.png"));
 			setImageDimensions(27 + s, 30 + s);
@@ -347,6 +372,7 @@ public class Player extends Entity implements Moveable, Keyable {
 
 	public void setTool(Tool tool) {
 		this.tool = tool;
+		Main.removeSprite(tool);
 
 	}
 

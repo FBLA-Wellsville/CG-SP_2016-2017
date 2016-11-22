@@ -223,6 +223,8 @@ public class Screen extends JPanel implements ActionListener {
 					if(sprite.x < -100 || sprite.x > 2000){
 						objects_remove.add(sprite);
 					}
+					if(sprite.y > 600)
+						objects_remove.add(sprite);
 					
 					if(sprite instanceof Particle){
 						Particle p = (Particle) sprite;
@@ -273,14 +275,26 @@ public class Screen extends JPanel implements ActionListener {
 			
 		}
 		
+		//This is what shows when the player loses all of their lives.
+		if(board == Board.GAME_OVER){
+			g.drawImage(Backgrounds.MAIN.getImage(), 0, 0, getWidth(), getHeight(), this);
+			Utils.drawOutlineString(g, "GAME OVER", getWidth()/2-(-g.getFontMetrics().stringWidth("GAME OVER")/2), getHeight()/3, Color.WHITE, Color.RED, 1);
+		}
+		
 		
 		
 		if (board == Board.LEVELUP) {
 			g.drawImage(Backgrounds.MAIN.getImage(), 0, 0, getWidth(), getHeight(), this);
 			
-			Utils.drawOutlineString(g, "You won level " + Utils.getLevel() + "!", getWidth()/2, getHeight()/3, Color.decode("#99db45"), Color.WHITE, 1);
+			Utils.drawOutlineString(g, "You won level " + Utils.getLevel() + "!", getWidth()/2-(g.getFontMetrics().stringWidth("You won level " + Utils.getLevel() + "!")/2), getHeight()/3, Color.decode("#99db45"), Color.WHITE, 1);
 			Utils.drawOutlineString(g, "Press P to play!", getWidth()/2, getHeight()/2, Color.decode("#99db45"), Color.WHITE, 1);
 			
+		}
+		if(board == Board.WIN){
+			g.drawImage(Backgrounds.MAIN.getImage(), 0, 0, getWidth(), getHeight(), this);
+			
+			Utils.drawOutlineString(g, "YOU WON!", getWidth()/2-(g.getFontMetrics().stringWidth("YOU WON!")/2), getHeight()/3, Color.decode("#99db45"), Color.WHITE, 1);
+			Utils.drawOutlineString(g, "Press P to play again. Press C for credits. Press ESC to go back to the main menu.", getWidth()/2 - (g.getFontMetrics().stringWidth("Press P to play again. Press C for credits. Press ESC to go back to the main menu.")/2), getHeight()/2, Color.decode("#99db45"), Color.WHITE, 1);
 		}
 
 		for (Clickable c : Main.getClickables()) {

@@ -3,11 +3,12 @@ package io.github.trinnorica.entity;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.Random;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.objects.Collidable;
 import io.github.trinnorica.objects.tools.DarkSword;
-import io.github.trinnorica.objects.tools.Sword;
+import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Direction;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
@@ -84,6 +85,12 @@ public class Enemy extends Entity implements Moveable {
 //		Utils.debug("X: " + velocity.x + "\nY: " + velocity.y);
 		if(onground) setVelocity(0, 0);
 		
+	}
+	
+	@Override
+	public void kill(DamageReason reason){
+		if(new Random().nextInt(10) <= 2)Main.addSprite(new DarkSword(x,y));
+		Main.removeSprite(this);
 	}
 
 	@Override

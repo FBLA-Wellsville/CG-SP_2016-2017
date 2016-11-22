@@ -68,12 +68,16 @@ public class Main {
 		}
 		
 		if(board == Board.GAME){
-			
-			Main.clearObjects();
+			try{
+				Main.clearObjects();
 
-			LevelBuilder l = new LevelBuilder();
-			int level = Utils.getLevel();
-			l.buildLevel(Utils.getLevelBlueprint(level),Utils.getLevelWidth(level),Utils.getLevelHeight(level));
+				LevelBuilder l = new LevelBuilder();
+				int level = Utils.getLevel();
+				l.buildLevel(Utils.getLevelBlueprint(level),Utils.getLevelWidth(level),Utils.getLevelHeight(level));
+			} catch(NullPointerException ex){
+				setBoard(Board.WIN);
+			}
+			
 			
 			
 		}
@@ -102,7 +106,11 @@ public class Main {
 		return player;
 	
 	}
-	public static void removeSprite(Sprite s) {screen.objects_remove.add(s);}
+	public static void removeSprite(Sprite s) {
+		if(screen.objects.contains(s))
+				screen.objects_remove.add(s);
+		
+	}
 	
 	
 	public static int getBoard() {

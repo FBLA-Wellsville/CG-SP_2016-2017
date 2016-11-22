@@ -16,6 +16,7 @@ public class IceStaff extends Tool {
 	private void init(){
 		loadImage("objects/tools/elementals/staff-fire.png");
 		setImageDimensions(15, 15);
+		registerXBounds();
 	}
 	
 	public int getWidth(){

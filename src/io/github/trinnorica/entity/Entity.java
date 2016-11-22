@@ -30,7 +30,7 @@ public class Entity extends Sprite implements Moveable {
 	protected int score;
 //	protected Tool tool;
 	public boolean walking;
-	Velocity velocity = new Velocity(0,0);
+	public Velocity velocity = new Velocity(0,0);
 //	protected Direction direction = Direction.RIGHT;
 //	protected Direction facing = Direction.RIGHT;
 //	protected Interaction interact;

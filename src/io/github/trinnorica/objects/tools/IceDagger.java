@@ -18,6 +18,7 @@ public class IceDagger extends Tool {
 	private void initSword(){
 		loadImage("objects/tools/elementals/dagger-ice.png");
 		setImageDimensions(15, 15);
+		registerXBounds();
 	}
 	
 	public int getWidth(){

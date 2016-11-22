@@ -19,6 +19,7 @@ public class FireDagger extends Tool {
 	private void initSword(){
 		loadImage("objects/tools/elementals/dagger-fire.png");
 		setImageDimensions(15, 15);
+		registerXBounds();
 	}
 	
 	public int getWidth(){

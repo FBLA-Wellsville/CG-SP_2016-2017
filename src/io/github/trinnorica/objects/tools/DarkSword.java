@@ -13,6 +13,7 @@ public class DarkSword extends Tool {
 		loadImage("objects/tools/darksword.png");
 		setImageDimensions(15, 15);
 		power = 5;
+		registerXBounds();
 	}
 	
 	public int getWidth(){
