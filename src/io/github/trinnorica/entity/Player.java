@@ -40,13 +40,13 @@ public class Player extends Entity implements Moveable, Keyable {
 	private Polygon xbounds;
 	private Rectangle sbounds;
 	private Tool tool;
-	private int s = 1;
+	int s = 1;
 	private boolean utool = false;
 	private int utoolt = 0;
 	private int cooldown = 0;
 	public boolean left = false;
 	public boolean right = false;
-	private final int MAXLIVES = 5;
+	private int MAXLIVES = 5;
 	private int lives = MAXLIVES;
 	private boolean sprint = false;
 	private boolean tooling = false;
@@ -54,6 +54,8 @@ public class Player extends Entity implements Moveable, Keyable {
 	public Player(int x, int y) {
 		super(x, y);
 		initPlayer();
+		maxhealth = 20;
+		health = maxhealth;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -73,13 +75,36 @@ public class Player extends Entity implements Moveable, Keyable {
 
 	
 	public void kill(DamageReason reason){
+		if(damaged){
+			setVelocity(0,0);
+		}
+		damaged = false;
 		x=0;
 		y=0;
 		lives = lives-1;
+		health = 20;
 		if(lives == 0){
+			Main.deathmessage = reason.getDeathLine();
 			Main.setBoard(Board.GAME_OVER);
 		}
 		setVelocity(0,0);
+	}
+	
+	public void jump(){
+		jumping = true;
+		onground = false;
+		setVelocity("", -5 - (s / 10));
+	}
+	public void toss(Direction direction){
+		jumping = true;
+		onground = false;
+		if(direction.equals(Direction.LEFT)){
+			setVelocity(-2, -5 - (s / 10));
+		}
+		if(direction.equals(Direction.RIGHT)){
+			setVelocity(2, -5 - (s / 10));
+		}
+		
 	}
 
 	@Override
@@ -90,67 +115,105 @@ public class Player extends Entity implements Moveable, Keyable {
 //		} else {
 //			loadImage(ExternalFile.loadTexture("entity/knight/dark/bobbing.gif"));
 //		}
-		if (y + height + 29 >= 570 & !jumping) {
-			kill(DamageReason.VOID);
-		} else {
-			onground = false;
-		}
-		getPolygon();
-		climbing = false;
-		try{
-			for (Sprite s : Main.getScreen().objects) {
-				if(!bounds.intersects(s.getPolygon().getBounds())) continue;
-				if(s instanceof Flag){
-					levelup();
-					continue;
-				}
-				if(s instanceof Ladder){
-					climbing = true;
-				}
-				if(s instanceof Tool){
-					if(!tooling){
-						tooling = true;
-						try{
-							
-							getTool().x = x;
-							getTool().y = y-30;
-							tool.velocity.y = -2;
-							if(direction.equals(Direction.LEFT))
-								tool.velocity.x = 2;
-							else tool.velocity.x = -2;
-							Main.addSprite(getTool());
-						} catch(NullPointerException ex){
-							//This just means that the player doesn't have a tool in their hand.
-						}
-						setTool((Tool) s);
-						
-						tooling = false;
-					}
-					
-				}
-				if(s instanceof Collidable){
-					switch (getIntercectingDirection(s.getPolygon().getBounds())) {
-					case DOWN:
-						if (!jumping && !climbing) {
-							y = s.getY() - getHeight() + 1;
-							onground = true;
-						}
-						break;
-					case LEFT:
-						if(left)velocity.x = 0;
-						break;
-					case RIGHT:
-						if(right)velocity.x = 0;
-						break;
-						default:
-							break;		
-					}	
-				}
+		
+		//If flying through air because of enemy, loop through sprites until lands
+//		if(damaged){
+//			try{
+//				for (Sprite s : Main.getScreen().objects) {
+//					if(!bounds.intersects(s.getPolygon().getBounds())) continue;
+//					if(s instanceof Flag){
+//						levelup();
+//						setVelocity(0,0);
+//						continue;
+//					}
+//					if(s instanceof Ladder){
+//						damaged = false;
+//						setVelocity(0,0);
+//					}
+//					
+//					if(s instanceof Collidable){
+//						damaged = false;
+//						setVelocity(0,0);
+//					}
+//				}
+//			} catch(ConcurrentModificationException ex){
+//				Utils.debug("ConcurrentModificationException 1 (Player)");
+//			}
+//		} else {
+			if (y + height + 29 >= 570 & !jumping) {
+				kill(DamageReason.VOID);
+			} else {
+				onground = false;
 			}
-		} catch(ConcurrentModificationException ex){
-			Utils.debug("ConcurrentModificationException 1 (Player)");
-		}
+			getPolygon();
+			climbing = false;
+			try{
+				for (Sprite s : Main.getScreen().objects) {
+					if(!bounds.intersects(s.getPolygon().getBounds())) continue;
+					if(s instanceof Flag){
+						levelup();
+						if(damaged){
+							setVelocity(0,0);
+						}
+						damaged = false;
+						continue;
+					}
+					if(s instanceof Ladder){
+						climbing = true;
+						if(damaged){
+							setVelocity(0,0);
+						}
+						damaged = false;
+					}
+					if(s instanceof Tool){
+						if(!tooling){
+							tooling = true;
+							try{
+								
+								getTool().x = x;
+								getTool().y = y-30;
+								tool.velocity.y = -2;
+								if(direction.equals(Direction.LEFT))
+									tool.velocity.x = 2;
+								else tool.velocity.x = -2;
+								Main.addSprite(getTool());
+							} catch(NullPointerException ex){
+								//This just means that the player doesn't have a tool in their hand.
+							}
+							setTool((Tool) s);
+							
+							tooling = false;
+						}
+						
+					}
+					if(s instanceof Collidable){
+						if(damaged && !jumping){
+							setVelocity(0,0);
+						}
+						damaged = false;
+						switch (getIntercectingDirection(s.getPolygon().getBounds())) {
+						case DOWN:
+							if (!jumping && !climbing) {
+								y = s.getY() - getHeight() + 1;
+								onground = true;
+							}
+							break;
+						case LEFT:
+							if(left)velocity.x = 0;
+							break;
+						case RIGHT:
+							if(right)velocity.x = 0;
+							break;
+							default:
+								break;		
+						}	
+					}
+				}
+			} catch(ConcurrentModificationException ex){
+				Utils.debug("ConcurrentModificationException 1 (Player)");
+			}
 
+		
 		// velocity.x = velocity.x*0.2;
 		if (!flying && !climbing)
 			velocity.y = velocity.y + Main.gravity;
@@ -189,6 +252,7 @@ public class Player extends Entity implements Moveable, Keyable {
 
 	@Override
 	public void draw(Graphics g) {
+		drawHealthBar(g, x-(100/2)+(width/2), y-20, 100, 5);
 		if(cooldown > 0) cooldown = cooldown - 1;
 		if (direction == Direction.RIGHT) {
 			g.drawImage(getImage(), x, y, width, height, null);
@@ -277,6 +341,18 @@ public class Player extends Entity implements Moveable, Keyable {
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		
+		if(key == KeyEvent.VK_NUMPAD0){
+			lives = lives+1;
+			if(lives > MAXLIVES){
+				MAXLIVES = lives;
+			}
+			if(lives <=5){
+				MAXLIVES = 5;
+			}
+		}
+		if(key == KeyEvent.VK_NUMPAD1){
+			kill(DamageReason.VOID);
+		}
 		if(key == KeyEvent.VK_CONTROL){
 			sprint = true;
 		}
@@ -291,15 +367,17 @@ public class Player extends Entity implements Moveable, Keyable {
 				setVelocity("", 5);
 		}
 
-		if (key == KeyEvent.VK_D) {
-			direction = Direction.RIGHT;
-			right = true;
-			setVelocity(3, "");
-		}
-		if (key == KeyEvent.VK_A) {
-			direction = Direction.LEFT;
-			left = true;
-			setVelocity(-3, "");
+		if (!damaged) {
+			if (key == KeyEvent.VK_D) {
+				direction = Direction.RIGHT;
+				right = true;
+				setVelocity(3, "");
+			}
+			if (key == KeyEvent.VK_A) {
+				direction = Direction.LEFT;
+				left = true;
+				setVelocity(-3, "");
+			} 
 		}
 		if (key == KeyEvent.VK_SHIFT) {
 			if (tool != null && !utool) {
@@ -351,13 +429,15 @@ public class Player extends Entity implements Moveable, Keyable {
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		if (key == KeyEvent.VK_D) {
-			right = false;
-			setVelocity(0, "");
-		}
-		if (key == KeyEvent.VK_A) {
-			left = false;
-			setVelocity(0, "");
+		if (!damaged) {
+			if (key == KeyEvent.VK_D) {
+				right = false;
+				setVelocity(0, "");
+			}
+			if (key == KeyEvent.VK_A) {
+				left = false;
+				setVelocity(0, "");
+			} 
 		}
 		if (key == KeyEvent.VK_W) {
 			if(flying || climbing)setVelocity("", 0);
@@ -394,5 +474,6 @@ public class Player extends Entity implements Moveable, Keyable {
 	public int getLives() {
 		return lives;
 	}
+
 
 }

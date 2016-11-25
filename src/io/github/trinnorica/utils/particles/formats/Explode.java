@@ -23,15 +23,15 @@ public class Explode implements ParticleFormat {
 
 	@Override
 	public void run(Point p, ParticleType t, Direction d) {
-		int r = new java.util.Random().nextInt(10) + 5;
+		int r = new java.util.Random().nextInt(20) + 5;
 
 		for (int i = 0; i != r; i++) {
 			boolean f = new java.util.Random().nextBoolean();
 			int e=0;
 			if (f)
-				e = - new java.util.Random().nextInt(5*power) + 5;
+				e = - new java.util.Random().nextInt(5*power) + power;
 			else
-				e = new java.util.Random().nextInt(5*power) + 5;
+				e = new java.util.Random().nextInt(5*power) + power;
 			
 
 			Main.addSprite(new Particle(new Point(p.x, p.y), t, new Velocity(e, -2),true));

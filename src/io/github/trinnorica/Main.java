@@ -28,6 +28,7 @@ public class Main {
 	private static Font pixel;
 	private static Player player;
 	private static int board;
+	public static String deathmessage = "";
 	
 	
 	public static void main(String[] args){

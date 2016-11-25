@@ -278,7 +278,8 @@ public class Screen extends JPanel implements ActionListener {
 		//This is what shows when the player loses all of their lives.
 		if(board == Board.GAME_OVER){
 			g.drawImage(Backgrounds.MAIN.getImage(), 0, 0, getWidth(), getHeight(), this);
-			Utils.drawOutlineString(g, "GAME OVER", getWidth()/2-(-g.getFontMetrics().stringWidth("GAME OVER")/2), getHeight()/3, Color.WHITE, Color.RED, 1);
+			Utils.drawOutlineString(g, "GAME OVER", getWidth()/2-(g.getFontMetrics().stringWidth("GAME OVER")/2), getHeight()/3, Color.WHITE, Color.RED, 1);
+			Utils.drawOutlineString(g, Main.deathmessage +"\nPress R to restart.", getWidth()/2, getHeight()/2, Color.decode("#99DB45"), Color.WHITE, 1);
 		}
 		
 		
@@ -441,10 +442,13 @@ public class Screen extends JPanel implements ActionListener {
 			
 
 		
-			for (Sprite sprite : objects) {
-				if (sprite instanceof Keyable)
-					((Keyable) sprite).keyPressed(e);
-			}
+			try{
+				for (Sprite sprite : objects) {
+					if (sprite instanceof Keyable)
+						((Keyable) sprite).keyPressed(e);
+			} 
+				
+			}catch(Exception ex){}
 
 		}
 	}

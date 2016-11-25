@@ -4,7 +4,8 @@ import java.util.Random;
 
 public enum DamageReason {
 	PROJECTILE("You were shot!:Ouch! Arrow to the face!"), 
-	VOID("You fell out of the world?:Oh. The world ends right there..:Careful, you just fell out of the world.");
+	VOID("You fell out of the world?:Oh. The world ends right there..:Careful, you just fell out of the world."), 
+	ENEMY("You were slain!:Try again!");
 	
 	String deathline;
 	
