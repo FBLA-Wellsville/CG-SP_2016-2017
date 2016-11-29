@@ -62,6 +62,10 @@ public class Screen extends JPanel implements ActionListener {
 	private int timeri=0;
 	private int timeril=1;
 	private boolean loading = true;
+	private boolean paused = false;
+	private Image DIRT = ExternalFile.loadTexture("objects/background/dirt.png");
+	private Image DARK = Images.makeImageTranslucent(Images.toBufferedImage(Images.createColorImage("#000000")), 0.5);
+	private boolean playing = false;
 
 	public Screen() {
 		init();
@@ -98,10 +102,27 @@ public class Screen extends JPanel implements ActionListener {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		drawMenu(g);
+		if(!paused) drawMenu(g);
+		else {
+			drawPaused(g);
+		}
 		Toolkit.getDefaultToolkit().sync();
 	}
 
+	public void drawPaused(Graphics g){
+		
+		g.setFont(Main.getFont().deriveFont(20f));
+		for(int x=0;x!=32;x++){
+			for(int y=0;y!=18;y++){
+				g.drawImage(DIRT, x*30, y*30, 30, 30, this);
+			}
+		}
+		g.drawImage(DARK, 0, 0, getWidth(), getHeight(), this);
+		
+		
+		Utils.drawOutlineString(g, "Press ESC to resume.", getWidth()/2-(g.getFontMetrics().stringWidth("Press ESC to resume.")/2), getHeight()/2, Color.decode("#99DB45"), Color.decode("#FFFFFF"), 1);
+	}
+	//this is where EVERYTHING happens.
 	public void drawMenu(Graphics g) {
 		graphics = g;
 		
@@ -160,9 +181,8 @@ public class Screen extends JPanel implements ActionListener {
 			Utils.drawScrollingImage(g, Backgrounds.MAIN.getImage(), menuvar, (int)0, this.getWidth(),
 					this.getHeight(), 1);
 			
-			Image dark = Images.makeImageTranslucent(Images.toBufferedImage(Images.createColorImage("#000000")), 0.5);
-			g.drawImage(dark, 0, 0, getWidth(), getHeight(), this);
-			dark = null;
+
+			g.drawImage(DARK, 0, 0, getWidth(), getHeight(), this);
 			g.setFont(new Font("Helvetica", Font.BOLD, getWidth() / 50));
 			Utils.drawCredit(g, "Author & Developers:", creditvar, 1, Color.BLACK, Color.WHITE, 1);
 			g.setFont(new Font("Helvetica", Font.PLAIN, getWidth() / 50));
@@ -371,11 +391,17 @@ public class Screen extends JPanel implements ActionListener {
 				}
 			}
 			
+			if(key == KeyEvent.VK_ESCAPE){
+				if(playing) paused = !paused;
+			}
 			if(key == KeyEvent.VK_P){
-				if(!(Main.getBoard() == Board.GAME)){
-					Utils.setLevel(Utils.getLevel()+1);
-				Main.setBoard(Board.GAME);
-				}
+				if(!playing){
+					if(!(Main.getBoard() == Board.GAME)){
+						Utils.setLevel(Utils.getLevel()+1);
+						Main.setBoard(Board.GAME);
+					}
+				
+				} else { playing = true; }
 				
 			}
 			
@@ -438,6 +464,7 @@ public class Screen extends JPanel implements ActionListener {
 			}
 			if (key == KeyEvent.VK_R) {
 				Main.setBoard(Board.MAIN);
+				Utils.setLevel(0);
 			}
 			
 
