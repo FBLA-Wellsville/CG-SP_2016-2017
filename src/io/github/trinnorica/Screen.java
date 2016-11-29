@@ -30,6 +30,7 @@ import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.Clickable;
 import io.github.trinnorica.utils.Images;
 import io.github.trinnorica.utils.Utils;
+import io.github.trinnorica.utils.levels.LevelBuilder;
 import io.github.trinnorica.utils.particles.Particle;
 import io.github.trinnorica.utils.sprites.Empty;
 import io.github.trinnorica.utils.sprites.Keyable;
@@ -330,16 +331,17 @@ public class Screen extends JPanel implements ActionListener {
 			Utils.drawOutlineString(g, "Clickables: " + Main.getClickables().size(), 0, 40, Color.WHITE, Color.BLACK,
 					1);
 			Utils.drawOutlineString(g, "Objects: " + objects.size(), 0, 60, Color.WHITE, Color.BLACK, 1);
+			Utils.drawOutlineString(g, "Playing: " + playing, 0, 80, Color.WHITE, Color.BLACK, 1);
 			try {
 				for(Sprite s : objects){
 					if(!(s instanceof Player)) continue;
-					Utils.drawOutlineString(g, "Flying: " + ((Player)s).flying, 0, 80, Color.WHITE,
+					Utils.drawOutlineString(g, "Flying: " + ((Player)s).flying, 0, 100, Color.WHITE,
 							Color.BLACK, 1);
-					Utils.drawOutlineString(g, "Jumping: " + ((Player) s).jumping, 0, 100, Color.WHITE,
+					Utils.drawOutlineString(g, "Jumping: " + ((Player) s).jumping, 0, 120, Color.WHITE,
 							Color.BLACK, 1);
-					Utils.drawOutlineString(g, "Onground: " + ((Player) s).onground, 0, 120, Color.WHITE,
+					Utils.drawOutlineString(g, "Onground: " + ((Player) s).onground, 0, 140, Color.WHITE,
 							Color.BLACK, 1);
-					Utils.drawOutlineString(g, "Playing: True", 0, 140, Color.WHITE, Color.BLACK, 1);
+					
 					Utils.drawOutlineString(g, "Climbing: " + ((Player) s).climbing, 0, 160, Color.WHITE, Color.BLACK, 1);
 					if(((Player)s).getTool() != null)Utils.drawOutlineString(g, "Tool: " + ((Player) s).getTool().getClass().getSimpleName(), 0, 180, Color.WHITE, Color.BLACK, 1);
 					else Utils.drawOutlineString(g, "Tool: null", 0, 180, Color.WHITE, Color.BLACK, 1);
@@ -350,7 +352,7 @@ public class Screen extends JPanel implements ActionListener {
 				}
 				
 			} catch (IndexOutOfBoundsException ex) {
-				Utils.drawOutlineString(g, "Playing: False", 0, 100, Color.WHITE, Color.BLACK, 1);
+				
 			}
 
 			for (Sprite s : objects) {
@@ -395,19 +397,19 @@ public class Screen extends JPanel implements ActionListener {
 				if(playing) paused = !paused;
 			}
 			if(key == KeyEvent.VK_P){
-				if(!playing){
 					if(!(Main.getBoard() == Board.GAME)){
 						Utils.setLevel(Utils.getLevel()+1);
 						Main.setBoard(Board.GAME);
+						playing = true;
 					}
-				
-				} else { playing = true; }
 				
 			}
 			
 			if(key == KeyEvent.VK_C){
+				if(playing) return;
 				objects.clear();
 				Main.setBoard(Board.CREDITS);
+				
 			}
 			
 			if (key == KeyEvent.VK_6) {
@@ -450,17 +452,14 @@ public class Screen extends JPanel implements ActionListener {
 			}
 			if (key == KeyEvent.VK_0) {
 				Main.clearObjects();
-//				LevelBuilder l = new LevelBuilder();
-//				l.buildLevel(new char[]{
-//						'A','B','B','C','X','A','C','X','A','C',
-//				},10,1);
+				LevelBuilder l = new LevelBuilder();
+				l.buildLevel(new char[]{
+						'A','B','B','C','X','A','C','X','A','C',
+				},10,1);
 			}
 			
 			if (key == KeyEvent.VK_F3) {
-				if (debug)
-					debug = false;
-				else
-					debug = true;
+				debug = !debug;
 			}
 			if (key == KeyEvent.VK_R) {
 				Main.setBoard(Board.MAIN);

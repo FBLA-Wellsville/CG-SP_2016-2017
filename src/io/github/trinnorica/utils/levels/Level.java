@@ -31,12 +31,16 @@ public class Level {
 			}
 			switch(LevelFactory.decode(c[i]).getSpriteType()){
 			case CLOUD:
-				if(LevelFactory.decode(c[i-1]).getSpriteType().equals(SpriteType.CLOUD)){
-					if(!LevelFactory.decode(c[i+1]).getSpriteType().equals(SpriteType.CLOUD))
-						sprites.add(new Cloud(x*30,y*30,Cloud.END));
-					else sprites.add(new Cloud(x*30,y*30,Cloud.MIDDLE));
+				try{
+					if(LevelFactory.decode(c[i-1]).getSpriteType().equals(SpriteType.CLOUD)){
+						if(!LevelFactory.decode(c[i+1]).getSpriteType().equals(SpriteType.CLOUD))
+							sprites.add(new Cloud(x*30,y*30,Cloud.END));
+						else sprites.add(new Cloud(x*30,y*30,Cloud.MIDDLE));
+					}
+					else sprites.add(new Cloud(x*30,y*30,Cloud.BEGIN));
+				} catch (ArrayIndexOutOfBoundsException ex){
+					sprites.add(new Cloud(x*30,y*30,Cloud.BEGIN));
 				}
-				else sprites.add(new Cloud(x*30,y*30,Cloud.BEGIN));
 				
 		
 				break;
