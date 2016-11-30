@@ -11,6 +11,7 @@ import io.github.trinnorica.objects.Flag;
 import io.github.trinnorica.objects.Floor;
 import io.github.trinnorica.objects.Ladder;
 import io.github.trinnorica.utils.sprites.Empty;
+import io.github.trinnorica.utils.sprites.EntityType;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.SpriteType;
 import res.ExternalFile;
@@ -45,7 +46,7 @@ public class Level {
 		
 				break;
 			case TEST_ENTITY:
-				entities.add(new Enemy(x*30, y*30));
+				entities.add(new Enemy(x*30+200, y*30,EntityType.OGRE));
 				break;
 			case DIRT:
 				sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/dirt.png"),30,30));

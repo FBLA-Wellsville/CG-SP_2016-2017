@@ -1,15 +1,18 @@
 package io.github.trinnorica.entity;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.Random;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.objects.Collidable;
+import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.DarkSword;
+import io.github.trinnorica.objects.tools.Stick;
+import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Direction;
+import io.github.trinnorica.utils.sprites.EntityType;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.Tool;
@@ -24,21 +27,55 @@ public class Enemy extends Entity implements Moveable {
 	public boolean jumping = false;
 	private Tool tool;
 	private int s = 1;
-	private Image walking = ExternalFile.loadTexture("entity/knight/walk.gif");
-	private Image standing = ExternalFile.loadTexture("entity/knight/bobbing.gif");
+	private Image walking;
+	
+	private Image standing;
+	private EntityType type;
 
-	public Enemy(int x, int y) {
+	public Enemy(int x, int y,EntityType type) {
 		super(x, y);
 		initEntity();
-		// TODO Auto-generated constructor stub
+		this.type = type;
+		switch(type){
+		case KNIGHT:
+			walking = ExternalFile.loadTexture("entity/knight/walk.gif");
+			standing = ExternalFile.loadTexture("entity/knight/bobbing.gif");
+			maxhealth = 10;
+			tool = new Sword(0,0);
+			break;
+		case DARK_KNIGHT:
+			walking = ExternalFile.loadTexture("entity/knight/dark/walk.gif");
+			standing = ExternalFile.loadTexture("entity/knight/dark/bobbing.gif");
+			maxhealth = 10;
+			tool = new DarkSword(0,0);
+			break;
+		case OGRE:
+			walking = ExternalFile.loadTexture("entity/ogre/walk.gif");
+			standing = ExternalFile.loadTexture("entity/ogre/bobbing.gif");
+			maxhealth = 10;
+			tool = new Stick(0,0);
+			break;
+		case SKELETON:
+			walking = ExternalFile.loadTexture("entity/skeleton/walk.gif");
+			standing = ExternalFile.loadTexture("entity/skeleton/bobbing.gif");
+			maxhealth = 10;
+			tool = new Bow(0,0);
+			break;
+		default:
+			walking = ExternalFile.loadTexture("entity/knight/walk.gif");
+			standing = ExternalFile.loadTexture("entity/knight/bobbing.gif");
+			maxhealth = 10;
+			tool = new Sword(0,0);
+			break;
+			
+		}
 	}
 
 	private void initEntity() {
 		loadImage(standing);
 		setImageDimensions(27 + s, 30 + s);
-		setTool(new DarkSword(0, 0));
-		health = 10;
-		maxhealth = health;
+		
+		health = maxhealth;
 	}
 
 	@Override

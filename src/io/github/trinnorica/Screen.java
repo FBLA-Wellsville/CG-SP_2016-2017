@@ -162,13 +162,15 @@ public class Screen extends JPanel implements ActionListener {
 		if (board == Board.MAIN) {
 			menuvar = Utils.drawScrollingImage(g, Backgrounds.MAIN.getImage(), menuvar, (int)0, this.getWidth(),
 					this.getHeight(), 1);
-			Utils.drawOutlineString(g, "Press P to play!", getWidth()/2 - (g.getFontMetrics().stringWidth("Press P to play!")/2), getHeight()/4 + getHeight()/2, Color.decode("#99db45"), Color.WHITE, 1);
+			Utils.drawOutlineString(g, "Press P to play!", getWidth()/3 - (g.getFontMetrics().stringWidth("Press P to play!")/2), getHeight()/4 + getHeight()/2, Color.decode("#99db45"), Color.WHITE, 1);
+			
+			Utils.drawOutlineString(g, "Press C for credits!", (((getWidth())+(getWidth()/2))/2) - (g.getFontMetrics().stringWidth("Press C for credits!")/2), getHeight()/4 + getHeight()/2, Color.decode("#99db45"), Color.WHITE, 1);
 			
 
-			g.drawImage(ExternalFile.loadTexture("entity/player/player.png"), getWidth() / 4, getHeight() / 2, 60, 60,
+			g.drawImage(ExternalFile.loadTexture("entity/knight/dark/standing.png"), getWidth() / 4, getHeight() / 2, 60, 60,
 					this);
-			g.drawImage(ExternalFile.loadTexture("entity/knight/knight.png"), getWidth() / 4 + getWidth() / 2,
-					getHeight() / 2, 60, 60, this);
+			g.drawImage(ExternalFile.loadTexture("entity/knight/standing.png"), (getWidth() / 4 + getWidth() / 2)+0,
+					getHeight() / 2, -60, 60, this);
 			Image logo = ExternalFile.loadTexture("logos/logo-title.png");
 			g.drawImage(Images.makeImageTranslucent(Images.toBufferedImage(logo), 0.9),
 					this.getWidth() / 2 - logo.getWidth(this) / 2, this.getHeight() / 2 - logo.getHeight(this) / 2,
@@ -309,15 +311,17 @@ public class Screen extends JPanel implements ActionListener {
 			g.drawImage(Backgrounds.MAIN.getImage(), 0, 0, getWidth(), getHeight(), this);
 			
 			Utils.drawOutlineString(g, "You won level " + Utils.getLevel() + "!", getWidth()/2-(g.getFontMetrics().stringWidth("You won level " + Utils.getLevel() + "!")/2), getHeight()/3, Color.decode("#99db45"), Color.WHITE, 1);
-			Utils.drawOutlineString(g, "Press P to play!", getWidth()/2, getHeight()/2, Color.decode("#99db45"), Color.WHITE, 1);
+			Utils.drawOutlineString(g, "Press P to play!", getWidth()/2-(g.getFontMetrics().stringWidth("Press P to play!")/2), getHeight()/2, Color.decode("#99db45"), Color.WHITE, 1);
 			
 		}
 		if(board == Board.WIN){
 			g.drawImage(Backgrounds.MAIN.getImage(), 0, 0, getWidth(), getHeight(), this);
-			
+			playing = false;
+			g.setFont(Main.getFont().deriveFont(Font.BOLD, 20));
 			Utils.drawOutlineString(g, "YOU WON!", getWidth()/2-(g.getFontMetrics().stringWidth("YOU WON!")/2), getHeight()/3, Color.decode("#99db45"), Color.WHITE, 1);
-			g.setFont(Main.getFont().deriveFont(15f));
-			Utils.drawOutlineString(g, "Press P to play again.\nPress C for credits.\nPress ESC to go back to the main menu.", getWidth()/2, getHeight()/2, Color.decode("#99db45"), Color.BLACK, 1);
+			g.setFont(Main.getFont().deriveFont(Font.PLAIN, 15));
+			
+			Utils.drawOutlineString(g, "Press C for credits.\nPress ESC to go back to the main menu.", getWidth()/2, getHeight()/2, Color.decode("#99db45"), Color.BLACK, 1);
 		}
 
 		for (Clickable c : Main.getClickables()) {
@@ -395,8 +399,15 @@ public class Screen extends JPanel implements ActionListener {
 			
 			if(key == KeyEvent.VK_ESCAPE){
 				if(playing) paused = !paused;
+				else {
+					Main.setBoard(Board.MAIN);
+				}
 			}
 			if(key == KeyEvent.VK_P){
+				if(Main.getBoard() == Board.WIN){
+					Main.setBoard(Board.GAME);
+					Utils.setLevel(0);
+				}else
 					if(!(Main.getBoard() == Board.GAME)){
 						Utils.setLevel(Utils.getLevel()+1);
 						Main.setBoard(Board.GAME);
@@ -464,6 +475,9 @@ public class Screen extends JPanel implements ActionListener {
 			if (key == KeyEvent.VK_R) {
 				Main.setBoard(Board.MAIN);
 				Utils.setLevel(0);
+			}
+			if(key == KeyEvent.VK_F5){
+				Main.setBoard(Board.WIN);
 			}
 			
 

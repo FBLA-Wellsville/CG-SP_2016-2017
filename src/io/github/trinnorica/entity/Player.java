@@ -21,6 +21,7 @@ import io.github.trinnorica.utils.Direction;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.particles.Particle;
+import io.github.trinnorica.utils.sprites.EntityType;
 import io.github.trinnorica.utils.sprites.Keyable;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Projectile;
@@ -386,12 +387,12 @@ public class Player extends Entity implements Moveable, Keyable {
 		}
 
 		if (key == KeyEvent.VK_UP) {
-			s = s + 1;
+			if(!(health+0.5>maxhealth))health = health+0.5;
 			setImageDimensions(27 + s, 30 + s);
 
 		}
 		if (key == KeyEvent.VK_DOWN) {
-			s = s - 1;
+			if(!(health-0.5<0))health = health-0.5;
 			setImageDimensions(27 + s, 30 + s);
 		}
 
@@ -409,7 +410,7 @@ public class Player extends Entity implements Moveable, Keyable {
 		}
 
 		if(key == KeyEvent.VK_L){
-			Main.addSprite(new Enemy(x,y));
+			Main.addSprite(new Enemy(x,y,EntityType.KNIGHT));
 		}
 		if(key == KeyEvent.VK_K){
 			Main.addSprite(new DarkSword(x+100,y));
