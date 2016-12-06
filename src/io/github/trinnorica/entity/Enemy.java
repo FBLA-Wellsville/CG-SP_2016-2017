@@ -69,13 +69,14 @@ public class Enemy extends Entity implements Moveable {
 			break;
 			
 		}
+		health = maxhealth;
 	}
 
 	private void initEntity() {
 		loadImage(standing);
 		setImageDimensions(27 + s, 30 + s);
 		
-		health = maxhealth;
+		
 	}
 
 	@Override

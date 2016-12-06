@@ -12,10 +12,12 @@ import io.github.trinnorica.objects.Floor;
 import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.Button;
 import io.github.trinnorica.utils.Clickable;
+import io.github.trinnorica.utils.Sound;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.levels.LevelBuilder;
 import io.github.trinnorica.utils.sprites.Projectile;
 import io.github.trinnorica.utils.sprites.Sprite;
+import res.Audio;
 import res.ExternalFile;
 
 public class Main {
@@ -43,6 +45,7 @@ public class Main {
 		}
 		Utils.start();
 		new Window();
+		Audio.playBackground(Sound.BACKGROUND_MENU);
 		
 	}
 	public static Font getFont(){

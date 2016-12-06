@@ -29,6 +29,7 @@ import io.github.trinnorica.utils.Backgrounds;
 import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.Clickable;
 import io.github.trinnorica.utils.Images;
+import io.github.trinnorica.utils.Sound;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.levels.LevelBuilder;
 import io.github.trinnorica.utils.particles.Particle;
@@ -36,6 +37,7 @@ import io.github.trinnorica.utils.sprites.Empty;
 import io.github.trinnorica.utils.sprites.Keyable;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
+import res.Audio;
 import res.ExternalFile;
 
 public class Screen extends JPanel implements ActionListener {
@@ -205,16 +207,17 @@ public class Screen extends JPanel implements ActionListener {
 			Utils.drawCredit(g, "Joey Phillips", creditvar, 11, Color.BLACK, Color.WHITE, 1);
 			Utils.drawCredit(g, "Carsyn Stephenson", creditvar, 12, Color.BLACK, Color.WHITE, 1);
 			Utils.drawCredit(g, "Chris Green", creditvar, 13, Color.BLACK, Color.WHITE, 1);
+			Utils.drawCredit(g, "Chad Guthrie", creditvar, 14, Color.BLACK, Color.WHITE, 1);
 			
 			
 
 			Image logo = ExternalFile.loadTexture("logos/logo-title.png");
 
-			Utils.drawCreditImage(g, logo, creditvar, 16);
+			Utils.drawCreditImage(g, logo, creditvar, 17);
 
 			creditvar -= 1;
 
-			if (Utils.creditsOver(g, creditvar, 20)) {
+			if (Utils.creditsOver(g, creditvar, 21)) {
 				Main.setBoard(Board.MAIN);
 			}
 
@@ -411,6 +414,7 @@ public class Screen extends JPanel implements ActionListener {
 					if(!(Main.getBoard() == Board.GAME)){
 						Utils.setLevel(Utils.getLevel()+1);
 						Main.setBoard(Board.GAME);
+						Audio.playBackground(Sound.BACKGROUND_GRASS);
 						playing = true;
 					}
 				
