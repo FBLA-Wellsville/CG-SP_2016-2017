@@ -160,6 +160,7 @@ public class Screen extends JPanel implements ActionListener {
 		
 		
 		
+		
 		//Main Menu
 		if (board == Board.MAIN) {
 			menuvar = Utils.drawScrollingImage(g, Backgrounds.MAIN.getImage(), menuvar, (int)0, this.getWidth(),
@@ -368,6 +369,8 @@ public class Screen extends JPanel implements ActionListener {
 			}
 
 		}
+		
+		
 
 	}
 
