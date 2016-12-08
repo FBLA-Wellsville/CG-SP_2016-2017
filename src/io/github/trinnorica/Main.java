@@ -103,16 +103,12 @@ public class Main {
 	}
 
 	public static Player getPlayer() {
-		if(player == null){
-			for(Sprite sprite : screen.objects)
-				if(sprite instanceof Player) return ((Player) sprite);
-		}
 		return player;
-	
 	}
 	public static void removeSprite(Sprite s) {
 		if(screen.objects.contains(s))
 				screen.objects_remove.add(s);
+		
 		
 	}
 	
@@ -122,6 +118,12 @@ public class Main {
 	}
 	public static Graphics getGraphics() {
 		return Screen.graphics;
+	}
+	public static void setPlayer(Player player2) {
+		try{
+			player.remove();
+		}catch(NullPointerException ex){}
+		player = player2;
 	}
 	
 }

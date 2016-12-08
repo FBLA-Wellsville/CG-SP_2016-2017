@@ -3,6 +3,7 @@ package io.github.trinnorica.utils.levels;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.Enemy;
 import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.entity.Player;
@@ -44,6 +45,11 @@ public class Level {
 				}
 				
 		
+				break;
+			case PLAYER:
+				Main.setPlayer(new Player(x*30, y*30));
+				Main.getPlayer().x = x*30;
+				Main.getPlayer().y = y*30;
 				break;
 			case TEST_ENTITY:
 				entities.add(new Enemy(x*30+200, y*30,EntityType.OGRE));

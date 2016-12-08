@@ -7,5 +7,6 @@ import io.github.trinnorica.utils.Direction;
 public interface ParticleFormat {
 	
 	public void run(Point p, ParticleType t, Direction d);
+	public void run(Point p, ParticleType t, Direction d,int mini);
 
 }

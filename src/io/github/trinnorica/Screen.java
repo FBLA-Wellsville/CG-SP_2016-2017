@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
@@ -80,8 +83,8 @@ public class Screen extends JPanel implements ActionListener {
 		timer.start();
 
 		addKeyListener(new TAdapter());
-//		addMouseMotionListener(new MMListener()); 
-//		addMouseListener(new MListener());
+		addMouseMotionListener(new MMListener()); 
+		addMouseListener(new MListener());
 
 		setLayout(null);
 
@@ -297,6 +300,14 @@ public class Screen extends JPanel implements ActionListener {
 				Utils.drawOutlineString(g, highscores[l], (getWidth()-100)-(g.getFontMetrics().stringWidth(highscores[l])/2), (getHeight()/3+(Main.getFont().getSize()*12))+(((Main.getFont().getSize()*12)*(l+1))+(l*4)), Color.WHITE, Color.WHITE, 0);
 				
 			}
+			Main.getPlayer().getPolygon();
+			
+			Main.getPlayer().move();
+			
+			Main.getPlayer().draw(g);
+			
+			
+			
 			
 			
 			
@@ -341,23 +352,20 @@ public class Screen extends JPanel implements ActionListener {
 			Utils.drawOutlineString(g, "Objects: " + objects.size(), 0, 60, Color.WHITE, Color.BLACK, 1);
 			Utils.drawOutlineString(g, "Playing: " + playing, 0, 80, Color.WHITE, Color.BLACK, 1);
 			try {
-				for(Sprite s : objects){
-					if(!(s instanceof Player)) continue;
-					Utils.drawOutlineString(g, "Flying: " + ((Player)s).flying, 0, 100, Color.WHITE,
+					Utils.drawOutlineString(g, "Flying: " + Main.getPlayer().flying, 0, 100, Color.WHITE,
 							Color.BLACK, 1);
-					Utils.drawOutlineString(g, "Jumping: " + ((Player) s).jumping, 0, 120, Color.WHITE,
+					Utils.drawOutlineString(g, "Jumping: " + Main.getPlayer().jumping, 0, 120, Color.WHITE,
 							Color.BLACK, 1);
-					Utils.drawOutlineString(g, "Onground: " + ((Player) s).onground, 0, 140, Color.WHITE,
+					Utils.drawOutlineString(g, "Onground: " + Main.getPlayer().onground, 0, 140, Color.WHITE,
 							Color.BLACK, 1);
 					
-					Utils.drawOutlineString(g, "Climbing: " + ((Player) s).climbing, 0, 160, Color.WHITE, Color.BLACK, 1);
-					if(((Player)s).getTool() != null)Utils.drawOutlineString(g, "Tool: " + ((Player) s).getTool().getClass().getSimpleName(), 0, 180, Color.WHITE, Color.BLACK, 1);
+					Utils.drawOutlineString(g, "Climbing: " + Main.getPlayer().climbing, 0, 160, Color.WHITE, Color.BLACK, 1);
+					if(Main.getPlayer().getTool() != null)Utils.drawOutlineString(g, "Tool: " + Main.getPlayer().getTool().getClass().getSimpleName(), 0, 180, Color.WHITE, Color.BLACK, 1);
 					else Utils.drawOutlineString(g, "Tool: null", 0, 180, Color.WHITE, Color.BLACK, 1);
-					Utils.drawOutlineString(g, "Left: " + ((Player) s).left, 0, 200, Color.WHITE, Color.BLACK, 1);
-					Utils.drawOutlineString(g, "Right: " + ((Player) s).right, 0, 220, Color.WHITE, Color.BLACK, 1);
-					Utils.drawOutlineString(g, "Location: " + ((Player) s).getLocation(), 0, 240, Color.WHITE, Color.BLACK, 1);
-					break;
-				}
+					Utils.drawOutlineString(g, "Left: " + Main.getPlayer().left, 0, 200, Color.WHITE, Color.BLACK, 1);
+					Utils.drawOutlineString(g, "Right: " + Main.getPlayer().right, 0, 220, Color.WHITE, Color.BLACK, 1);
+					Utils.drawOutlineString(g, "Location: " + Main.getPlayer().getLocation(), 0, 240, Color.WHITE, Color.BLACK, 1);
+				
 				
 			} catch (IndexOutOfBoundsException ex) {
 				
@@ -378,11 +386,31 @@ public class Screen extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		repaint();
 	}
+	
+	private class MMListener extends MouseMotionAdapter {
+		
+	}
+	
+	private class MListener extends MouseAdapter {
+
+			public void mousePressed(MouseEvent e){
+				try{
+					Main.getPlayer().x = e.getX();
+					Main.getPlayer().y = e.getY();
+				} catch(NullPointerException ex){
+					//This just means the player hasn't been set. Not a big deal.
+				}
+			}
+
+
+	
+	}
 
 	private class TAdapter extends KeyAdapter {
 
 		@Override
 		public void keyReleased(KeyEvent e) {
+			Main.getPlayer().keyReleased(e);
 			for (Sprite sprite : objects) {
 				if (sprite instanceof Keyable)
 					((Keyable) sprite).keyReleased(e);
@@ -490,6 +518,7 @@ public class Screen extends JPanel implements ActionListener {
 
 		
 			try{
+				Main.getPlayer().keyPressed(e);
 				for (Sprite sprite : objects) {
 					if (sprite instanceof Keyable)
 						((Keyable) sprite).keyPressed(e);

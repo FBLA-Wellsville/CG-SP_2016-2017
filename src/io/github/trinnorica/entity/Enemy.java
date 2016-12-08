@@ -2,6 +2,7 @@ package io.github.trinnorica.entity;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.util.Random;
 
 import io.github.trinnorica.Main;
@@ -12,6 +13,9 @@ import io.github.trinnorica.objects.tools.Stick;
 import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Direction;
+import io.github.trinnorica.utils.Utils;
+import io.github.trinnorica.utils.particles.ParticleType;
+import io.github.trinnorica.utils.particles.formats.Ghost;
 import io.github.trinnorica.utils.sprites.EntityType;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
@@ -83,13 +87,14 @@ public class Enemy extends Entity implements Moveable {
 	public void move() {
 		onground = false;
 
+		if(getPolygon().intersects(Main.getPlayer().getPolygon().getBounds())){
+			attack(Main.getPlayer());
+		}
 		for (Sprite s : Main.getScreen().objects) {
 			if (!getPolygon().intersects(s.getPolygon().getBounds()))
 				continue;
 
-			if((s instanceof Entity && !(s instanceof Enemy))){
-				attack((Entity) s);
-			}
+			
 			if (s instanceof Collidable) {
 				onground = true;
 				y = s.getY() - this.getHeight() + 1;
@@ -135,9 +140,14 @@ public class Enemy extends Entity implements Moveable {
 
 	@Override
 	public void kill(DamageReason reason) {
-		if (new Random().nextInt(10) <= 2)
-			Main.addSprite(new DarkSword(x, y));
+		if (new Random().nextInt(10) <= 2){
+			tool.x =x;
+			tool.y = y;
+			
+			Main.addSprite(tool);
+		}
 		Main.removeSprite(this);
+		Utils.runParticles(new Point(x,y), new Ghost(), ParticleType.GHOST, null,100);
 	}
 
 	@Override

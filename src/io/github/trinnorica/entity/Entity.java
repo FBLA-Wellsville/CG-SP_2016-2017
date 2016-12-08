@@ -14,6 +14,7 @@ import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.particles.ParticleType;
 import io.github.trinnorica.utils.particles.formats.Explode;
+import io.github.trinnorica.utils.particles.formats.Ghost;
 import io.github.trinnorica.utils.particles.formats.Stay;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
@@ -127,7 +128,8 @@ public class Entity extends Sprite implements Moveable {
 	}
 
 	public void kill(DamageReason reason) {
-		Utils.runParticles(new Point(x,y), new Explode(4), ParticleType.BLOOD, null);
+//		Utils.runParticles(new Point(x,y), new Explode(4), ParticleType.BLOOD, null);
+		Utils.runParticles(new Point(x,y), new Ghost(), ParticleType.GHOST, null,100);
 		Main.removeSprite(this);
 //		dead = true;
 //		Utils.debug("DEATH");

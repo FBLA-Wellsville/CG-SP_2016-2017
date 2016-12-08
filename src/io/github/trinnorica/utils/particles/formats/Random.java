@@ -28,6 +28,11 @@ public class Random implements ParticleFormat {
 			Main.addSprite(new Particle(new Point(a,b),t,new Velocity(0, -2),false));
 		}
 	}
+	
+	@Override
+	public void run(Point p, ParticleType t, Direction d,int i) {
+		run(p,t,d);
+	}
 
 	
 

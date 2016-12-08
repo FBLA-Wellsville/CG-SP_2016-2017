@@ -7,7 +7,8 @@ public enum ParticleType {
 	ICE("ice"),
 	FIRE("fire"), 
 	BLOOD("blood-1:blood-2"),
-	HEART("heart");
+	HEART("heart"), 
+	GHOST("ghost");
 	
 	String particle;
 	
@@ -23,6 +24,23 @@ public enum ParticleType {
 		
 		}
 		return particle;
+	}
+	
+	public boolean getAnimation(){
+		switch(this){
+		case ICE:
+			return false;
+		case FIRE:
+			return false;
+		case BLOOD:
+			return false;
+		case HEART:
+			return false;
+		case GHOST:
+			return true;
+		default: 
+			return true;
+		}
 	}
 	
 

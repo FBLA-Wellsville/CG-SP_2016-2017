@@ -1,6 +1,7 @@
 package io.github.trinnorica.entity;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -21,6 +22,8 @@ import io.github.trinnorica.utils.Direction;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.particles.Particle;
+import io.github.trinnorica.utils.particles.ParticleType;
+import io.github.trinnorica.utils.particles.formats.Ghost;
 import io.github.trinnorica.utils.sprites.EntityType;
 import io.github.trinnorica.utils.sprites.Keyable;
 import io.github.trinnorica.utils.sprites.Moveable;
@@ -161,8 +164,10 @@ public class Player extends Entity implements Moveable, Keyable {
 					}
 					if(s instanceof Ladder){
 						climbing = true;
-						if(damaged){
+						if(damaged || jumping || falling){
 							setVelocity(0,0);
+							jumping = false;
+							falling = false;
 						}
 						damaged = false;
 					}
@@ -190,11 +195,12 @@ public class Player extends Entity implements Moveable, Keyable {
 					if(s instanceof Collidable){
 						if(damaged && !jumping){
 							setVelocity(0,0);
+							
 						}
 						damaged = false;
 						switch (getIntercectingDirection(s.getPolygon().getBounds())) {
 						case DOWN:
-							if (!jumping && !climbing) {
+							if (!jumping) {
 								y = s.getY() - getHeight() + 1;
 								onground = true;
 							}
@@ -217,14 +223,38 @@ public class Player extends Entity implements Moveable, Keyable {
 		
 		// velocity.x = velocity.x*0.2;
 		if (!flying && !climbing)
-			velocity.y = velocity.y + Main.gravity;
+			if(!(velocity.y >= 10))velocity.y = velocity.y + Main.gravity;
 		
 		if(flying || climbing){
-			dy = velocity.y;
+			if(onground){
+				if(velocity.y > 0){
+					dy = 0;
+				} else {
+					dy = velocity.y/5;
+				}
+			} else {
+				dy = velocity.y/5;
+			}
+				
+				
 			dx = velocity.x;
 
+
+			if(x <=0 || x>=(Main.getScreen().getWidth()-getWidth())){
+				dx=0;
+				velocity.x =0;
+				if(x<=0){
+					x=1;
+				}
+				if(x>=(Main.getScreen().getWidth()-getWidth())){
+					x=Main.getScreen().getWidth()-getWidth()-1;
+				}
+			}
+			
 			y = (int) (y + dy);
 			x = (int) (x + dx);
+			
+			
 
 			dx = 0;
 			dy = 0;
@@ -232,7 +262,7 @@ public class Player extends Entity implements Moveable, Keyable {
 
 		else {
 			if(velocity.y < 0){
-				jumping = true;
+//				jumping = true;
 			} else jumping = false;
 			if (onground) {
 				falling = false;
@@ -242,8 +272,22 @@ public class Player extends Entity implements Moveable, Keyable {
 			dx = velocity.x;
 			
 			if(sprint) dx = dx*1.5;
+			
+			if(x <=0 || x>=(Main.getScreen().getWidth()-getWidth())){
+				dx=0;
+				velocity.x =0;
+				if(x<=0){
+					x=1;
+				}
+				if(x>=(Main.getScreen().getWidth()-getWidth())){
+					x=Main.getScreen().getWidth()-getWidth()-10;
+				}
+			}
+			
+			
 			y = (int) (y + dy);
 			x = (int) (x + dx);
+			
 
 			dx = 0;
 			dy = 0;
@@ -342,6 +386,12 @@ public class Player extends Entity implements Moveable, Keyable {
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		
+		
+		
+
+		if(key == KeyEvent.VK_NUMPAD2){
+			Utils.runParticles(new Point(x,y), new Ghost(), ParticleType.GHOST, null,100);
+		}
 		if(key == KeyEvent.VK_NUMPAD0){
 			lives = lives+1;
 			if(lives > MAXLIVES){
@@ -360,24 +410,26 @@ public class Player extends Entity implements Moveable, Keyable {
 
 		if (key == KeyEvent.VK_W) {
 			if (flying || climbing)
-				setVelocity("", -5);
+				setVelocity("", -3);
 		}
+		
+		
 
 		if (key == KeyEvent.VK_S) {
 			if (flying || climbing)
-				setVelocity("", 5);
+				setVelocity("", 3);
 		}
 
 		if (!damaged) {
 			if (key == KeyEvent.VK_D) {
 				direction = Direction.RIGHT;
 				right = true;
-				setVelocity(3, "");
+				setVelocity(1.5, "");
 			}
 			if (key == KeyEvent.VK_A) {
 				direction = Direction.LEFT;
 				left = true;
-				setVelocity(-3, "");
+				setVelocity(-1.5, "");
 			} 
 		}
 		if (key == KeyEvent.VK_SHIFT) {
@@ -410,7 +462,7 @@ public class Player extends Entity implements Moveable, Keyable {
 		}
 
 		if(key == KeyEvent.VK_L){
-			Main.addSprite(new Enemy(x,y,EntityType.KNIGHT));
+			Main.addSprite(new Enemy(x+100,y,EntityType.KNIGHT));
 		}
 		if(key == KeyEvent.VK_K){
 			Main.addSprite(new DarkSword(x+100,y));
@@ -474,6 +526,11 @@ public class Player extends Entity implements Moveable, Keyable {
 	}
 	public int getLives() {
 		return lives;
+	}
+	
+	public void remove(){
+		x=100000;
+		y=100000;
 	}
 
 

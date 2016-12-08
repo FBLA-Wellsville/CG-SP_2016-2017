@@ -11,7 +11,8 @@ public enum LevelFactory {
 	FLOOR('E',SpriteType.FLOOR),
 	DYNAMIC_DIRT('F',SpriteType.DYNAMIC_DIRT),
 	GRASS('G',SpriteType.GRASS),
-	TEST_ENTITY_AIR('☺',SpriteType.TEST_ENTITY),
+	TEST_ENTITY_AIR('☻',SpriteType.TEST_ENTITY),
+	PLAYER('☺',SpriteType.PLAYER),
 	
 	
 	GATE('K',SpriteType.GATE),

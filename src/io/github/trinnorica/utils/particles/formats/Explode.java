@@ -20,7 +20,11 @@ public class Explode implements ParticleFormat {
 	public Explode(int power) {
 		this.power = power;
 	}
-
+	
+	@Override
+	public void run(Point p, ParticleType t, Direction d,int i) {
+		run(p,t,d);
+	}
 	@Override
 	public void run(Point p, ParticleType t, Direction d) {
 		int r = new java.util.Random().nextInt(20) + 5;

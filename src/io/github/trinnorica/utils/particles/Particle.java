@@ -1,6 +1,7 @@
 package io.github.trinnorica.utils.particles;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.util.Random;
 
@@ -16,7 +17,6 @@ public class Particle extends Sprite implements Moveable {
 	int lifetime;
 	Velocity v;
 	boolean g = false;
-	double f = 0.90;
 	
 	public Particle(Point p, ParticleType t, Velocity v, boolean gravity) {
 		super(p.x, p.y);
@@ -24,12 +24,28 @@ public class Particle extends Sprite implements Moveable {
 		g = gravity;
 		init();
 		this.v = v;
+		lifetime = new Random().nextInt(100);
+	}
+	public Particle(Point p, ParticleType t, Velocity v, boolean gravity,int lifetime) {
+		super(p.x, p.y);
+		type = t;
+		g = gravity;
+		init();
+		this.v = v;
+		this.lifetime = new Random().nextInt(100)+lifetime;
 	}
 	
 	public void init(){
-		lifetime = new Random().nextInt(100);
-		loadImage(ExternalFile.loadTexture("particles/" + type.getString() + ".png"));
-		setImageDimensions(15, 15);
+		Image image;
+		if(type.getAnimation() == true){
+			image = ExternalFile.loadTexture("particles/" + type.getString() + ".gif");
+		} else {
+			image = ExternalFile.loadTexture("particles/" + type.getString() + ".png");
+		}
+		
+		
+		loadImage(image);
+		setImageDimensions(image.getWidth(null), image.getHeight(null));
 	}
 	
 	public void draw(Graphics g){

@@ -9,27 +9,19 @@ import io.github.trinnorica.utils.particles.Particle;
 import io.github.trinnorica.utils.particles.ParticleFormat;
 import io.github.trinnorica.utils.particles.ParticleType;
 
-public class Stay implements ParticleFormat {
+public class Ghost implements ParticleFormat {
 
 	@Override
 	public void run(Point p, ParticleType t, Direction d) {
-		
-		int r = new java.util.Random().nextInt(10);
-		boolean f = new java.util.Random().nextBoolean();
-		
-		int a = p.x;
-		int b = p.y;
-		
-		if(f) b=b+r;
-		else b=b-r;
-		
-		Main.addSprite(new Particle(new Point(a,b),t,new Velocity(0, 0),false));
+		run(p,t,d,100);
 		
 	}
-
+	
 	@Override
 	public void run(Point p, ParticleType t, Direction d,int i) {
-		run(p,t,d);
+		Main.addSprite(new Particle(p,t,new Velocity(0, -2),false,i));
 	}
+
+	
 
 }

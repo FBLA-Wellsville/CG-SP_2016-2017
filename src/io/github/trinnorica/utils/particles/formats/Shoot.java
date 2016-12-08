@@ -34,6 +34,9 @@ public class Shoot implements ParticleFormat {
 		}
 	}
 
-	
+	@Override
+	public void run(Point p, ParticleType t, Direction d,int i) {
+		run(p,t,d);
+	}
 
 }
