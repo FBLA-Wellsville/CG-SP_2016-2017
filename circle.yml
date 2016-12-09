@@ -4,5 +4,6 @@ machine:
 deployment:
   master:
     branch: master
-    owner: circleci
+    owner: QuickScythe
     commands:
+      - ./deploy_master.sh
