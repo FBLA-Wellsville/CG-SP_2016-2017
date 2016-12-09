@@ -1,0 +1,8 @@
+machine:
+  java:
+    version: openjdk7
+deployment:
+  master:
+    branch: master
+    owner: circleci
+    commands:
