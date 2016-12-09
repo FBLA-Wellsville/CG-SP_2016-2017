@@ -124,6 +124,7 @@ public class Main {
 			player.remove();
 		}catch(NullPointerException ex){}
 		player = player2;
+		addSprite(player);
 	}
 	
 }

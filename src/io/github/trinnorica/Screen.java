@@ -300,11 +300,7 @@ public class Screen extends JPanel implements ActionListener {
 				Utils.drawOutlineString(g, highscores[l], (getWidth()-100)-(g.getFontMetrics().stringWidth(highscores[l])/2), (getHeight()/3+(Main.getFont().getSize()*12))+(((Main.getFont().getSize()*12)*(l+1))+(l*4)), Color.WHITE, Color.WHITE, 0);
 				
 			}
-			Main.getPlayer().getPolygon();
 			
-			Main.getPlayer().move();
-			
-			Main.getPlayer().draw(g);
 			
 			
 			
