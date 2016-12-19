@@ -241,6 +241,9 @@ public class Screen extends JPanel implements ActionListener {
 			try{
 				for (Sprite sprite : objects) {
 					
+					if(sprite instanceof Player){
+						objects_remove.add(sprite);
+					}
 					if(sprite instanceof Empty){
 						objects_remove.add(sprite);
 						continue;
@@ -268,6 +271,9 @@ public class Screen extends JPanel implements ActionListener {
 				Utils.debug("ConcurrentModificationException 2 (Screen)");
 			}
 			
+			Main.getPlayer().getPolygon();
+			Main.getPlayer().move();
+			Main.getPlayer().draw(g);
 			
 			try{
 				for(int i=0;i!=Main.getPlayer().getMaxLives();i++){
@@ -345,7 +351,7 @@ public class Screen extends JPanel implements ActionListener {
 			Utils.drawOutlineString(g, "Version: " + Utils.getVersion(), 0, 20, Color.WHITE, Color.BLACK, 1);
 			Utils.drawOutlineString(g, "Clickables: " + Main.getClickables().size(), 0, 40, Color.WHITE, Color.BLACK,
 					1);
-			Utils.drawOutlineString(g, "Objects: " + objects.size(), 0, 60, Color.WHITE, Color.BLACK, 1);
+			Utils.drawOutlineString(g, "Objects: " + objects.size() , 0, 60, Color.WHITE, Color.BLACK, 1);
 			Utils.drawOutlineString(g, "Playing: " + playing, 0, 80, Color.WHITE, Color.BLACK, 1);
 			try {
 					Utils.drawOutlineString(g, "Flying: " + Main.getPlayer().flying, 0, 100, Color.WHITE,

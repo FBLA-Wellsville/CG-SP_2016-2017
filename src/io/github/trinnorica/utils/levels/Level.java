@@ -10,6 +10,7 @@ import io.github.trinnorica.entity.Player;
 import io.github.trinnorica.objects.Cloud;
 import io.github.trinnorica.objects.Flag;
 import io.github.trinnorica.objects.Floor;
+import io.github.trinnorica.objects.GoldCoin;
 import io.github.trinnorica.objects.Ladder;
 import io.github.trinnorica.utils.sprites.Empty;
 import io.github.trinnorica.utils.sprites.EntityType;
@@ -45,6 +46,9 @@ public class Level {
 				}
 				
 		
+				break;
+			case GOLD:
+				sprites.add(new GoldCoin(x*30+15, y*3-15));
 				break;
 			case PLAYER:
 				Main.setPlayer(new Player(x*30, y*30));

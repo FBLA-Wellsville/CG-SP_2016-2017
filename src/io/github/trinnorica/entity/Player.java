@@ -230,26 +230,26 @@ public class Player extends Entity implements Moveable, Keyable {
 				if(velocity.y > 0){
 					dy = 0;
 				} else {
-					dy = velocity.y/5;
+					dy = velocity.y;
 				}
 			} else {
-				dy = velocity.y/5;
+				dy = velocity.y;
 			}
 				
 				
-			dx = velocity.x;
+			dx = velocity.x*2;
 
 
-			if(x <=0 || x>=(Main.getScreen().getWidth()-getWidth())){
-				dx=0;
-				velocity.x =0;
-				if(x<=0){
-					x=1;
-				}
-				if(x>=(Main.getScreen().getWidth()-getWidth())){
-					x=Main.getScreen().getWidth()-getWidth()-1;
-				}
-			}
+//			if(x <=0 || x>=(Main.getScreen().getWidth()-getWidth())){
+//				dx=0;
+//				velocity.x =0;
+//				if(x<=0){
+//					x=1;
+//				}
+//				if(x>=(Main.getScreen().getWidth()-getWidth())){
+//					x=Main.getScreen().getWidth()-getWidth()-1;
+//				}
+//			}
 			
 			y = (int) (y + dy);
 			x = (int) (x + dx);
@@ -531,6 +531,11 @@ public class Player extends Entity implements Moveable, Keyable {
 	public void remove(){
 		x=100000;
 		y=100000;
+		try{
+			Main.removeSprite(this);
+		} catch(NullPointerException ex){
+			Utils.debug("TESTIMG");
+		}
 	}
 
 

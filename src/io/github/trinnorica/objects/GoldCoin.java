@@ -20,8 +20,8 @@ public class GoldCoin extends Sprite {
     }
 
     private void init() {
-        loadImage("objects/gold.png");
-        getImageDimensions();
+        loadImage("objects/goldcoin.gif");
+        setImageDimensions(15,15);
     }
     
     
