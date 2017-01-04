@@ -48,7 +48,7 @@ public class Level {
 		
 				break;
 			case GOLD:
-				sprites.add(new GoldCoin(x*30+15, y*3-15));
+				sprites.add(new GoldCoin(x*30+(15/2), y*30+(15/2)));
 				break;
 			case PLAYER:
 				Main.setPlayer(new Player(x*30, y*30));

@@ -10,6 +10,7 @@ import java.util.ConcurrentModificationException;
 import io.github.trinnorica.Main;
 import io.github.trinnorica.objects.Collidable;
 import io.github.trinnorica.objects.Flag;
+import io.github.trinnorica.objects.GoldCoin;
 import io.github.trinnorica.objects.Ladder;
 import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.DarkSword;
@@ -154,6 +155,10 @@ public class Player extends Entity implements Moveable, Keyable {
 			try{
 				for (Sprite s : Main.getScreen().objects) {
 					if(!bounds.intersects(s.getPolygon().getBounds())) continue;
+					if(s instanceof GoldCoin){
+						Main.removeSprite(s);
+						score = score+1;
+					}
 					if(s instanceof Flag){
 						levelup();
 						if(damaged){
@@ -424,12 +429,12 @@ public class Player extends Entity implements Moveable, Keyable {
 			if (key == KeyEvent.VK_D) {
 				direction = Direction.RIGHT;
 				right = true;
-				setVelocity(1.5, "");
+				setVelocity(3, "");
 			}
 			if (key == KeyEvent.VK_A) {
 				direction = Direction.LEFT;
 				left = true;
-				setVelocity(-1.5, "");
+				setVelocity(-3, "");
 			} 
 		}
 		if (key == KeyEvent.VK_SHIFT) {
@@ -537,6 +542,9 @@ public class Player extends Entity implements Moveable, Keyable {
 			Utils.debug("TESTIMG");
 		}
 	}
+	
+	
+	
 
 
 }
