@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
@@ -412,7 +413,9 @@ public class Screen extends JPanel implements ActionListener {
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			Main.getPlayer().keyReleased(e);
+			try{
+				Main.getPlayer().keyReleased(e);
+			} catch(NullPointerException ex){}
 			for (Sprite sprite : objects) {
 				if (sprite instanceof Keyable)
 					((Keyable) sprite).keyReleased(e);
@@ -423,6 +426,14 @@ public class Screen extends JPanel implements ActionListener {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			int key = e.getKeyCode();
+			
+			if(key == KeyEvent.VK_Q){
+				try{
+					System.out.println(Utils.readConfig());
+				} catch(IOException ex){
+					ex.printStackTrace();
+				}
+			}
 			if (key == KeyEvent.VK_5) {
 				for (Sprite sprite : objects) {
 

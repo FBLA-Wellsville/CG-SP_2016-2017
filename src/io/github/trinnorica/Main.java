@@ -7,6 +7,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.yaml.snakeyaml.Yaml;
+
 import io.github.trinnorica.entity.Player;
 import io.github.trinnorica.objects.Floor;
 import io.github.trinnorica.utils.Board;
@@ -60,6 +62,8 @@ public class Main {
 	}
 	
 	public static void setBoard(int board){
+		
+		
 		clickables.clear();
 		Main.board = board;
 		screen.board = board;
