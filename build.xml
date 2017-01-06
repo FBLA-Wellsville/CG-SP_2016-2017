@@ -1,9 +1,10 @@
-<project name="Upsilon" default="dist" basedir=".">
+<project name="Trinnorica" default="dist" basedir=".">
 	<description>simple example build file</description>
 	<!-- set global properties for this build -->
 	<property name="src" location="src"/>
 	<property name="build" location="build"/>
 	<property name="dist" location="downloads"/>
+	<property name="Title" value="Eldiseth" />
 	<property name="major" value="2" />
 	<property name="minor" value="4" />
 	<property name="distro" value="15" />
