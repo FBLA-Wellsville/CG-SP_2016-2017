@@ -7,7 +7,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.yaml.snakeyaml.Yaml;
 
 import io.github.trinnorica.entity.Player;
 import io.github.trinnorica.objects.Floor;
