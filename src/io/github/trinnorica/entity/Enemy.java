@@ -31,9 +31,6 @@ public class Enemy extends Entity implements Moveable {
 	public boolean jumping = false;
 	private Tool tool;
 	private int s = 1;
-	private Image walking;
-	
-	private Image standing;
 	private EntityType type;
 
 	public Enemy(int x, int y,EntityType type) {
@@ -85,6 +82,17 @@ public class Enemy extends Entity implements Moveable {
 
 	@Override
 	public void move() {
+		if(velocity.x != 0){
+			if(moving == false){
+				moving = true;
+				loadImage(walking);
+			}
+		} else {
+			if(moving){
+				loadImage(standing);
+				moving = false;
+			}
+		}
 		onground = false;
 
 		if(getPolygon().intersects(Main.getPlayer().getPolygon().getBounds())){

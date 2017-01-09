@@ -40,6 +40,17 @@ public class TestEntity extends Entity implements Moveable {
 
 	@Override
 	public void move() {
+		if(velocity.x != 0){
+			if(moving == false){
+				moving = true;
+				loadImage(walking);
+			}
+		} else {
+			if(moving){
+				loadImage(standing);
+				moving = false;
+			}
+		}
 		onground = false;
 		
 //		if(velocity.y > 0){
