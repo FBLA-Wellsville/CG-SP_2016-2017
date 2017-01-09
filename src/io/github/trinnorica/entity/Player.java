@@ -175,10 +175,7 @@ public class Player extends Entity implements Moveable, Keyable {
 							else
 								tool.velocity.x = -2;
 							Main.addSprite(getTool());
-						} catch (NullPointerException ex) {
-							// This just means that the player doesn't have a
-							// tool in their hand.
-						}
+						} catch (NullPointerException ex) {}
 						setTool((Tool) s);
 						Audio.playSound(Sound.TOOL);
 						tooling = false;
@@ -272,8 +269,8 @@ public class Player extends Entity implements Moveable, Keyable {
 				if (x <= 0) {
 					x = 1;
 				}
-				if (x >= (Main.getScreen().getWidth() - getWidth())) {
-					x = Main.getScreen().getWidth() - getWidth() - 10;
+				if (x+width >= (Main.getScreen().getWidth())) {
+					x = Main.getScreen().getWidth() - width-3;
 				}
 			}
 

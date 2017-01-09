@@ -82,6 +82,7 @@ public class Enemy extends Entity implements Moveable {
 
 	@Override
 	public void move() {
+		Utils.debug(velocity.x + "");
 		if(velocity.x != 0){
 			if(moving == false){
 				moving = true;
@@ -114,11 +115,11 @@ public class Enemy extends Entity implements Moveable {
 
 		if (onground) {
 			if (x > Main.getPlayer().x) {
-				setVelocity(-2, "");
+				setVelocity(-1, "");
 				direction = Direction.LEFT;
 			}
 			if (x < Main.getPlayer().x) {
-				setVelocity(2, "");
+				setVelocity(1, "");
 				direction = Direction.RIGHT;
 			}
 		}
@@ -136,7 +137,7 @@ public class Enemy extends Entity implements Moveable {
 
 		// Utils.debug("X: " + velocity.x + "\nY: " + velocity.y);
 		if (onground)
-			setVelocity(0, 0);
+			setVelocity("", 0);
 
 	}
 

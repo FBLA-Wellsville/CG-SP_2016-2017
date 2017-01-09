@@ -89,6 +89,9 @@ public class Main {
 			
 			
 		}
+		if(board == Board.NAME){
+				
+		}
 		if(board == Board.CREDITS){
 			Audio.playBackground(Sound.BACKGROUND_CREDITS);
 			screen.creditvar = 0;
