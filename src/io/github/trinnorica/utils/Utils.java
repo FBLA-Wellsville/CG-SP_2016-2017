@@ -216,13 +216,13 @@ public class Utils {
 					'F', 'B', 'B', 'B', 'B', 'B', 'B', 'D', 'D', 'D', 'X', 'X', 'X', 'X', 'B', 'B', 'B', 'B', 'B', 'B',
 					'B', 'B', 'B', 'B', 'F', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'F', 'B', 'B', 'B', 'B', 'B', 'B', };
 		case 4:
-			return new char[] { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',
-					'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',
-					'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',
-					'X', 'X', 'X', 'X', 'X', 'K', 'X', '☺', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',
+			return new char[] { 
+					'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',
+					'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'K', 'X',
+					'☺', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',
 					'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'K', 'X', 'A',
-					'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',
-					'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'A', 'A', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',
+					'A', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',
+					'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'A', 'A', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',
 					'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',
 					'A', 'A', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',
 					'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'A', 'A', 'X', 'X', 'A', 'A', 'X', 'X',
@@ -536,10 +536,10 @@ public class Utils {
 		}
 	}
 
-	public static String readConfig() throws IOException{
+	public static String readConfig() throws IOException {
 		byte[] encoded = Files.readAllBytes(Paths.get(config.getPath()));
 		return new String(encoded, Charset.defaultCharset());
-		
+
 	}
 
 }
