@@ -2,6 +2,7 @@ package io.github.trinnorica.entity;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.util.ConcurrentModificationException;
 import java.util.Timer;
@@ -19,6 +20,7 @@ import io.github.trinnorica.utils.particles.formats.Stay;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.tasks.CheckLanding;
+import res.ExternalFile;
 
 public class Entity extends Sprite implements Moveable {
 
@@ -35,11 +37,14 @@ public class Entity extends Sprite implements Moveable {
 	
 	protected int score;
 //	protected Tool tool;
-	public boolean walking;
+	public boolean walkingb;
 	public Velocity velocity = new Velocity(0,0);
 //	protected Direction direction = Direction.RIGHT;
 //	protected Direction facing = Direction.RIGHT;
 //	protected Interaction interact;
+	protected boolean moving = false;
+	protected Image standing = ExternalFile.loadTexture("entity/player/player.png");
+	protected Image walking = ExternalFile.loadTexture("entity/player/walk.gif");
 
 	public Entity(int x, int y) {
 		super(x, y);

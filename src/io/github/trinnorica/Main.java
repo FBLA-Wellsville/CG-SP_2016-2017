@@ -7,7 +7,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.yaml.snakeyaml.Yaml;
 
 import io.github.trinnorica.entity.Player;
 import io.github.trinnorica.objects.Floor;
@@ -69,6 +68,7 @@ public class Main {
 		screen.board = board;
 		screen.objects.clear();
 		if(board == Board.MAIN){
+			Audio.playBackground(Sound.BACKGROUND_MENU);
 			screen.menuvar = 0;
 			screen.objects.clear();
 			
@@ -78,7 +78,7 @@ public class Main {
 		if(board == Board.GAME){
 			try{
 				Main.clearObjects();
-
+				Audio.playBackground(Sound.BACKGROUND_GRASS);
 				LevelBuilder l = new LevelBuilder();
 				int level = Utils.getLevel();
 				l.buildLevel(Utils.getLevelBlueprint(level),Utils.getLevelWidth(level),Utils.getLevelHeight(level));
@@ -90,6 +90,7 @@ public class Main {
 			
 		}
 		if(board == Board.CREDITS){
+			Audio.playBackground(Sound.BACKGROUND_CREDITS);
 			screen.creditvar = 0;
 		}
 	}
