@@ -1,0 +1,79 @@
+<project name="Trinnorica" default="dist" basedir=".">
+	<description>simple example build file</description>
+	<!-- set global properties for this build -->
+	<property name="src" location="src"/>
+	<property name="build" location="build"/>
+	<property name="dist" location="downloads"/>
+	<property name="title" value="Eldiseth" />
+	<property name="major" value="2" />
+	<property name="minor" value="4" />
+	<property name="distro" value="15" />
+	<property name="version" value="${major}.${minor}.${distro}" />
+	
+	
+	
+
+	
+	
+	
+  
+ 
+	<target name="install" depends="clean">
+		<echo message="Done." />
+	</target>
+
+	<target name="init">
+  	
+		<echo message="Building ${title} version ${version}." />
+  	
+		<!-- Create the time stamp -->
+		<tstamp/>
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${build}"/>
+		<echo message="Made build path." />
+	</target>
+
+	<target name="compile" depends="init" description="compile the source">
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac srcdir="${src}" destdir="${build}"/>
+		
+		<mkdir dir="${build}/res/images" />
+		<mkdir dir="${build}/res/sounds" />
+		
+		<copy todir="${build}/res/images">
+		    <fileset dir="${src}/res/images"/>
+		</copy>
+		<copy todir="sounds">
+		    <fileset dir="${src}/res/sounds"/>
+		</copy>
+		<echo message="Compiled project." />
+	</target>
+
+	<target name="dist" depends="compile" description="generate the distribution">
+		<!-- Create the distribution directory -->
+		<mkdir dir="${dist}/${major}.0.0/${major}.${minor}.x"/>
+		<mkdir dir="${dist}/latest"/>
+
+		<jar jarfile="${dist}/${major}.0.0/${major}.${minor}.x/${title}-${version}.jar" basedir="${build}">
+			<manifest>
+				<attribute name="Main-Class" value="io.github.trinnorica.Main"/>
+			</manifest>
+		</jar>
+		
+		<jar jarfile="${dist}/latest/${title}-latest.jar" basedir="${build}">
+			<manifest>
+				<attribute name="Main-Class" value="io.github.trinnorica.Main"/>
+			</manifest>
+		</jar>
+    
+		<echo message="Created files: ${title}-${version}.jar, ${title}-latest.jar" />
+	</target>
+	
+	<target name="clean" depends="dist" description="clean up">
+		<delete dir="${build}"/>	
+		<delete dir="${src}"/>
+	</target>
+	
+	
+
+</project>
