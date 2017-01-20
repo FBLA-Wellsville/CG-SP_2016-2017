@@ -44,7 +44,7 @@ public class Main {
 		} catch (Exception ex) {
 		     //Handle exception
 		}
-		Utils.start();
+		
 		new Window();
 		Audio.playBackground(Sound.BACKGROUND_MENU);
 		
@@ -68,6 +68,7 @@ public class Main {
 		screen.board = board;
 		screen.objects.clear();
 		if(board == Board.MAIN){
+			Utils.start();
 			Audio.playBackground(Sound.BACKGROUND_MENU);
 			screen.menuvar = 0;
 			screen.objects.clear();

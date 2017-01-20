@@ -11,6 +11,10 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.stratos.merchants.utils.merchants.Merchant;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.utils.particles.ParticleFormat;
@@ -22,9 +26,10 @@ public class Utils {
 	private static Version version;
 	private static int level = 0;
 	private static File config;
+	private static Map<String,Integer> highscores = new HashMap<>();
 
 	public static void start() {
-		config = new File("/Kansas/WELLSVILLE_HIGHSCHOOL/Eldiseth/config.txt");
+		config = new File("/Kansas/WELLSVILLE_HIGHSCHOOL/Eldiseth/" + Main.getScreen().getName() + ".txt");
 		if (!config.exists())
 			try {
 				config.createNewFile();
@@ -432,7 +437,7 @@ public class Utils {
 	}
 
 	public static void debug(String message) {
-		System.out.print("DEBUG:\n" + message + "\n");
+		if(Main.getScreen().debug) System.out.print("DEBUG:\n" + message + "\n");
 	}
 
 	public static void saveConfig(String score) {
@@ -452,6 +457,13 @@ public class Utils {
 		byte[] encoded = Files.readAllBytes(Paths.get(config.getPath()));
 		return new String(encoded, Charset.defaultCharset());
 
+	}
+
+	public static Map<String, Integer> getHighScores() {
+		if(highscores.size() == 0){
+			for(File file: config.getParentFile().listFiles()) {}
+			
+		}
 	}
 
 }

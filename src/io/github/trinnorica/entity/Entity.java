@@ -96,9 +96,7 @@ public class Entity extends Sprite implements Moveable {
 //		Utils.displayMessage(new Random().nextInt(), "-" + i, x, y, 100, "#FF0000", 15,Bridge.getGame().getFont());
 //		Utils.displayMessage(new Random().nextInt(), getHealth() + "/" + getMaxHealth(), x, y - 15, 100, "#FF0000", 15,Bridge.getGame().getFont());
 //
-		Utils.debug(i + "");
 		if (health <= 0) {
-			Utils.debug(health + "");
 			this.kill(reason);
 		}
 
