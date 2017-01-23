@@ -32,9 +32,11 @@ public class Main {
 	private static Player player;
 	private static int board;
 	public static String deathmessage = "";
+	public static int score = 0;
 	
 	
 	public static void main(String[] args){
+		
 		try {
 		     GraphicsEnvironment ge = 
 		         GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -46,6 +48,7 @@ public class Main {
 		}
 		
 		new Window();
+		
 		Audio.playBackground(Sound.BACKGROUND_MENU);
 		
 	}
@@ -53,8 +56,9 @@ public class Main {
 		return pixel;
 	}
 	
-	public static void setScreen(Screen screen){
+	public static Screen setScreen(Screen screen){
 		Main.screen = screen;
+		return screen;
 	}
 	public static Screen getScreen(){
 		return screen;
@@ -63,12 +67,13 @@ public class Main {
 	public static void setBoard(int board){
 		
 		
+		
 		clickables.clear();
 		Main.board = board;
 		screen.board = board;
 		screen.objects.clear();
 		if(board == Board.MAIN){
-			Utils.start();
+			
 			Audio.playBackground(Sound.BACKGROUND_MENU);
 			screen.menuvar = 0;
 			screen.objects.clear();
@@ -134,6 +139,9 @@ public class Main {
 		}catch(NullPointerException ex){}
 		player = player2;
 		addSprite(player);
+	}
+	public static void setScore(int sscore) {
+		score = sscore;
 	}
 	
 }

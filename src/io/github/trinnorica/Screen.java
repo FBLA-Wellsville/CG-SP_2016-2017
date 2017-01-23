@@ -16,7 +16,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
-import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.TimerTask;
 import java.util.regex.Pattern;
@@ -77,6 +77,7 @@ public class Screen extends JPanel implements ActionListener {
 	private Pattern alphanumeric = Pattern.compile("[^a-zA-Z0-9]");
 	private String name = "___";
 	private boolean typing = false;
+	private int s = 0;
 
 	private boolean leaderboard= true;
 
@@ -107,7 +108,7 @@ public class Screen extends JPanel implements ActionListener {
 		setSize(new Dimension(1920, 1080));
 		setMinimumSize(new Dimension(1920, 1080));
 
-		Main.setScreen(this);
+		
 		java.util.Timer t = new java.util.Timer();
 		t.schedule(new TimerTask() {
 			public void run() {
@@ -323,15 +324,26 @@ public class Screen extends JPanel implements ActionListener {
 				Utils.drawOutlineString(g, "Leaderboard",
 						(getWidth() - 100) - (g.getFontMetrics().stringWidth("Leaderboard") / 2),
 						getHeight() / 3 + (Main.getFont().getSize() * 12), Color.YELLOW, Color.WHITE, 0);
-				Map<String, Integer> scores = Utils.getHighScores();
-				String[] highscores = new String[] { "1", "2", "3", "4", "5", "6" };
-				for (int l = 0; l != highscores.length; l++) {
-					Utils.drawOutlineString(g, highscores[l],
-							(getWidth() - 100) - (g.getFontMetrics().stringWidth(highscores[l]) / 2),
-							(getHeight() / 3 + (Main.getFont().getSize() * 12))
-									+ (((Main.getFont().getSize() * 12) * (l + 1)) + (l * 4)),
-							Color.WHITE, Color.WHITE, 0);
-			}
+				
+				if(Utils.getHighScores().size() < 6){
+					//TODO
+				}
+				
+				for(Entry<String,Integer> entry : Utils.getHighScores().entrySet()){
+					
+					Utils.drawOutlineString(g, entry.getKey(), (getWidth() - 100) - (g.getFontMetrics().stringWidth(entry.getKey()) / 2),
+							(getHeight() / 3 + (Main.getFont().getSize() * 12))+ (((Main.getFont().getSize() * 12) * (s + 1)) + (s * 4)), Color.WHITE, Color.black, 1);
+					
+					
+					s=s+1;
+				}
+				s=0;
+//				for(int i=0;i!=Utils.getHighScores().size();i++){
+//					Utils.drawOutlineString(g, Utils.getHighScores(),(getWidth() - 100) - (g.getFontMetrics().stringWidth(highscores[l]) / 2),(getHeight() / 3 + (Main.getFont().getSize() * 12))+ (((Main.getFont().getSize() * 12) * (l + 1)) + (l * 4)),
+//							Color.WHITE, Color.WHITE, 0);
+//				}
+				
+			
 
 			
 
@@ -470,6 +482,7 @@ public class Screen extends JPanel implements ActionListener {
 				if(key == KeyEvent.VK_ENTER){
 					if(!name.contains("_")){
 						typing = false;
+						Utils.createScore(name);
 						Main.setBoard(Board.MAIN);
 					}
 				}

@@ -19,7 +19,9 @@ public class Window extends JFrame {
 		setPreferredSize(new Dimension(1920/2, 1080/2));
 		
 		pack();
-		add(new Screen());
+		
+		add(Main.setScreen(new Screen()));
+		Utils.start();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(ExternalFile.loadTexture("logos/logo.png"));
 		setTitle("Eldesith " + Utils.getVersion());

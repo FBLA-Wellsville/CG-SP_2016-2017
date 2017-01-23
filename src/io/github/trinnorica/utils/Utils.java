@@ -14,8 +14,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.stratos.merchants.utils.merchants.Merchant;
-
 import io.github.trinnorica.Main;
 import io.github.trinnorica.utils.particles.ParticleFormat;
 import io.github.trinnorica.utils.particles.ParticleType;
@@ -27,17 +25,21 @@ public class Utils {
 	private static int level = 0;
 	private static File config;
 	private static Map<String,Integer> highscores = new HashMap<>();
+	private static File file;
 
 	public static void start() {
-		config = new File("/Kansas/WELLSVILLE_HIGHSCHOOL/Eldiseth/" + Main.getScreen().getName() + ".txt");
+		config = new File("C:/KANSAS_WELLSVILLE_HIGHSCHOOL/Eldiseth/" + Main.getScreen().getName() + ".conf");
 		if (!config.exists())
 			try {
+				config.getParentFile().mkdirs();
 				config.createNewFile();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		version = ExternalFile.getVersion__BOOT_ONLY__();
+		
+		sendToConfig(version.getVersion());
 	}
 
 	public static void drawOutlineString(Graphics g, String string, int x, int y, Color text, Color outline,
@@ -440,7 +442,7 @@ public class Utils {
 		if(Main.getScreen().debug) System.out.print("DEBUG:\n" + message + "\n");
 	}
 
-	public static void saveConfig(String score) {
+	public static void sendToConfig(String score) {
 		try {
 			// Create file
 			FileWriter fstream = new FileWriter(config);
@@ -458,12 +460,87 @@ public class Utils {
 		return new String(encoded, Charset.defaultCharset());
 
 	}
+	
+	public static String readFile(File file) throws IOException {
+		byte[] encoded = Files.readAllBytes(Paths.get(file.getPath()));
+		return new String(encoded, Charset.defaultCharset());
+	}
 
 	public static Map<String, Integer> getHighScores() {
+		Map<String, Integer> scores = new HashMap<>();
 		if(highscores.size() == 0){
-			for(File file: config.getParentFile().listFiles()) {}
+			for(File file: config.getParentFile().listFiles()) {
+				if(file.getName().contains(".txt")){
+					try {
+						scores.put(file.getName().replace(".yml", ""), Integer.parseInt(readFile(file)));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
 			
 		}
+		return scores;
+	}
+
+	public static void createScore(String name) {
+		file = new File(config.getParentFile() + "/" + name + ".txt");
+
+		if(!file.exists())
+			try {
+				file.createNewFile();
+				sendScore(0,file);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		else {
+			try {
+				setScore(Integer.parseInt(readFile(file)));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void setScore(int score){
+		Main.setScore(score);
+	}
+
+	public static void sendScore(int score,File file) {
+		
+		BufferedWriter writer = null;
+        try {
+            //create a temporary file
+
+            // This will output the full path where the file will be written to...
+//            System.out.println(logFile.getCanonicalPath());
+
+            writer = new BufferedWriter(new FileWriter(file));
+            writer.write(score);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // Close the writer regardless of what happens...
+                writer.close();
+            } catch (Exception e) {
+            }
+        }
+		
+//		try {
+//			// Create file
+//			FileWriter fstream = new FileWriter(file);
+//			BufferedWriter out = new BufferedWriter(fstream);
+//			out.write(score);
+//			// Close the output stream
+//			out.close();
+//			System.out.println("SCORE: " + score);
+//		} catch (Exception e) {// Catch exception if any
+//			System.err.println("Error: " + e.getMessage());
+//		}
+
 	}
 
 }

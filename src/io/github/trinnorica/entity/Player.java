@@ -141,10 +141,12 @@ public class Player extends Entity implements Moveable, Keyable {
 					continue;
 				if (s instanceof GoldCoin) {
 					Main.removeSprite(s);
-					score = score + 10;
+					Main.score = Main.score + 10;
 					Audio.playSound(Sound.SCORE);
 				}
 				if (s instanceof Flag) {
+					//TODO
+					Utils.sendScore(Main.score,null);
 					levelup();
 					if (damaged) {
 						setVelocity(0, 0);
