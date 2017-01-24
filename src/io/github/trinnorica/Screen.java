@@ -313,6 +313,7 @@ public class Screen extends JPanel implements ActionListener {
 			Utils.drawOutlineString(g, "Level: " + Utils.getLevel(),
 					getWidth() - (g.getFontMetrics().stringWidth("Level: " + Utils.getLevel())), 20,
 					Color.decode("#99db45"), Color.WHITE, 1);
+			Utils.drawOutlineString(g, "Score: " + Main.score, getWidth() - (g.getFontMetrics().stringWidth("Score: " + Main.score)), 42, Color.decode("#99db45"), Color.white, 1);
 
 			// Draw Leaderboard
 			
@@ -325,14 +326,12 @@ public class Screen extends JPanel implements ActionListener {
 						(getWidth() - 100) - (g.getFontMetrics().stringWidth("Leaderboard") / 2),
 						getHeight() / 3 + (Main.getFont().getSize() * 12), Color.YELLOW, Color.WHITE, 0);
 				
-				if(Utils.getHighScores().size() < 6){
-					//TODO
-				}
 				
 				for(Entry<String,Integer> entry : Utils.getHighScores().entrySet()){
 					
-					Utils.drawOutlineString(g, entry.getKey(), (getWidth() - 100) - (g.getFontMetrics().stringWidth(entry.getKey()) / 2),
+					Utils.drawOutlineString(g, entry.getKey(), (getWidth() - 100) - (g.getFontMetrics().stringWidth(entry.getKey())),
 							(getHeight() / 3 + (Main.getFont().getSize() * 12))+ (((Main.getFont().getSize() * 12) * (s + 1)) + (s * 4)), Color.WHITE, Color.black, 1);
+					Utils.drawOutlineString(g, entry.getValue()+"", getWidth() - g.getFontMetrics().stringWidth(entry.getValue()+""), ((getHeight() / 3 + (Main.getFont().getSize() * 12))+ (((Main.getFont().getSize() * 12) * (s + 1)) + (s * 4))), Color.WHITE, Color.BLACK, 1);
 					
 					
 					s=s+1;

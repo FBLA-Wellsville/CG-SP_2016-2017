@@ -11,8 +11,14 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.utils.particles.ParticleFormat;
@@ -23,23 +29,20 @@ public class Utils {
 
 	private static Version version;
 	private static int level = 0;
-	private static File config;
-	private static Map<String,Integer> highscores = new HashMap<>();
-	private static File file;
+	private static HashMap<String,Integer> highscores = new HashMap<>();
+	private static ValueComparator bvc = new ValueComparator(highscores);
+	private static TreeMap<String,Integer> thighscores = new TreeMap<>(bvc);
+	private static File file = null;
+	private static File folder;
 
 	public static void start() {
-		config = new File("C:/KANSAS_WELLSVILLE_HIGHSCHOOL/Eldiseth/" + Main.getScreen().getName() + ".conf");
-		if (!config.exists())
-			try {
-				config.getParentFile().mkdirs();
-				config.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		folder = new File("C:/KANSAS_WELLSVILLE_HIGHSCHOOL/Eldiseth/");
+		if (!folder.exists())
+			folder.mkdirs();
+		
+		
 		version = ExternalFile.getVersion__BOOT_ONLY__();
 		
-		sendToConfig(version.getVersion());
 	}
 
 	public static void drawOutlineString(Graphics g, String string, int x, int y, Color text, Color outline,
@@ -442,24 +445,24 @@ public class Utils {
 		if(Main.getScreen().debug) System.out.print("DEBUG:\n" + message + "\n");
 	}
 
-	public static void sendToConfig(String score) {
-		try {
-			// Create file
-			FileWriter fstream = new FileWriter(config);
-			BufferedWriter out = new BufferedWriter(fstream);
-			out.write(score);
-			// Close the output stream
-			out.close();
-		} catch (Exception e) {// Catch exception if any
-			System.err.println("Error: " + e.getMessage());
-		}
-	}
+//	public static void sendToConfig(String score) {
+//		try {
+//			// Create file
+//			FileWriter fstream = new FileWriter(config);
+//			BufferedWriter out = new BufferedWriter(fstream);
+//			out.write(score);
+//			// Close the output stream
+//			out.close();
+//		} catch (Exception e) {// Catch exception if any
+//			System.err.println("Error: " + e.getMessage());
+//		}
+//	}
 
-	public static String readConfig() throws IOException {
-		byte[] encoded = Files.readAllBytes(Paths.get(config.getPath()));
-		return new String(encoded, Charset.defaultCharset());
-
-	}
+//	public static String readConfig() throws IOException {
+//		byte[] encoded = Files.readAllBytes(Paths.get(config.getPath()));
+//		return new String(encoded, Charset.defaultCharset());
+//
+//	}
 	
 	public static String readFile(File file) throws IOException {
 		byte[] encoded = Files.readAllBytes(Paths.get(file.getPath()));
@@ -467,29 +470,49 @@ public class Utils {
 	}
 
 	public static Map<String, Integer> getHighScores() {
-		Map<String, Integer> scores = new HashMap<>();
+		
+		thighscores.clear();
+		
 		if(highscores.size() == 0){
-			for(File file: config.getParentFile().listFiles()) {
-				if(file.getName().contains(".txt")){
+			for(File file: folder.listFiles()) {
+				if(file.getName().contains(".score")){
 					try {
-						scores.put(file.getName().replace(".yml", ""), Integer.parseInt(readFile(file)));
+						highscores.put(file.getName().replace(".score", ""), Integer.parseInt(readFile(file)));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
 			}
+
 			
 		}
-		return scores;
+		thighscores.putAll(highscores);
+		return thighscores;
+	}
+
+	public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue( Map<K, V> map ) {
+		List<Map.Entry<K, V>> list = new LinkedList<>( map.entrySet() );
+		Collections.sort( list, new Comparator<Map.Entry<K, V>>(){
+			@Override
+			public int compare( Map.Entry<K, V> o1, Map.Entry<K, V> o2 ){
+				return ( o1.getValue() ).compareTo( o2.getValue() );
+			}
+		});
+		Map<K, V> result = new LinkedHashMap<>();
+		for (Map.Entry<K, V> entry : list){
+			result.put( entry.getKey(), entry.getValue() );
+		}
+		return result;
 	}
 
 	public static void createScore(String name) {
-		file = new File(config.getParentFile() + "/" + name + ".txt");
+		file = new File(folder.getPath() + "/" + name + ".score");
+		
 
 		if(!file.exists())
 			try {
 				file.createNewFile();
-				sendScore(0,file);
+				sendScore(0);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -502,13 +525,16 @@ public class Utils {
 				e.printStackTrace();
 			}
 		}
+		
 	}
 	
 	public static void setScore(int score){
 		Main.setScore(score);
 	}
 
-	public static void sendScore(int score,File file) {
+	public static void sendScore(int score) {
+		
+		Main.setScore(score);
 		
 		BufferedWriter writer = null;
         try {
@@ -518,7 +544,7 @@ public class Utils {
 //            System.out.println(logFile.getCanonicalPath());
 
             writer = new BufferedWriter(new FileWriter(file));
-            writer.write(score);
+            writer.write(score +"");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -542,5 +568,5 @@ public class Utils {
 //		}
 
 	}
-
+	
 }

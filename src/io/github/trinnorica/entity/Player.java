@@ -146,7 +146,7 @@ public class Player extends Entity implements Moveable, Keyable {
 				}
 				if (s instanceof Flag) {
 					//TODO
-					Utils.sendScore(Main.score,null);
+					Utils.sendScore(Main.score);
 					levelup();
 					if (damaged) {
 						setVelocity(0, 0);
