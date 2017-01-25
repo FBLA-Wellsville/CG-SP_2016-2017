@@ -41,7 +41,7 @@ public class Player extends Entity implements Moveable, Keyable {
 
 	double dx = 0;
 	double dy = 0;
-	boolean falling = false;
+	public boolean falling = false;
 	public boolean onground = false;
 	public boolean jumping = false;
 	public boolean flying = false;
@@ -60,9 +60,16 @@ public class Player extends Entity implements Moveable, Keyable {
 	private boolean sprint = false;
 	private boolean tooling = false;
 	private int b = 5;
+	int spawnx = 0;
+	int spawny = 0;
 
 	public Player(int x, int y) {
 		super(x, y);
+		this.spawnx = x;
+		this.spawny = y;
+		this.x = spawnx;
+		this.y = spawny;
+		
 		initPlayer();
 		maxhealth = 20;
 		health = maxhealth;
@@ -95,8 +102,8 @@ public class Player extends Entity implements Moveable, Keyable {
 			setVelocity(0, 0);
 		}
 		damaged = false;
-		x = 0;
-		y = 0;
+		x = spawnx;
+		y = spawny;
 		lives = lives - 1;
 		health = 20;
 		if (lives == 0) {
@@ -209,11 +216,11 @@ public class Player extends Entity implements Moveable, Keyable {
 						}
 						break;
 					case LEFT:
-						if (left)
+						if (left&&!jumping&&!falling)
 							velocity.x = 0;
 						break;
 					case RIGHT:
-						if (right)
+						if (right&&!jumping&&!falling)
 							velocity.x = 0;
 						break;
 					default:
@@ -232,6 +239,7 @@ public class Player extends Entity implements Moveable, Keyable {
 				velocity.y = velocity.y + Main.gravity;
 
 		if (flying || climbing) {
+
 			if (onground) {
 				if (velocity.y > 0) {
 					dy = 0;
@@ -242,7 +250,7 @@ public class Player extends Entity implements Moveable, Keyable {
 				dy = velocity.y;
 			}
 
-			dx = velocity.x * 2;
+			dx = velocity.x;
 
 			// if(x <=0 || x>=(Main.getScreen().getWidth()-getWidth())){
 			// dx=0;
@@ -262,11 +270,15 @@ public class Player extends Entity implements Moveable, Keyable {
 			dy = 0;
 		}
 
-		else {
+		else
+
+		{
 			if (velocity.y < 0) {
 				// jumping = true;
-			} else
+			} else{
 				jumping = false;
+				falling = true;
+			}
 			if (onground) {
 				falling = false;
 				setVelocity("", 0);
@@ -411,12 +423,12 @@ public class Player extends Entity implements Moveable, Keyable {
 
 		if (key == KeyEvent.VK_W) {
 			if (flying || climbing)
-				setVelocity("", -3);
+				setVelocity("", -2);
 		}
 
 		if (key == KeyEvent.VK_S) {
 			if (flying || climbing)
-				setVelocity("", 3);
+				setVelocity("", 2);
 		}
 
 		if (!damaged) {

@@ -21,7 +21,6 @@ import res.ExternalFile;
 public class Level {
 	
 	List<Sprite> sprites = new ArrayList<>();
-	List<Entity> entities = new ArrayList<>();
 
 	int y = 0;
 	int x = 0;
@@ -51,12 +50,12 @@ public class Level {
 				sprites.add(new GoldCoin(x*30+(15/2), y*30+(15/2)));
 				break;
 			case PLAYER:
-				Main.setPlayer(new Player(x*30, y*30));
-				Main.getPlayer().x = x*30;
-				Main.getPlayer().y = y*30;
+				sprites.add(new Player(x*30,y*30));
+//				Main.getPlayer().x = x*30;
+//				Main.getPlayer().y = y*30;
 				break;
 			case TEST_ENTITY:
-				entities.add(new Enemy(x*30+200, y*30,EntityType.OGRE));
+				sprites.add(new Enemy(x*30+200, y*30,EntityType.OGRE));
 				break;
 			case DIRT:
 				sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/dirt.png"),30,30));
@@ -107,10 +106,8 @@ public class Level {
 				
 				try{
 					
-					if(LevelFactory.decode(c[i+width]).getSpriteType().equals(SpriteType.FLOOR)){//TODO
-						if(LevelFactory.decode(c[i+width+1]).getSpriteType().equals(SpriteType.FLOOR)){
-							sprites.add(new Floor(x*30,y*30,Floor.DIRT_BACKGROUND));
-						}
+					if(LevelFactory.decode(c[i-width]).getSpriteType().equals(SpriteType.FLOOR)){
+						sprites.add(new Floor(x*30,y*30,Floor.DIRT_BACKGROUND));
 						break;
 					}
 					
@@ -178,7 +175,6 @@ public class Level {
 			sprites.add(new Empty(x*30,y*30));
 			x=x+1;
 		}
-		sprites.add(new Player(0, 0));
 	}
 
 }

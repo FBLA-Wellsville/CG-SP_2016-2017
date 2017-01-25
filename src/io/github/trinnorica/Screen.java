@@ -258,6 +258,7 @@ public class Screen extends JPanel implements ActionListener {
 
 					if (sprite instanceof Player) {
 						objects_remove.add(sprite);
+						
 					}
 					if (sprite instanceof Empty) {
 						objects_remove.add(sprite);
@@ -410,19 +411,20 @@ public class Screen extends JPanel implements ActionListener {
 			try {
 				Utils.drawOutlineString(g, "Flying: " + Main.getPlayer().flying, 0, 100, Color.WHITE, Color.BLACK, 1);
 				Utils.drawOutlineString(g, "Jumping: " + Main.getPlayer().jumping, 0, 120, Color.WHITE, Color.BLACK, 1);
-				Utils.drawOutlineString(g, "Onground: " + Main.getPlayer().onground, 0, 140, Color.WHITE, Color.BLACK,
+				Utils.drawOutlineString(g, "Falling: " + Main.getPlayer().falling, 0, 140, Color.WHITE, Color.BLACK, 1);
+				Utils.drawOutlineString(g, "Onground: " + Main.getPlayer().onground, 0, 160, Color.WHITE, Color.BLACK,
 						1);
 
-				Utils.drawOutlineString(g, "Climbing: " + Main.getPlayer().climbing, 0, 160, Color.WHITE, Color.BLACK,
+				Utils.drawOutlineString(g, "Climbing: " + Main.getPlayer().climbing, 0, 180, Color.WHITE, Color.BLACK,
 						1);
 				if (Main.getPlayer().getTool() != null)
-					Utils.drawOutlineString(g, "Tool: " + Main.getPlayer().getTool().getClass().getSimpleName(), 0, 180,
+					Utils.drawOutlineString(g, "Tool: " + Main.getPlayer().getTool().getClass().getSimpleName(), 0, 200,
 							Color.WHITE, Color.BLACK, 1);
 				else
-					Utils.drawOutlineString(g, "Tool: null", 0, 180, Color.WHITE, Color.BLACK, 1);
-				Utils.drawOutlineString(g, "Left: " + Main.getPlayer().left, 0, 200, Color.WHITE, Color.BLACK, 1);
-				Utils.drawOutlineString(g, "Right: " + Main.getPlayer().right, 0, 220, Color.WHITE, Color.BLACK, 1);
-				Utils.drawOutlineString(g, "Location: " + Main.getPlayer().getLocation(), 0, 240, Color.WHITE,
+					Utils.drawOutlineString(g, "Tool: None", 0, 200, Color.WHITE, Color.BLACK, 1);
+				Utils.drawOutlineString(g, "Left: " + Main.getPlayer().left, 0, 220, Color.WHITE, Color.BLACK, 1);
+				Utils.drawOutlineString(g, "Right: " + Main.getPlayer().right, 0, 240, Color.WHITE, Color.BLACK, 1);
+				Utils.drawOutlineString(g, "Location: " + Main.getPlayer().getLocation(), 0, 260, Color.WHITE,
 						Color.BLACK, 1);
 				g.drawRect((int)Main.getPlayer().getPolygon().getBounds().getX(),(int)Main.getPlayer().getPolygon().getBounds().getY(),(int)Main.getPlayer().getPolygon().getBounds().getWidth(),(int)Main.getPlayer().getPolygon().getBounds().getHeight());
 				g.drawRect((int)Main.getPlayer().getXBounds().getBounds().getX(),(int)Main.getPlayer().getXBounds().getBounds().getY(),(int)Main.getPlayer().getXBounds().getBounds().getWidth(),(int)Main.getPlayer().getXBounds().getBounds().getHeight());
@@ -592,11 +594,7 @@ public class Screen extends JPanel implements ActionListener {
 					}
 				}
 			}
-			if (key == KeyEvent.VK_0) {
-				Main.clearObjects();
-				LevelBuilder l = new LevelBuilder();
-				l.buildLevel(new char[] { 'A', 'B', 'B', 'C', 'X', 'A', 'C', 'X', 'A', 'C', }, 10, 1);
-			}
+			
 
 			if (key == KeyEvent.VK_F3) {
 				debug = !debug;

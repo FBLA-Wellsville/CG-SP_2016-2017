@@ -8,16 +8,17 @@ public class LevelBuilder {
 	
 	public Level buildLevel(char[] c, int width, int height){
 		Main.clearObjects();
+		Player player = null;
 		Level l =  new Level(c,width,height);
 		for(Sprite s : l.sprites){
 			if(!(s instanceof Player))Main.addSprite(s);
-		}
-		for(Sprite s : l.entities){
-			if(!(s instanceof Player))Main.addSprite(s);
+			else player = (Player) s;
 		}
 		
-		Main.addSprite(Main.getPlayer());
-		
+		if(player == null){
+			player = new Player(1,1);
+		}
+		Main.setPlayer(player);
 		return l;
 	}
 
