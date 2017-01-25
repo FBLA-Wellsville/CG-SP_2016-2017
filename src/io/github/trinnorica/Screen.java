@@ -329,7 +329,9 @@ public class Screen extends JPanel implements ActionListener {
 				
 				for(Entry<String,Integer> entry : Utils.getHighScores().entrySet()){
 					
-					Utils.drawOutlineString(g, entry.getKey(), (getWidth() - 100) - (g.getFontMetrics().stringWidth(entry.getKey())),
+					if(s > 5) continue;
+					
+					Utils.drawOutlineString(g, entry.getKey(), (getWidth() - 190),
 							(getHeight() / 3 + (Main.getFont().getSize() * 12))+ (((Main.getFont().getSize() * 12) * (s + 1)) + (s * 4)), Color.WHITE, Color.black, 1);
 					Utils.drawOutlineString(g, entry.getValue()+"", getWidth() - g.getFontMetrics().stringWidth(entry.getValue()+""), ((getHeight() / 3 + (Main.getFont().getSize() * 12))+ (((Main.getFont().getSize() * 12) * (s + 1)) + (s * 4))), Color.WHITE, Color.BLACK, 1);
 					

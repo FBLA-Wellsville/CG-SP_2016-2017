@@ -81,9 +81,9 @@ public class Player extends Entity implements Moveable, Keyable {
 						(int) (getPolygon().getBounds().getX() + getPolygon().getBounds().getWidth() + b),
 						(int) (getPolygon().getBounds().getX() + getPolygon().getBounds().getWidth() + b),
 						(int) (getPolygon().getBounds().getX() - b) },
-				new int[] { (int) (getPolygon().getBounds().getY() - b), (int) (getPolygon().getBounds().getY() - b),
-						(int) (getPolygon().getBounds().getY() + getPolygon().getBounds().getHeight() + b),
-						(int) (getPolygon().getBounds().getY() + getPolygon().getBounds().getHeight() + b) },
+				new int[] { (int) (getPolygon().getBounds().getY()), (int) (getPolygon().getBounds().getY()),
+						(int) (getPolygon().getBounds().getY() + getPolygon().getBounds().getHeight()),
+						(int) (getPolygon().getBounds().getY() + getPolygon().getBounds().getHeight()) },
 				4);
 		// xbounds = new Rectangle((int)getPolygon().getBounds().getX()-1,
 		// (int)getPolygon().getBounds().getY()+1, 29, 32);

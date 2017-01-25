@@ -107,8 +107,11 @@ public class Level {
 				
 				try{
 					
-					if(LevelFactory.decode(c[i+width]).getSpriteType().equals(SpriteType.FLOOR)){
-						sprites.add(new Floor(x*30,y*30,Floor.DIRT_BACKGROUND));
+					if(LevelFactory.decode(c[i+width]).getSpriteType().equals(SpriteType.FLOOR)){//TODO
+						if(LevelFactory.decode(c[i+width+1]).getSpriteType().equals(SpriteType.FLOOR)){
+							sprites.add(new Floor(x*30,y*30,Floor.DIRT_BACKGROUND));
+						}
+						break;
 					}
 					
 					if(LevelFactory.decode(c[i+width+1]).getSpriteType().equals(SpriteType.FLOOR) && LevelFactory.decode(c[i+width-1]).getSpriteType().equals(SpriteType.FLOOR)){
