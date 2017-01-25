@@ -14,10 +14,23 @@ public enum LevelFactory {
 	//ALT 9
 	COIN('○',SpriteType.GOLD),
 	//ALT 2
-	TEST_ENTITY_AIR('☻',SpriteType.TEST_ENTITY),
+	OGRE('☻',SpriteType.OGRE),
+	//ALT 10
+	KNIGHT('◙',SpriteType.KNIGHT),
+	//ALT 11
+	DARK_KNIGHT('♂',SpriteType.DARK_KNIGHT),
+	//ALT 12
+	WIZARD('♀',SpriteType.WIZARD),
 	//ALT 1
 	PLAYER('☺',SpriteType.PLAYER),
-	
+	//ALT 4
+	STONE_SWORD('♦',SpriteType.TOOL),
+	//ALT 5
+	DARK_SWORD('♣',SpriteType.TOOL),
+	//ALT 6
+	STICK('♠',SpriteType.TOOL),
+	//ALT 7
+	BOW('•',SpriteType.TOOL),
 	
 	GATE('K',SpriteType.GATE),
 	LADDER('M',SpriteType.LADDER),

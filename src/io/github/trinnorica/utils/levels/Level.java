@@ -54,7 +54,7 @@ public class Level {
 //				Main.getPlayer().x = x*30;
 //				Main.getPlayer().y = y*30;
 				break;
-			case TEST_ENTITY:
+			case OGRE:
 				sprites.add(new Enemy(x*30+200, y*30,EntityType.OGRE));
 				break;
 			case DIRT:
