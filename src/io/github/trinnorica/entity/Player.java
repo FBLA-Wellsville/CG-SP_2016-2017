@@ -1,5 +1,6 @@
 package io.github.trinnorica.entity;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -45,7 +46,7 @@ public class Player extends Entity implements Moveable, Keyable {
 	public boolean jumping = false;
 	public boolean flying = false;
 	public boolean climbing = false;
-	private Polygon xbounds;
+	private Rectangle xbounds;
 	private Rectangle sbounds;
 	private Tool tool;
 	int s = 1;
@@ -70,17 +71,12 @@ public class Player extends Entity implements Moveable, Keyable {
 	private void initPlayer() {
 		loadImage(standing);
 		setImageDimensions(27 + s, 30 + s);
-		xbounds = new Polygon(
-				new int[] { (int) (bounds.getBounds().getX() - 1),
-						(int) ((int) bounds.getBounds().getX() + (bounds.getBounds().getWidth() + 2)),
-						(int) ((int) bounds.getBounds().getX() + (bounds.getBounds().getWidth() + 2)),
-						(int) (bounds.getBounds().getX() - 1) },
-				new int[] { (int) (bounds.getBounds().getY() - 1), (int) (bounds.getBounds().getY() - 1),
-						(int) ((bounds.getBounds().getY() - 1) + bounds.getBounds().getHeight() + 2),
-						(int) ((int) ((bounds.getBounds().getY() - 1)) + bounds.getBounds().getHeight() + 2) },
-				4);
+		xbounds = new Rectangle((int)getPolygon().getBounds().getX()-1, (int)getPolygon().getBounds().getY()+1, 29, 32);
 	}
 
+	public Rectangle getXBounds() {
+		return xbounds;
+	}
 	public void kill(DamageReason reason) {
 		if (damaged) {
 			setVelocity(0, 0);
@@ -137,7 +133,7 @@ public class Player extends Entity implements Moveable, Keyable {
 		climbing = false;
 		try {
 			for (Sprite s : Main.getScreen().objects) {
-				if (!bounds.intersects(s.getPolygon().getBounds()))
+				if (!xbounds.intersects(s.getPolygon().getBounds()))
 					continue;
 				if (s instanceof GoldCoin) {
 					Main.removeSprite(s);
@@ -190,7 +186,7 @@ public class Player extends Entity implements Moveable, Keyable {
 
 					}
 					damaged = false;
-					switch (getIntercectingDirection(s.getPolygon().getBounds())) {
+					switch (s.getIntercectingDirection(xbounds)) {
 					case DOWN:
 						if (!jumping) {
 							y = s.getY() - getHeight() + 1;
@@ -522,5 +518,7 @@ public class Player extends Entity implements Moveable, Keyable {
 			Utils.debug("TESTIMG");
 		}
 	}
+
+	
 
 }

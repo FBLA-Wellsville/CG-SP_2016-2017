@@ -3,20 +3,16 @@ package io.github.trinnorica;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import io.github.trinnorica.entity.Player;
-import io.github.trinnorica.objects.Floor;
 import io.github.trinnorica.utils.Board;
-import io.github.trinnorica.utils.Button;
 import io.github.trinnorica.utils.Clickable;
 import io.github.trinnorica.utils.Sound;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.levels.LevelBuilder;
-import io.github.trinnorica.utils.sprites.Projectile;
+import io.github.trinnorica.utils.levels.LevelUtils;
 import io.github.trinnorica.utils.sprites.Sprite;
 import res.Audio;
 import res.ExternalFile;
@@ -87,7 +83,7 @@ public class Main {
 				Audio.playBackground(Sound.BACKGROUND_GRASS);
 				LevelBuilder l = new LevelBuilder();
 				int level = Utils.getLevel();
-				l.buildLevel(Utils.getLevelBlueprint(level),Utils.getLevelWidth(level),Utils.getLevelHeight(level));
+				l.buildLevel(LevelUtils.getLevelBlueprint(level),LevelUtils.getLevelWidth(level),LevelUtils.getLevelHeight(level));
 			} catch(NullPointerException ex){
 				setBoard(Board.WIN);
 			}

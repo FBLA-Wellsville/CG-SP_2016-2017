@@ -422,6 +422,8 @@ public class Screen extends JPanel implements ActionListener {
 				Utils.drawOutlineString(g, "Right: " + Main.getPlayer().right, 0, 220, Color.WHITE, Color.BLACK, 1);
 				Utils.drawOutlineString(g, "Location: " + Main.getPlayer().getLocation(), 0, 240, Color.WHITE,
 						Color.BLACK, 1);
+				g.drawRect(Main.getPlayer().getPolygon().getBounds().getX(),Main.getPlayer().getPolygon().getBounds().getY(),Main.getPlayer().getPolygon().getBounds().getWidth(),Main.getPlayer().getPolygon().getBounds().getHeight());
+				g.drawRect(Main.getPlayer().getXBounds().getX(),Main.getPlayer().getXBounds().getY(),Main.getPlayer().getXBounds().getWidth(),Main.getPlayer().getXBounds().getHeight());
 
 			} catch (IndexOutOfBoundsException ex) {
 
@@ -431,6 +433,8 @@ public class Screen extends JPanel implements ActionListener {
 				g.drawRect((int) s.getPolygon().getBounds().getX(), (int) s.getPolygon().getBounds().getY(),
 						(int) s.getPolygon().getBounds().getWidth(), (int) s.getPolygon().getBounds().getHeight());
 			}
+			
+			
 
 		}
 
