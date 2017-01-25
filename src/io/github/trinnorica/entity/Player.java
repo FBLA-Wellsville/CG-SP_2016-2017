@@ -46,7 +46,7 @@ public class Player extends Entity implements Moveable, Keyable {
 	public boolean jumping = false;
 	public boolean flying = false;
 	public boolean climbing = false;
-	private Rectangle xbounds;
+	private Polygon xbounds;
 	private Rectangle sbounds;
 	private Tool tool;
 	int s = 1;
@@ -59,6 +59,7 @@ public class Player extends Entity implements Moveable, Keyable {
 	private int lives = MAXLIVES;
 	private boolean sprint = false;
 	private boolean tooling = false;
+	private int b = 5;
 
 	public Player(int x, int y) {
 		super(x, y);
@@ -71,12 +72,24 @@ public class Player extends Entity implements Moveable, Keyable {
 	private void initPlayer() {
 		loadImage(standing);
 		setImageDimensions(27 + s, 30 + s);
-		xbounds = new Rectangle((int)getPolygon().getBounds().getX()-1, (int)getPolygon().getBounds().getY()+1, 29, 32);
+
 	}
 
-	public Rectangle getXBounds() {
+	public Polygon getXBounds() {
+		xbounds = new Polygon(
+				new int[] { ((int) (getPolygon().getBounds().getX() - b)),
+						(int) (getPolygon().getBounds().getX() + getPolygon().getBounds().getWidth() + b),
+						(int) (getPolygon().getBounds().getX() + getPolygon().getBounds().getWidth() + b),
+						(int) (getPolygon().getBounds().getX() - b) },
+				new int[] { (int) (getPolygon().getBounds().getY() - b), (int) (getPolygon().getBounds().getY() - b),
+						(int) (getPolygon().getBounds().getY() + getPolygon().getBounds().getHeight() + b),
+						(int) (getPolygon().getBounds().getY() + getPolygon().getBounds().getHeight() + b) },
+				4);
+		// xbounds = new Rectangle((int)getPolygon().getBounds().getX()-1,
+		// (int)getPolygon().getBounds().getY()+1, 29, 32);
 		return xbounds;
 	}
+
 	public void kill(DamageReason reason) {
 		if (damaged) {
 			setVelocity(0, 0);
@@ -113,13 +126,13 @@ public class Player extends Entity implements Moveable, Keyable {
 
 	@Override
 	public void move() {
-		if(velocity.x != 0){
-			if(moving == false){
+		if (velocity.x != 0) {
+			if (moving == false) {
 				moving = true;
 				loadImage(walking);
 			}
 		} else {
-			if(moving){
+			if (moving) {
 				loadImage(standing);
 				moving = false;
 			}
@@ -133,7 +146,7 @@ public class Player extends Entity implements Moveable, Keyable {
 		climbing = false;
 		try {
 			for (Sprite s : Main.getScreen().objects) {
-				if (!xbounds.intersects(s.getPolygon().getBounds()))
+				if (!getXBounds().intersects(s.getPolygon().getBounds()))
 					continue;
 				if (s instanceof GoldCoin) {
 					Main.removeSprite(s);
@@ -141,7 +154,7 @@ public class Player extends Entity implements Moveable, Keyable {
 					Audio.playSound(Sound.SCORE);
 				}
 				if (s instanceof Flag) {
-					//TODO
+					// TODO
 					Utils.sendScore(Main.score);
 					levelup();
 					if (damaged) {
@@ -159,7 +172,7 @@ public class Player extends Entity implements Moveable, Keyable {
 					}
 					damaged = false;
 				}
-				
+
 				if (s instanceof Tool) {
 					if (!tooling) {
 						tooling = true;
@@ -173,7 +186,8 @@ public class Player extends Entity implements Moveable, Keyable {
 							else
 								tool.velocity.x = -2;
 							Main.addSprite(getTool());
-						} catch (NullPointerException ex) {}
+						} catch (NullPointerException ex) {
+						}
 						setTool((Tool) s);
 						Audio.playSound(Sound.TOOL);
 						tooling = false;
@@ -186,9 +200,10 @@ public class Player extends Entity implements Moveable, Keyable {
 
 					}
 					damaged = false;
-					switch (s.getIntercectingDirection(xbounds)) {
+
+					switch (getIntercectingDirection(xbounds.getBounds(), s.getPolygon().getBounds())) {
 					case DOWN:
-						if (!jumping) {
+						if (!jumping && (bounds.intersects(s.getPolygon().getBounds()))) {
 							y = s.getY() - getHeight() + 1;
 							onground = true;
 						}
@@ -204,6 +219,7 @@ public class Player extends Entity implements Moveable, Keyable {
 					default:
 						break;
 					}
+
 				}
 			}
 		} catch (ConcurrentModificationException ex) {
@@ -267,8 +283,8 @@ public class Player extends Entity implements Moveable, Keyable {
 				if (x <= 0) {
 					x = 1;
 				}
-				if (x+width >= (Main.getScreen().getWidth())) {
-					x = Main.getScreen().getWidth() - width-3;
+				if (x + width >= (Main.getScreen().getWidth())) {
+					x = Main.getScreen().getWidth() - width - 3;
 				}
 			}
 
@@ -518,7 +534,5 @@ public class Player extends Entity implements Moveable, Keyable {
 			Utils.debug("TESTIMG");
 		}
 	}
-
-	
 
 }
