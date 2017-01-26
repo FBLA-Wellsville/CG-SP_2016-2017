@@ -36,7 +36,6 @@ import io.github.trinnorica.utils.Clickable;
 import io.github.trinnorica.utils.Images;
 import io.github.trinnorica.utils.Sound;
 import io.github.trinnorica.utils.Utils;
-import io.github.trinnorica.utils.levels.LevelBuilder;
 import io.github.trinnorica.utils.particles.Particle;
 import io.github.trinnorica.utils.sprites.Empty;
 import io.github.trinnorica.utils.sprites.Keyable;
@@ -77,7 +76,9 @@ public class Screen extends JPanel implements ActionListener {
 	private Pattern alphanumeric = Pattern.compile("[^a-zA-Z0-9]");
 	private String name = "___";
 	private boolean typing = false;
+	private boolean pseudopause = false;
 	private int s = 0;
+	private Image SWORD = ExternalFile.loadTexture("objects/tools/sword.png");
 
 	private boolean leaderboard= true;
 
@@ -246,7 +247,23 @@ public class Screen extends JPanel implements ActionListener {
 
 		// This is where all the fun happens! :)
 		if (board == Board.GAME) {
+			
+			
 			g.drawImage(Backgrounds.SKY.getImage(), 0, 0, getWidth(), getHeight(), this);
+			
+			if(!Utils.hasPlayedBefore()){
+				g.drawImage(DARK, 0, 0, getWidth(), getHeight(), this);
+				g.setFont(Main.getFont().deriveFont(15.0F));
+				Utils.drawOutlineString(g, "It looks like  you have not played before. Here is a quick run through.", (getWidth()/2) - g.getFontMetrics().stringWidth("It looks like  you have not played before. Here is a quick run through.")/2, 20, Utils.getGreenColor(), Color.WHITE, 1);
+				
+				g.setFont(Main.getFont().deriveFont(10.0F));
+				Utils.drawOutlineString(g, "This is a tool or item.\n\nYou can pick it up by running into it.", 200, 50, Utils.getGreenColor(), Color.WHITE, 0);
+				g.drawImage(SWORD, 200, 80, 30, 30, this);
+				
+				return;
+			}
+			
+			
 
 			for (Sprite sprite : objects_temp) {
 				objects.add(sprite);
@@ -350,6 +367,7 @@ public class Screen extends JPanel implements ActionListener {
 			
 
 			}
+			
 
 		}
 
@@ -484,6 +502,14 @@ public class Screen extends JPanel implements ActionListener {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			int key = e.getKeyCode();
+			
+			if(key == KeyEvent.VK_ESCAPE){
+				if(!Utils.hasPlayedBefore() && pseudopause){
+					Utils.hasPlayedBefore(true);
+					pseudopause = false;
+				}
+			}
+			
 
 			if (typing) {
 				if(key == KeyEvent.VK_ENTER){

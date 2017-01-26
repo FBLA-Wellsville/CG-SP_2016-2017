@@ -35,6 +35,8 @@ public class Utils {
 	private static File file = null;
 	private static File folder;
 
+	private static boolean hasplayedbefore = true;
+	
 	public static void start() {
 		folder = new File("C:/KANSAS_WELLSVILLE_HIGHSCHOOL/Eldiseth/");
 		if (!folder.exists())
@@ -43,6 +45,15 @@ public class Utils {
 		
 		version = ExternalFile.getVersion__BOOT_ONLY__();
 		
+	}
+	
+	public static boolean hasPlayedBefore(){
+		return hasplayedbefore;
+	}
+
+	public static boolean hasPlayedBefore(boolean played){
+		hasplayedbefore = played;
+		return hasplayedbefore;
 	}
 
 	public static void drawOutlineString(Graphics g, String string, int x, int y, Color text, Color outline,
@@ -215,6 +226,7 @@ public class Utils {
 			try {
 				file.createNewFile();
 				sendScore(0);
+				hasplayedbefore = false;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -269,6 +281,10 @@ public class Utils {
 //			System.err.println("Error: " + e.getMessage());
 //		}
 
+	}
+
+	public static Color getGreenColor() {
+		return Color.decode("#99db45");
 	}
 	
 }

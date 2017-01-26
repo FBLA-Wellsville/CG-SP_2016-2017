@@ -33,6 +33,7 @@ import io.github.trinnorica.utils.sprites.Keyable;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Projectile;
 import io.github.trinnorica.utils.sprites.Sprite;
+import io.github.trinnorica.utils.sprites.SpriteType;
 import io.github.trinnorica.utils.sprites.Tool;
 import res.Audio;
 import res.ExternalFile;
@@ -216,8 +217,10 @@ public class Player extends Entity implements Moveable, Keyable {
 						}
 						break;
 					case LEFT:
-						if (left&&!jumping&&!falling)
+						if (left&&!falling)
 							velocity.x = 0;
+							
+							
 						break;
 					case RIGHT:
 						if (right&&!jumping&&!falling)
