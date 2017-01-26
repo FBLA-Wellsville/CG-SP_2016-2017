@@ -78,21 +78,24 @@ public class Screen extends JPanel implements ActionListener {
 	private boolean typing = false;
 	private boolean pseudopause = false;
 	private int s = 0;
+	private boolean help = false;
 	private Image SWORD = ExternalFile.loadTexture("objects/tools/sword.png");
+	private Image ENEMY = ExternalFile.loadTexture("entity/knight/walk.gif");
+	private Image LOGO = ExternalFile.loadTexture("logos/logo-title.png");
+	private Image FBLA = ExternalFile.loadTexture("logos/fbla-logo.png");
 
-	private boolean leaderboard= true;
+	private boolean leaderboard = true;
 
 	public Screen() {
 		init();
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return name;
 	}
 
 	public void init() {
 
-		
 		timer = new Timer(INITIALDELAY, this);
 		timer.start();
 
@@ -109,7 +112,6 @@ public class Screen extends JPanel implements ActionListener {
 		setSize(new Dimension(1920, 1080));
 		setMinimumSize(new Dimension(1920, 1080));
 
-		
 		java.util.Timer t = new java.util.Timer();
 		t.schedule(new TimerTask() {
 			public void run() {
@@ -122,12 +124,43 @@ public class Screen extends JPanel implements ActionListener {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if (!paused)
+		if (!paused && !help)
 			drawMenu(g);
 		else {
-			drawPaused(g);
+			if (paused)
+				drawPaused(g);
+			if (help)
+				drawHelp(g);
 		}
 		Toolkit.getDefaultToolkit().sync();
+	}
+
+	public void drawHelp(Graphics g) {
+		g.drawImage(Backgrounds.SKY.getImage(), 0, 0, getWidth(), getHeight(), this);
+		g.drawImage(DARK, 0, 0, getWidth(), getHeight(), this);
+		g.setFont(Main.getFont().deriveFont(15.0F));
+		Utils.drawOutlineString(g, "It looks like  you have not played before. Here is a quick run through.",
+				(getWidth() / 2) - g.getFontMetrics()
+						.stringWidth("It looks like  you have not played before. Here is a quick run through.") / 2,
+				20, Utils.getGreenColor(), Color.WHITE, 1);
+
+		g.setFont(Main.getFont().deriveFont(10.0F));
+		Utils.drawOutlineString(g, "This is a tool or item.\n\nYou can pick it up by running into it.", 200, 50,
+				Utils.getGreenColor(), Color.WHITE, 0);
+		g.drawImage(SWORD, 200, 50, 30, 30, this);
+
+		Utils.drawOutlineString(g, "This is an enemy.\n\nThe only way to damage them is with a weapon.",
+				getWidth() - 200, 50, Utils.getGreenColor(), Color.WHITE, 0);
+		g.drawImage(ENEMY, getWidth() - 200, 50, 30, 30, this);
+
+		Utils.drawOutlineString(g,
+				"Controls\n" + "W or Up Arrow - Climb up\n" + "A or Left Arrow - Move Left\n"
+						+ "S or Down Arrow - Climb down\n" + "D or Right Arrow - Move Right\n" + "SPACE - Jump\n"
+						+ "T - Toggle leaderboard\n" + "Ctrl - Sprint\n" + "Shift - Use item\n" + "Esc - Pause menu\n"
+						+ "F1 - Show this menu\n"
+						+ "R - Go to main menu\n\n\n" + "Press Esc to close this page.",
+				getWidth() / 2, getHeight() / 3, Utils.getGreenColor(), Color.WHITE, 0);
+
 	}
 
 	public void drawPaused(Graphics g) {
@@ -233,13 +266,17 @@ public class Screen extends JPanel implements ActionListener {
 			Utils.drawCredit(g, "Chris Green", creditvar, 13, Color.BLACK, Color.WHITE, 1);
 			Utils.drawCredit(g, "Chad Guthrie", creditvar, 14, Color.BLACK, Color.WHITE, 1);
 
-			Image logo = ExternalFile.loadTexture("logos/logo-title.png");
+			
 
-			Utils.drawCreditImage(g, logo, creditvar, 17);
+			Utils.drawCreditImage(g, LOGO, creditvar, 17);
+			
+			g.setFont(new Font("Helvetica", Font.BOLD, getWidth() / 50));
+			Utils.drawCredit(g, "And a big thanks to FBLA for giving us the chance to create this game!", creditvar, 25, Color.BLACK, Color.WHITE, 1);
+			Utils.drawCreditImage(g, FBLA, creditvar, 29);
 
 			creditvar -= 1;
 
-			if (Utils.creditsOver(g, creditvar, 21)) {
+			if (Utils.creditsOver(g, creditvar, 40)) {
 				Main.setBoard(Board.MAIN);
 			}
 
@@ -247,23 +284,13 @@ public class Screen extends JPanel implements ActionListener {
 
 		// This is where all the fun happens! :)
 		if (board == Board.GAME) {
-			
-			
-			g.drawImage(Backgrounds.SKY.getImage(), 0, 0, getWidth(), getHeight(), this);
-			
-			if(!Utils.hasPlayedBefore()){
-				g.drawImage(DARK, 0, 0, getWidth(), getHeight(), this);
-				g.setFont(Main.getFont().deriveFont(15.0F));
-				Utils.drawOutlineString(g, "It looks like  you have not played before. Here is a quick run through.", (getWidth()/2) - g.getFontMetrics().stringWidth("It looks like  you have not played before. Here is a quick run through.")/2, 20, Utils.getGreenColor(), Color.WHITE, 1);
-				
-				g.setFont(Main.getFont().deriveFont(10.0F));
-				Utils.drawOutlineString(g, "This is a tool or item.\n\nYou can pick it up by running into it.", 200, 50, Utils.getGreenColor(), Color.WHITE, 0);
-				g.drawImage(SWORD, 200, 80, 30, 30, this);
-				
+			if (!Utils.hasPlayedBefore()) {
+				help = true;
+				drawHelp(g);
 				return;
 			}
-			
-			
+
+			g.drawImage(Backgrounds.SKY.getImage(), 0, 0, getWidth(), getHeight(), this);
 
 			for (Sprite sprite : objects_temp) {
 				objects.add(sprite);
@@ -275,7 +302,7 @@ public class Screen extends JPanel implements ActionListener {
 
 					if (sprite instanceof Player) {
 						objects_remove.add(sprite);
-						
+
 					}
 					if (sprite instanceof Empty) {
 						objects_remove.add(sprite);
@@ -331,43 +358,49 @@ public class Screen extends JPanel implements ActionListener {
 			Utils.drawOutlineString(g, "Level: " + Utils.getLevel(),
 					getWidth() - (g.getFontMetrics().stringWidth("Level: " + Utils.getLevel())), 20,
 					Color.decode("#99db45"), Color.WHITE, 1);
-			Utils.drawOutlineString(g, "Score: " + Main.score, getWidth() - (g.getFontMetrics().stringWidth("Score: " + Main.score)), 42, Color.decode("#99db45"), Color.white, 1);
+			Utils.drawOutlineString(g, "Score: " + Main.score,
+					getWidth() - (g.getFontMetrics().stringWidth("Score: " + Main.score)), 42, Color.decode("#99db45"),
+					Color.white, 1);
 
 			// Draw Leaderboard
-			
-			if(leaderboard){
-				g.drawImage(Images.makeImageTranslucent(Images.toBufferedImage(Images.createColorImage("#000000")), 0.5),
+
+			if (leaderboard) {
+				g.drawImage(
+						Images.makeImageTranslucent(Images.toBufferedImage(Images.createColorImage("#000000")), 0.5),
 						getWidth() - 200, getHeight() / 3, 200, 110, this);
 				g.setFont(Main.getFont().deriveFont(10f));
 
 				Utils.drawOutlineString(g, "Leaderboard",
 						(getWidth() - 100) - (g.getFontMetrics().stringWidth("Leaderboard") / 2),
 						getHeight() / 3 + (Main.getFont().getSize() * 12), Color.YELLOW, Color.WHITE, 0);
-				
-				
-				for(Entry<String,Integer> entry : Utils.getHighScores().entrySet()){
-					
-					if(s > 5) continue;
-					
-					Utils.drawOutlineString(g, entry.getKey(), (getWidth() - 190),
-							(getHeight() / 3 + (Main.getFont().getSize() * 12))+ (((Main.getFont().getSize() * 12) * (s + 1)) + (s * 4)), Color.WHITE, Color.black, 1);
-					Utils.drawOutlineString(g, entry.getValue()+"", getWidth() - g.getFontMetrics().stringWidth(entry.getValue()+""), ((getHeight() / 3 + (Main.getFont().getSize() * 12))+ (((Main.getFont().getSize() * 12) * (s + 1)) + (s * 4))), Color.WHITE, Color.BLACK, 1);
-					
-					
-					s=s+1;
-				}
-				s=0;
-//				for(int i=0;i!=Utils.getHighScores().size();i++){
-//					Utils.drawOutlineString(g, Utils.getHighScores(),(getWidth() - 100) - (g.getFontMetrics().stringWidth(highscores[l]) / 2),(getHeight() / 3 + (Main.getFont().getSize() * 12))+ (((Main.getFont().getSize() * 12) * (l + 1)) + (l * 4)),
-//							Color.WHITE, Color.WHITE, 0);
-//				}
-				
-			
 
-			
+				for (Entry<String, Integer> entry : Utils.getHighScores().entrySet()) {
+
+					if (s > 5)
+						continue;
+
+					Utils.drawOutlineString(g, entry.getKey(), (getWidth() - 190),
+							(getHeight() / 3 + (Main.getFont().getSize() * 12))
+									+ (((Main.getFont().getSize() * 12) * (s + 1)) + (s * 4)),
+							Color.WHITE, Color.black, 1);
+					Utils.drawOutlineString(g, entry.getValue() + "",
+							getWidth() - g.getFontMetrics().stringWidth(entry.getValue() + ""),
+							((getHeight() / 3 + (Main.getFont().getSize() * 12))
+									+ (((Main.getFont().getSize() * 12) * (s + 1)) + (s * 4))),
+							Color.WHITE, Color.BLACK, 1);
+
+					s = s + 1;
+				}
+				s = 0;
+				// for(int i=0;i!=Utils.getHighScores().size();i++){
+				// Utils.drawOutlineString(g, Utils.getHighScores(),(getWidth()
+				// - 100) - (g.getFontMetrics().stringWidth(highscores[l]) /
+				// 2),(getHeight() / 3 + (Main.getFont().getSize() * 12))+
+				// (((Main.getFont().getSize() * 12) * (l + 1)) + (l * 4)),
+				// Color.WHITE, Color.WHITE, 0);
+				// }
 
 			}
-			
 
 		}
 
@@ -444,8 +477,14 @@ public class Screen extends JPanel implements ActionListener {
 				Utils.drawOutlineString(g, "Right: " + Main.getPlayer().right, 0, 240, Color.WHITE, Color.BLACK, 1);
 				Utils.drawOutlineString(g, "Location: " + Main.getPlayer().getLocation(), 0, 260, Color.WHITE,
 						Color.BLACK, 1);
-				g.drawRect((int)Main.getPlayer().getPolygon().getBounds().getX(),(int)Main.getPlayer().getPolygon().getBounds().getY(),(int)Main.getPlayer().getPolygon().getBounds().getWidth(),(int)Main.getPlayer().getPolygon().getBounds().getHeight());
-				g.drawRect((int)Main.getPlayer().getXBounds().getBounds().getX(),(int)Main.getPlayer().getXBounds().getBounds().getY(),(int)Main.getPlayer().getXBounds().getBounds().getWidth(),(int)Main.getPlayer().getXBounds().getBounds().getHeight());
+				g.drawRect((int) Main.getPlayer().getPolygon().getBounds().getX(),
+						(int) Main.getPlayer().getPolygon().getBounds().getY(),
+						(int) Main.getPlayer().getPolygon().getBounds().getWidth(),
+						(int) Main.getPlayer().getPolygon().getBounds().getHeight());
+				g.drawRect((int) Main.getPlayer().getXBounds().getBounds().getX(),
+						(int) Main.getPlayer().getXBounds().getBounds().getY(),
+						(int) Main.getPlayer().getXBounds().getBounds().getWidth(),
+						(int) Main.getPlayer().getXBounds().getBounds().getHeight());
 
 			} catch (IndexOutOfBoundsException ex) {
 
@@ -455,8 +494,6 @@ public class Screen extends JPanel implements ActionListener {
 				g.drawRect((int) s.getPolygon().getBounds().getX(), (int) s.getPolygon().getBounds().getY(),
 						(int) s.getPolygon().getBounds().getWidth(), (int) s.getPolygon().getBounds().getHeight());
 			}
-			
-			
 
 		}
 
@@ -502,18 +539,28 @@ public class Screen extends JPanel implements ActionListener {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			int key = e.getKeyCode();
-			
-			if(key == KeyEvent.VK_ESCAPE){
-				if(!Utils.hasPlayedBefore() && pseudopause){
+
+			if (key == KeyEvent.VK_ESCAPE) {
+				if (help) {
 					Utils.hasPlayedBefore(true);
-					pseudopause = false;
+					help = false;
+					return;
 				}
 			}
-			
+
+			if (key == KeyEvent.VK_F1) {
+				if (!paused)
+					help = !help;
+				return;
+
+			}
+			if (help)
+				return;
+
 
 			if (typing) {
-				if(key == KeyEvent.VK_ENTER){
-					if(!name.contains("_")){
+				if (key == KeyEvent.VK_ENTER) {
+					if (!name.contains("_")) {
 						typing = false;
 						Utils.createScore(name);
 						Main.setBoard(Board.MAIN);
@@ -539,9 +586,9 @@ public class Screen extends JPanel implements ActionListener {
 				return;
 
 			}
-			
-			if(key == KeyEvent.VK_T){
-				leaderboard= !leaderboard;
+
+			if (key == KeyEvent.VK_T) {
+				leaderboard = !leaderboard;
 			}
 
 			if (key == KeyEvent.VK_5) {
@@ -620,7 +667,6 @@ public class Screen extends JPanel implements ActionListener {
 					}
 				}
 			}
-			
 
 			if (key == KeyEvent.VK_F3) {
 				debug = !debug;

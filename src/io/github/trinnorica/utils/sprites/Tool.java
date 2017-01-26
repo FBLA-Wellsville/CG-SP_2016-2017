@@ -18,6 +18,7 @@ public class Tool extends Entity implements Moveable{
 	public Tool(int x, int y) {
 		super(x, y);
 		xbounds = new Rectangle(x, y, width, height+2);
+		health = Integer.MAX_VALUE;
 	}
 
 	public void registerXBounds(){
