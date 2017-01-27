@@ -80,6 +80,8 @@ public class Enemy extends Entity implements Moveable {
 
 		}
 		health = maxhealth;
+		
+		attack(Main.getPlayer());
 	}
 
 	private void initEntity() {

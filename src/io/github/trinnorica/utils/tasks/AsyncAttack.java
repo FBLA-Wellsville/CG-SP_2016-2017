@@ -39,18 +39,21 @@ public class AsyncAttack implements Runnable {
 	}
 	
 	public boolean hasLineOfSight(Entity a, Entity entity){
+		
 		int s = attacker.x;
 		if(attacker.direction.equals(Direction.LEFT)){
-			Utils.debug("GO");
-			Main.getScreen().getGraphics().drawRect(s, attacker.y, 2, 2);
-			s=s-1;
-			if(entity.getPolygon().getBounds().contains(s,attacker.y))
-				return true;
+			while(s>0){
+				Utils.debug("GO 1");
+				s=s-1;
+				if(entity.getPolygon().getBounds().contains(s,attacker.y))
+					return true;
+			}
+			return false;
+		
 		}
 		if(attacker.direction.equals(Direction.RIGHT)){
 			while(s<Main.getScreen().getWidth()){
 				Utils.debug("GO");
-				Main.getScreen().getGraphics().drawRect(s, attacker.y, 2, 2);
 				s=s+1;
 				if(entity.getPolygon().getBounds().contains(s,attacker.y))
 					return true;
