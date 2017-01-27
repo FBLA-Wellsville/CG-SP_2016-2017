@@ -487,7 +487,7 @@ public class Screen extends JPanel implements ActionListener {
 						(int) Main.getPlayer().getXBounds().getBounds().getWidth(),
 						(int) Main.getPlayer().getXBounds().getBounds().getHeight());
 
-			} catch (IndexOutOfBoundsException ex) {
+			} catch (NullPointerException | IndexOutOfBoundsException ex) {
 
 			}
 

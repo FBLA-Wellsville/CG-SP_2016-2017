@@ -50,7 +50,6 @@ public class Player extends Entity implements Moveable, Keyable {
 	public boolean climbing = false;
 	private Polygon xbounds;
 	private Rectangle sbounds;
-	private Tool tool;
 	int s = 1;
 	private boolean utool = false;
 	private int utoolt = 0;
@@ -497,14 +496,10 @@ public class Player extends Entity implements Moveable, Keyable {
 		}
 	}
 
-	public void setTool(Tool tool) {
-		this.tool = tool;
+	public void setTool(Tool tooll) {
+		tool = tooll;
 		Main.removeSprite(tool);
 
-	}
-
-	public Sprite getTool() {
-		return tool;
 	}
 
 	public int getLevel() {

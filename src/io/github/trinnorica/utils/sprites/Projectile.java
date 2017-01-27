@@ -3,12 +3,11 @@ package io.github.trinnorica.utils.sprites;
 import java.awt.Graphics;
 
 import io.github.trinnorica.Main;
+import io.github.trinnorica.entity.Enemy;
 import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.entity.Player;
-import io.github.trinnorica.objects.Collidable;
 import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Images;
-import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.particles.Particle;
 
@@ -35,6 +34,7 @@ public class Projectile extends Entity implements Moveable{
 			if(!bounds.intersects(s.getPolygon().getBounds())) continue;
 			if(s instanceof Projectile || s instanceof Particle) continue;
 			if(shooter instanceof Player && s instanceof Player) continue;
+			if(shooter instanceof Enemy && s instanceof Enemy) continue;
 				
 			
 			if(s instanceof Entity)

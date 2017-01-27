@@ -24,7 +24,7 @@ public class Sprite {
 	private Sprite sprite;
     public Polygon bounds;
     protected boolean exists = false;
-    protected Direction direction = Direction.RIGHT;
+    public Direction direction = Direction.RIGHT;
 
     public Sprite(int x, int y) {
     	this.sprite = this;

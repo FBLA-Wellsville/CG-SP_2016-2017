@@ -19,6 +19,7 @@ import io.github.trinnorica.utils.particles.formats.Ghost;
 import io.github.trinnorica.utils.particles.formats.Stay;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
+import io.github.trinnorica.utils.sprites.Tool;
 import io.github.trinnorica.utils.tasks.CheckLanding;
 import res.ExternalFile;
 
@@ -31,7 +32,7 @@ public class Entity extends Sprite implements Moveable {
 	boolean onground = false;
 	boolean falling = false;
 	public boolean damaged = false;
-	
+	public Tool tool;
 	double dx = 0;
 	double dy = 0;
 	
@@ -242,11 +243,7 @@ public class Entity extends Sprite implements Moveable {
 
 	}
 	
-	public boolean hasLineOfSight(Entity entity){
-		if(direction.equals(Direction.LEFT)){
-			
-		}
-	}
+	
 
 	@Override
 	public void move() {
@@ -283,6 +280,12 @@ public class Entity extends Sprite implements Moveable {
 		dy = 0;
 
 	}
+
+	public Tool getTool() {
+		return tool;
+	}
+
+	
 
 	
 
