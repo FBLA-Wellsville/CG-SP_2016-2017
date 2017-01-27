@@ -7,11 +7,12 @@ import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.particles.ParticleFormat;
 import io.github.trinnorica.utils.particles.ParticleType;
 import io.github.trinnorica.utils.sprites.Tool;
+import io.github.trinnorica.utils.sprites.ToolType;
 
 public class IceDagger extends Tool {
 
-	public IceDagger(int x, int y) {
-		super(x, y);
+	public IceDagger(int x, int y, ToolType type) {
+		super(x, y, type);
 		initSword();
 	}
 	

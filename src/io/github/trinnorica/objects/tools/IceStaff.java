@@ -5,11 +5,12 @@ import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.entity.projectiles.IceSpike;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.sprites.Tool;
+import io.github.trinnorica.utils.sprites.ToolType;
 
 public class IceStaff extends Tool {
 
-	public IceStaff(int x, int y) {
-		super(x, y);
+	public IceStaff(int x, int y, ToolType type) {
+		super(x, y, type);
 		init();
 	}
 	

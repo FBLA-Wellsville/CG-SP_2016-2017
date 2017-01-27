@@ -5,13 +5,14 @@ import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.entity.projectiles.Arrow;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.sprites.Tool;
+import io.github.trinnorica.utils.sprites.ToolType;
 
 public class Bow extends Tool {
 	
 	
 
-	public Bow(int x, int y) {
-		super(x, y);
+	public Bow(int x, int y,ToolType type) {
+		super(x, y, type);
 		init();
 	}
 	

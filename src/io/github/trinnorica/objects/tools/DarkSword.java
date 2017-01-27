@@ -1,11 +1,12 @@
 package io.github.trinnorica.objects.tools;
 
 import io.github.trinnorica.utils.sprites.Tool;
+import io.github.trinnorica.utils.sprites.ToolType;
 
 public class DarkSword extends Tool {
 
-	public DarkSword(int x, int y) {
-		super(x, y);
+	public DarkSword(int x, int y, ToolType type) {
+		super(x, y, type);
 		initSword();
 	}
 	

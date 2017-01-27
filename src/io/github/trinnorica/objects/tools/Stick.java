@@ -1,12 +1,13 @@
 package io.github.trinnorica.objects.tools;
 
 import io.github.trinnorica.utils.sprites.Tool;
+import io.github.trinnorica.utils.sprites.ToolType;
 import res.ExternalFile;
 
 public class Stick extends Tool{
 
-	public Stick(int x, int y) {
-		super(x, y);
+	public Stick(int x, int y, ToolType type) {
+		super(x, y, type);
 		power = 10;
 		init();
 		

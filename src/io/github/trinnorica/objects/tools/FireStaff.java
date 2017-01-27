@@ -5,11 +5,12 @@ import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.entity.projectiles.Fireball;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.sprites.Tool;
+import io.github.trinnorica.utils.sprites.ToolType;
 
 public class FireStaff extends Tool {
 
-	public FireStaff(int x, int y) {
-		super(x, y);
+	public FireStaff(int x, int y,ToolType type) {
+		super(x, y, type);
 		init();
 	}
 	

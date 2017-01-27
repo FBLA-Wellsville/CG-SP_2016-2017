@@ -241,6 +241,12 @@ public class Entity extends Sprite implements Moveable {
 		g.setColor(c);
 
 	}
+	
+	public boolean hasLineOfSight(Entity entity){
+		if(direction.equals(Direction.LEFT)){
+			
+		}
+	}
 
 	@Override
 	public void move() {

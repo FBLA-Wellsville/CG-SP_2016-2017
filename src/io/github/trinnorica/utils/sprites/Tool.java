@@ -14,9 +14,11 @@ public class Tool extends Entity implements Moveable{
 	protected int power = 5;
 	protected int cooldown = 1;
 	private Rectangle xbounds;
+	private ToolType tooltype;
 
-	public Tool(int x, int y) {
+	public Tool(int x, int y, ToolType type) {
 		super(x, y);
+		this.tooltype = type;
 		xbounds = new Rectangle(x, y, width, height+2);
 		health = Integer.MAX_VALUE;
 	}
@@ -27,16 +29,31 @@ public class Tool extends Entity implements Moveable{
 	
 
 	public void use(int x, int y) {
-		//Different in each tool class
-		
+		this.x = x;
+		this.y = y;
 	}
 	public void use(int x, int y, Velocity velocity, Entity shooter) {
-		//Different in each tool class
-		
+		this.x = x;
+		this.y = y;
 	}
 	public void use(int x, int y, Direction d, ParticleFormat f) {
-		//Different in each tool class
-		
+		this.x = x;
+		this.y = y;
+	}
+	
+	public Rectangle getStrikeRange() {
+
+		if (direction == Direction.LEFT) {
+			return new Rectangle(x - 30, y, 30, 30);
+		}
+		if (direction == Direction.RIGHT) {
+			return new Rectangle(x + 30, y, 30, 30);
+		}
+		return null;
+	}
+	
+	public ToolType getToolType(){
+		return tooltype;
 	}
 	
 	public int getPower(){

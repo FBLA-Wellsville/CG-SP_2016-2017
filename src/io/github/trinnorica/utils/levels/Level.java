@@ -12,10 +12,12 @@ import io.github.trinnorica.objects.Flag;
 import io.github.trinnorica.objects.Floor;
 import io.github.trinnorica.objects.GoldCoin;
 import io.github.trinnorica.objects.Ladder;
+import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.sprites.Empty;
 import io.github.trinnorica.utils.sprites.EntityType;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.SpriteType;
+import io.github.trinnorica.utils.sprites.ToolType;
 import res.ExternalFile;
 
 public class Level {
@@ -55,7 +57,19 @@ public class Level {
 //				Main.getPlayer().y = y*30;
 				break;
 			case OGRE:
-				sprites.add(new Enemy(x*30+200, y*30,EntityType.OGRE));
+				sprites.add(new Enemy(x*30, y*30,EntityType.OGRE));
+				break;
+			case KNIGHT:
+				sprites.add(new Enemy(x*30, y*20, EntityType.KNIGHT));
+				break;
+			case DARK_KNIGHT:
+				sprites.add(new Enemy(x*30, y*20, EntityType.DARK_KNIGHT));
+				break;
+			case WIZARD:
+				sprites.add(new Enemy(x*30, y*20, EntityType.WIZARD));
+				break;
+			case STONE_SWORD:
+				sprites.add(new Sword(x*30, y*30,ToolType.MELEE));
 				break;
 			case DIRT:
 				sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/dirt.png"),30,30));

@@ -5,6 +5,6 @@ public enum EntityType {
 	KNIGHT,
 	DARK_KNIGHT,
 	OGRE,
-	SKELETON;
+	SKELETON, WIZARD;
 
 }

@@ -9,6 +9,7 @@ import io.github.trinnorica.Main;
 import io.github.trinnorica.objects.Collidable;
 import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.DarkSword;
+import io.github.trinnorica.objects.tools.FireStaff;
 import io.github.trinnorica.objects.tools.Stick;
 import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.DamageReason;
@@ -20,6 +21,7 @@ import io.github.trinnorica.utils.sprites.EntityType;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.Tool;
+import io.github.trinnorica.utils.sprites.ToolType;
 import res.ExternalFile;
 
 public class Enemy extends Entity implements Moveable {
@@ -38,35 +40,41 @@ public class Enemy extends Entity implements Moveable {
 		initEntity();
 		this.type = type;
 		switch(type){
+		case WIZARD:
+			walking = ExternalFile.loadTexture("entity/wizard/walk.gif");
+			standing = ExternalFile.loadTexture("entity/wizard/bobbing.gif");
+			maxhealth = 10;
+			tool = new FireStaff(0,0,ToolType.DIRECTIONAL);
+			break;
 		case KNIGHT:
 			walking = ExternalFile.loadTexture("entity/knight/walk.gif");
 			standing = ExternalFile.loadTexture("entity/knight/bobbing.gif");
 			maxhealth = 10;
-			tool = new Sword(0,0);
+			tool = new Sword(0,0,ToolType.MELEE);
 			break;
 		case DARK_KNIGHT:
 			walking = ExternalFile.loadTexture("entity/knight/dark/walk.gif");
 			standing = ExternalFile.loadTexture("entity/knight/dark/bobbing.gif");
 			maxhealth = 10;
-			tool = new DarkSword(0,0);
+			tool = new DarkSword(0,0,ToolType.MELEE);
 			break;
 		case OGRE:
 			walking = ExternalFile.loadTexture("entity/ogre/walk.gif");
 			standing = ExternalFile.loadTexture("entity/ogre/bobbing.gif");
 			maxhealth = 10;
-			tool = new Stick(0,0);
+			tool = new Stick(0,0,ToolType.MELEE);
 			break;
 		case SKELETON:
 			walking = ExternalFile.loadTexture("entity/skeleton/walk.gif");
 			standing = ExternalFile.loadTexture("entity/skeleton/bobbing.gif");
 			maxhealth = 10;
-			tool = new Bow(0,0);
+			tool = new Bow(0,0,ToolType.DIRECTIONAL);
 			break;
 		default:
 			walking = ExternalFile.loadTexture("entity/knight/walk.gif");
 			standing = ExternalFile.loadTexture("entity/knight/bobbing.gif");
 			maxhealth = 10;
-			tool = new Sword(0,0);
+			tool = new Sword(0,0,ToolType.MELEE);
 			break;
 			
 		}
@@ -82,7 +90,6 @@ public class Enemy extends Entity implements Moveable {
 
 	@Override
 	public void move() {
-		Utils.debug(velocity.x + "");
 		if(velocity.x != 0){
 			if(moving == false){
 				moving = true;
@@ -142,7 +149,15 @@ public class Enemy extends Entity implements Moveable {
 	}
 
 	private void attack(Entity e) {
-		e.damage(3, DamageReason.ENEMY, this);
+		if(tool.getToolType().equals(ToolType.MELEE)){
+			e.damage(tool.getPower(), DamageReason.ENEMY, this);
+		}
+		if(tool.getToolType().equals(ToolType.PROJECTILE)){
+			if(this.hasLineOfSight(Main.getPlayer())){
+				
+			}
+		}
+//		e.damage(3, DamageReason.ENEMY, this);
 		
 		
 	}

@@ -35,6 +35,7 @@ import io.github.trinnorica.utils.sprites.Projectile;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.SpriteType;
 import io.github.trinnorica.utils.sprites.Tool;
+import io.github.trinnorica.utils.sprites.ToolType;
 import res.Audio;
 import res.ExternalFile;
 
@@ -359,47 +360,30 @@ public class Player extends Entity implements Moveable, Keyable {
 		utool = true;
 		cooldown = tool.getCooldown();
 		utoolt = 10;
-		if (tool instanceof FireDagger || tool instanceof IceDagger) {
-			tool.use(x, y, direction, new io.github.trinnorica.utils.particles.formats.Shoot());
-			return;
-		}
-		if (direction == Direction.LEFT) {
-			if (tool instanceof Bow || tool instanceof FireStaff)
-				tool.use(x, y, new Velocity(-8, -2), this);
-			for (Sprite s : Main.getScreen().objects) {
-				if (!(s instanceof Particle || s instanceof Projectile))
-					if (getStrikeRange().getBounds().intersects(s.getPolygon().getBounds())) {
-						if (s instanceof Entity)
-							((Entity) s).damage(tool.getPower(), DamageReason.PROJECTILE, this);
-					}
-			}
+//		if (tool instanceof FireDagger || tool instanceof IceDagger) {
+//			tool.use(x, y, direction, new io.github.trinnorica.utils.particles.formats.Shoot());
+//			return;
+//		}
+//		if (direction == Direction.LEFT) {
+//			if (tool instanceof Bow || tool instanceof FireStaff)
+//				tool.use(x, y, new Velocity(-8, -2), this);
+//		}
 
-		} else {
-
-			if (tool instanceof Bow || tool instanceof FireStaff)
+//		} else {
+			
+			if(tool.getToolType().equals(ToolType.PROJECTILE)){
 				tool.use(x, y, new Velocity(8, -2), this);
-			for (Sprite s : Main.getScreen().objects) {
-				if (!(s instanceof Particle || s instanceof Projectile))
-					if (getStrikeRange().getBounds().intersects(s.getPolygon().getBounds())) {
-						if (s instanceof Entity)
-							((Entity) s).damage(tool.getPower(), DamageReason.PROJECTILE, this);
-					}
 			}
-		}
+			if(tool.getToolType().equals(ToolType.MELEE)){
+				tool.use(x, y);
+			}
+
+				
+			
+//		}
 	}
 
-	private Rectangle getStrikeRange() {
-
-		if (direction == Direction.LEFT) {
-			sbounds = new Rectangle(x - 30, y, 30, 30);
-			return sbounds;
-		}
-		if (direction == Direction.RIGHT) {
-			sbounds = new Rectangle(x + 30, y, 30, 30);
-			return sbounds;
-		}
-		return null;
-	}
+	
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -481,7 +465,7 @@ public class Player extends Entity implements Moveable, Keyable {
 			Main.addSprite(new Enemy(x + 100, y, EntityType.KNIGHT));
 		}
 		if (key == KeyEvent.VK_K) {
-			Main.addSprite(new DarkSword(x + 100, y));
+			Main.addSprite(new DarkSword(x + 100, y,ToolType.MELEE));
 		}
 
 	}

@@ -41,6 +41,7 @@ import io.github.trinnorica.utils.sprites.Empty;
 import io.github.trinnorica.utils.sprites.Keyable;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
+import io.github.trinnorica.utils.sprites.ToolType;
 import res.Audio;
 import res.ExternalFile;
 
@@ -596,7 +597,7 @@ public class Screen extends JPanel implements ActionListener {
 
 					if (sprite instanceof Player) {
 						Player player = (Player) sprite;
-						player.setTool(new Sword(0, 0));
+						player.setTool(new Sword(0, 0,ToolType.MELEE));
 					}
 				}
 			}
@@ -634,7 +635,7 @@ public class Screen extends JPanel implements ActionListener {
 
 					if (sprite instanceof Player) {
 						Player player = (Player) sprite;
-						player.setTool(new FireStaff(0, 0));
+						player.setTool(new FireStaff(0, 0,ToolType.DIRECTIONAL));
 					}
 				}
 			}
@@ -644,7 +645,7 @@ public class Screen extends JPanel implements ActionListener {
 
 					if (sprite instanceof Player) {
 						Player player = (Player) sprite;
-						player.setTool(new Bow(0, 0));
+						player.setTool(new Bow(0, 0,ToolType.DIRECTIONAL));
 					}
 				}
 			}
@@ -653,7 +654,7 @@ public class Screen extends JPanel implements ActionListener {
 
 					if (sprite instanceof Player) {
 						Player player = (Player) sprite;
-						player.setTool(new IceDagger(0, 0));
+						player.setTool(new IceDagger(0, 0,ToolType.DIRECTIONAL));
 					}
 				}
 			}
@@ -663,7 +664,7 @@ public class Screen extends JPanel implements ActionListener {
 
 					if (sprite instanceof Player) {
 						Player player = (Player) sprite;
-						player.setTool(new FireDagger(0, 0));
+						player.setTool(new FireDagger(0, 0,ToolType.DIRECTIONAL));
 					}
 				}
 			}

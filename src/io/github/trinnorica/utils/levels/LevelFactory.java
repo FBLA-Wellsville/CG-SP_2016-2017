@@ -24,13 +24,13 @@ public enum LevelFactory {
 	//ALT 1
 	PLAYER('☺',SpriteType.PLAYER),
 	//ALT 4
-	STONE_SWORD('♦',SpriteType.TOOL),
+	STONE_SWORD('♦',SpriteType.STONE_SWORD),
 	//ALT 5
-	DARK_SWORD('♣',SpriteType.TOOL),
+	DARK_SWORD('♣',SpriteType.DARK_SWORD),
 	//ALT 6
-	STICK('♠',SpriteType.TOOL),
+	STICK('♠',SpriteType.STICK),
 	//ALT 7
-	BOW('•',SpriteType.TOOL),
+	BOW('•',SpriteType.BOW),
 	
 	GATE('K',SpriteType.GATE),
 	LADDER('M',SpriteType.LADDER),
