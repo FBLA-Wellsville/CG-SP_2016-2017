@@ -30,7 +30,6 @@ public class AsyncAttack implements Runnable {
 		}
 		if(attacker.getTool().getToolType().equals(ToolType.DIRECTIONAL)){
 			if (hasLineOfSight(attacker, entity)) {
-				Utils.debug("ATTACKS?");
 				if (attacker.direction.equals(Direction.LEFT))
 					attacker.getTool().use(attacker.x, attacker.y, attacker.direction, new Shoot(), attacker);
 				if (attacker.direction.equals(Direction.RIGHT))
@@ -57,7 +56,6 @@ public class AsyncAttack implements Runnable {
 		int s = attacker.x;
 		if(attacker.direction.equals(Direction.LEFT)){
 			while(s>0){
-				Utils.debug("GO 1");
 				s=s-1;
 //				Main.getScreen().getGraphics().drawRect(s, attacker.y, 1, 1);
 				if(entity.getPolygon().getBounds().contains(s,attacker.y))
@@ -68,7 +66,6 @@ public class AsyncAttack implements Runnable {
 		}
 		if(attacker.direction.equals(Direction.RIGHT)){
 			while(s<Main.getScreen().getWidth()){
-				Utils.debug("GO");
 				s=s+1;
 //				Main.getScreen().getGraphics().drawRect(s, attacker.y, 1, 1);
 				try{

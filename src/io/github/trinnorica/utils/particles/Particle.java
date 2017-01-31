@@ -9,6 +9,7 @@ import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.entity.Player;
 import io.github.trinnorica.utils.DamageReason;
+import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
@@ -79,16 +80,21 @@ public class Particle extends Sprite implements Moveable {
 		if(g) v.x = v.x *0.6;
 		x = (int) (x + v.x);
 		y = (int) (y + v.y);
-		if(d)
+		if(d){
 			for(Sprite s : Main.getScreen().objects){
-				if(!s.getPolygon().intersects(this.getPolygon().getBounds())) return;
+				if(!s.getPolygon().contains(new Point(x,y))) return;
+				Utils.debug("1");
 				if(!(s instanceof Entity)) return;
+				Utils.debug("2");
 				if(shooter instanceof Player && s instanceof Player) return;
+				Utils.debug("3");
 				if(!(shooter instanceof Player) && !(s instanceof Player)) return;
+				Utils.debug("4");
 				((Entity)s).damage(1, DamageReason.PROJECTILE, shooter);
+				Utils.debug("5");
 				Main.removeSprite(this);
 			}
-		
+		}
 	}
 	
 

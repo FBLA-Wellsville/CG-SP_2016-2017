@@ -106,7 +106,6 @@ public class Enemy extends Entity implements Moveable {
 		}
 		onground = false;
 		
-		Utils.debug("Cooldown: " + cooldown);
 
 		if (!cooldown) {
 			attack(Main.getPlayer());

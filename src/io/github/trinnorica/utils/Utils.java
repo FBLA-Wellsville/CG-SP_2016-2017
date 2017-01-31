@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import io.github.trinnorica.Main;
+import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.utils.particles.ParticleFormat;
 import io.github.trinnorica.utils.particles.ParticleType;
 import res.ExternalFile;
@@ -142,6 +143,9 @@ public class Utils {
 	public static void runParticles(Point point, ParticleFormat format, ParticleType type, Direction d,
 			int minimumLifetime) {
 		format.run(point, type, d, minimumLifetime);
+	}
+	public static void runParticles(Point point, ParticleFormat format, ParticleType type, Direction d, Entity shooter) {
+		format.run(point, type, d, shooter);
 	}
 
 	
