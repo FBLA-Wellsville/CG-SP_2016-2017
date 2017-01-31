@@ -32,5 +32,6 @@ public class FireStaff extends Tool {
 	public void use(int x, int y, Velocity velocity, Entity shooter){
 		Main.addSprite(new Fireball((int)x,(int)y,velocity, shooter));
 	}
+	
 
 }

@@ -2,6 +2,7 @@ package io.github.trinnorica.objects.tools;
 
 import java.awt.Point;
 
+import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.utils.Direction;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.particles.ParticleFormat;
@@ -31,7 +32,7 @@ public class FireDagger extends Tool {
 	}
 	
 	@Override
-	public void use(int x, int y, Direction d, ParticleFormat f){
+	public void use(int x, int y, Direction d, ParticleFormat f, Entity shooter){
 		Utils.runParticles(new Point(x,y), f, ParticleType.FIRE,d);
 	}
 

@@ -36,7 +36,7 @@ public class Tool extends Entity implements Moveable{
 		this.x = x;
 		this.y = y;
 	}
-	public void use(int x, int y, Direction d, ParticleFormat f) {
+	public void use(int x, int y, Direction d, ParticleFormat f, Entity shooter) {
 		this.x = x;
 		this.y = y;
 	}

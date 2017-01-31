@@ -3,6 +3,7 @@ package io.github.trinnorica.utils.particles.formats;
 import java.awt.Point;
 
 import io.github.trinnorica.Main;
+import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.utils.Direction;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.particles.Particle;
@@ -12,7 +13,7 @@ import io.github.trinnorica.utils.particles.ParticleType;
 public class Shoot implements ParticleFormat {
 
 	@Override
-	public void run(Point p, ParticleType t, Direction d) {
+	public void run(Point p, ParticleType t, Direction d, Entity shooter) {
 		int a = p.x;
 		int b = p.y;
 		int r = new java.util.Random().nextInt(20)+10;
@@ -30,13 +31,19 @@ public class Shoot implements ParticleFormat {
 				if(g>0)g=-g;
 			}
 			
-			Main.addSprite(new Particle(new Point(a,b),t,new Velocity(g, 0),false));
+			Main.addSprite(new Particle(new Point(a,b),t,new Velocity(g, 0),false,10,true,shooter));
 		}
 	}
 
 	@Override
 	public void run(Point p, ParticleType t, Direction d,int i) {
 		run(p,t,d);
+	}
+
+	@Override
+	public void run(Point p, ParticleType t, Direction d) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

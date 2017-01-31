@@ -6,6 +6,9 @@ import java.awt.Point;
 import java.util.Random;
 
 import io.github.trinnorica.Main;
+import io.github.trinnorica.entity.Entity;
+import io.github.trinnorica.entity.Player;
+import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
@@ -17,6 +20,8 @@ public class Particle extends Sprite implements Moveable {
 	int lifetime;
 	Velocity v;
 	boolean g = false;
+	boolean d = false;
+	Entity shooter = null;
 	
 	public Particle(Point p, ParticleType t, Velocity v, boolean gravity) {
 		super(p.x, p.y);
@@ -33,6 +38,16 @@ public class Particle extends Sprite implements Moveable {
 		init();
 		this.v = v;
 		this.lifetime = new Random().nextInt(100)+lifetime;
+	}
+	public Particle(Point p, ParticleType t, Velocity v, boolean gravity,int lifetime,boolean d, Entity shooter) {
+		super(p.x, p.y);
+		type = t;
+		g = gravity;
+		init();
+		this.v = v;
+		this.lifetime = new Random().nextInt(100)+lifetime;
+		this.d = d;
+		this.shooter = shooter;
 	}
 	
 	public void init(){
@@ -64,6 +79,15 @@ public class Particle extends Sprite implements Moveable {
 		if(g) v.x = v.x *0.6;
 		x = (int) (x + v.x);
 		y = (int) (y + v.y);
+		if(d)
+			for(Sprite s : Main.getScreen().objects){
+				if(!s.getPolygon().intersects(this.getPolygon().getBounds())) return;
+				if(!(s instanceof Entity)) return;
+				if(shooter instanceof Player && s instanceof Player) return;
+				if(!(shooter instanceof Player) && !(s instanceof Player)) return;
+				((Entity)s).damage(1, DamageReason.PROJECTILE, shooter);
+				Main.removeSprite(this);
+			}
 		
 	}
 	

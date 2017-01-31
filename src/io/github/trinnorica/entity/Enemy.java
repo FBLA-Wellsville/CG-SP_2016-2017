@@ -8,6 +8,7 @@ import io.github.trinnorica.Main;
 import io.github.trinnorica.objects.Collidable;
 import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.DarkSword;
+import io.github.trinnorica.objects.tools.FireDagger;
 import io.github.trinnorica.objects.tools.FireStaff;
 import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.DamageReason;
@@ -33,7 +34,7 @@ public class Enemy extends Entity implements Moveable {
 	
 	private int s = 1;
 	private EntityType type;
-	private boolean cooldown = false;
+	public boolean cooldown = false;
 	private Random random = new Random();
 
 	public Enemy(int x, int y, EntityType type) {
@@ -63,13 +64,13 @@ public class Enemy extends Entity implements Moveable {
 			walking = ExternalFile.loadTexture("entity/ogre/walk.gif");
 			standing = ExternalFile.loadTexture("entity/ogre/bobbing.gif");
 			maxhealth = 10;
-			tool = new Bow(0, 0, ToolType.PROJECTILE);
+			tool = new FireDagger(0, 0, ToolType.DIRECTIONAL);
 			break;
 		case SKELETON:
 			walking = ExternalFile.loadTexture("entity/skeleton/walk.gif");
 			standing = ExternalFile.loadTexture("entity/skeleton/bobbing.gif");
 			maxhealth = 10;
-			tool = new Bow(0, 0, ToolType.DIRECTIONAL);
+			tool = new Bow(0, 0, ToolType.PROJECTILE);
 			break;
 		default:
 			walking = ExternalFile.loadTexture("entity/knight/walk.gif");

@@ -3,6 +3,7 @@ package io.github.trinnorica.utils.particles.formats;
 import java.awt.Point;
 
 import io.github.trinnorica.Main;
+import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.utils.Direction;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.particles.Particle;
@@ -40,6 +41,12 @@ public class Explode implements ParticleFormat {
 
 			Main.addSprite(new Particle(new Point(p.x, p.y), t, new Velocity(e, -2),true));
 		}
+	}
+
+	@Override
+	public void run(Point p, ParticleType t, Direction d, Entity shooter) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
