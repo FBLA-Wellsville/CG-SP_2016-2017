@@ -14,6 +14,10 @@ public class LevelBuilder {
 			if(!(s instanceof Player))Main.addSprite(s);
 			else player = (Player) s;
 		}
+		for(Sprite s : l.entities){
+			if(!(s instanceof Player))Main.addSprite(s);
+			else player = (Player) s;
+		}
 		
 		if(player == null){
 			player = new Player(1,1);

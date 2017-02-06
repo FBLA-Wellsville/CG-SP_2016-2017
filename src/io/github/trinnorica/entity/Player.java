@@ -468,6 +468,11 @@ public class Player extends Entity implements Moveable, Keyable {
 		}
 
 	}
+	
+	@Override
+	public SpriteType getType(){
+		return SpriteType.PLAYER;
+	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {

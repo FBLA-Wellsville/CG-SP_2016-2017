@@ -23,6 +23,7 @@ import res.ExternalFile;
 public class Level {
 	
 	List<Sprite> sprites = new ArrayList<>();
+	List<Entity> entities = new ArrayList<>();
 
 	int y = 0;
 	int x = 0;
@@ -52,24 +53,24 @@ public class Level {
 				sprites.add(new GoldCoin(x*30+(15/2), y*30+(15/2)));
 				break;
 			case PLAYER:
-				sprites.add(new Player(x*30,y*30));
+				entities.add(new Player(x*30,y*30));
 //				Main.getPlayer().x = x*30;
 //				Main.getPlayer().y = y*30;
 				break;
 			case OGRE:
-				sprites.add(new Enemy(x*30, y*30,EntityType.OGRE));
+				entities.add(new Enemy(x*30, y*30,EntityType.OGRE));
 				break;
 			case KNIGHT:
-				sprites.add(new Enemy(x*30, y*20, EntityType.KNIGHT));
+				entities.add(new Enemy(x*30, y*20, EntityType.KNIGHT));
 				break;
 			case DARK_KNIGHT:
-				sprites.add(new Enemy(x*30, y*20, EntityType.DARK_KNIGHT));
+				entities.add(new Enemy(x*30, y*20, EntityType.DARK_KNIGHT));
 				break;
 			case WIZARD:
-				sprites.add(new Enemy(x*30, y*20, EntityType.WIZARD));
+				entities.add(new Enemy(x*30, y*20, EntityType.WIZARD));
 				break;
 			case STONE_SWORD:
-				sprites.add(new Sword(x*30, y*30,ToolType.MELEE));
+				entities.add(new Sword(x*30, y*30,ToolType.MELEE));
 				break;
 			case DIRT:
 				sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/dirt.png"),30,30));

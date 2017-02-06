@@ -10,6 +10,7 @@ import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.DarkSword;
 import io.github.trinnorica.objects.tools.FireDagger;
 import io.github.trinnorica.objects.tools.FireStaff;
+import io.github.trinnorica.objects.tools.Stick;
 import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Direction;
@@ -19,6 +20,7 @@ import io.github.trinnorica.utils.particles.formats.Ghost;
 import io.github.trinnorica.utils.sprites.EntityType;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
+import io.github.trinnorica.utils.sprites.SpriteType;
 import io.github.trinnorica.utils.sprites.Tool;
 import io.github.trinnorica.utils.sprites.ToolType;
 import io.github.trinnorica.utils.tasks.AsyncAttack;
@@ -52,7 +54,7 @@ public class Enemy extends Entity implements Moveable {
 			walking = ExternalFile.loadTexture("entity/knight/walk.gif");
 			standing = ExternalFile.loadTexture("entity/knight/bobbing.gif");
 			maxhealth = 10;
-			tool = new Sword(0, 0, ToolType.MELEE);
+			tool = new FireDagger(0, 0, ToolType.DIRECTIONAL);
 			break;
 		case DARK_KNIGHT:
 			walking = ExternalFile.loadTexture("entity/knight/dark/walk.gif");
@@ -64,7 +66,7 @@ public class Enemy extends Entity implements Moveable {
 			walking = ExternalFile.loadTexture("entity/ogre/walk.gif");
 			standing = ExternalFile.loadTexture("entity/ogre/bobbing.gif");
 			maxhealth = 10;
-			tool = new FireDagger(0, 0, ToolType.DIRECTIONAL);
+			tool = new Stick(0, 0, ToolType.MELEE);
 			break;
 		case SKELETON:
 			walking = ExternalFile.loadTexture("entity/skeleton/walk.gif");
@@ -107,9 +109,7 @@ public class Enemy extends Entity implements Moveable {
 		onground = false;
 		
 
-		if (!cooldown) {
-			attack(Main.getPlayer());
-		}
+		attack(Main.getPlayer());
 
 		
 		for (Sprite s : Main.getScreen().objects) {
@@ -155,14 +155,16 @@ public class Enemy extends Entity implements Moveable {
 
 	
 	private void attack(Entity e) {
-		cooldown = true;
-		new Thread(new AsyncAttack(this, e)).start();
-		new java.util.Timer().schedule(new java.util.TimerTask() {
-			@Override
-			public void run() {
-				cooldown = false;
-			}
-		}, random.nextInt(6) * 1000);
+		if(!cooldown){
+			new Thread(new AsyncAttack(this, e)).start();
+			new java.util.Timer().schedule(new java.util.TimerTask() {
+				@Override
+				public void run() {
+					cooldown = false;
+				}
+			}, random.nextInt(6) * 1000);
+		}
+		
 
 	
 	}
@@ -180,12 +182,15 @@ public class Enemy extends Entity implements Moveable {
 	}
 
 	@Override
+	public SpriteType getType(){
+		return type.getSpriteType();
+	}
+	@Override
 	public void draw(Graphics g) {
 		if (velocity.x != 0)
 			loadImage(walking);
 		else
 			loadImage(standing);
-
 		if (direction == Direction.RIGHT) {
 
 			g.drawImage(getImage(), x, y, width, height, null);

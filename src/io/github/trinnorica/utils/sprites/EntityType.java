@@ -7,4 +7,9 @@ public enum EntityType {
 	OGRE,
 	SKELETON, WIZARD;
 
+	public SpriteType getSpriteType() {
+		
+		return SpriteType.valueOf(this.toString());
+	}
+
 }
