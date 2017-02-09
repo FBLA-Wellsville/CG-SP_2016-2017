@@ -81,16 +81,22 @@ public class Particle extends Sprite implements Moveable {
 		x = (int) (x + v.x);
 		y = (int) (y + v.y);
 		if(d){
-			for(Sprite s : Main.getScreen().objects){
-				if(this.getPolygon().getBounds().contains(s.getPolygon().getBounds())) continue;
-				if(!(s instanceof Entity)) continue;
-				Utils.debug("Shooter: " + shooter.getType());
-				Utils.debug("Damaged: " + s.getType());
-				if(shooter instanceof Player && s instanceof Player) continue;
-				if(!(shooter instanceof Player) && !(s instanceof Player)) continue;
-				((Entity)s).damage(1, DamageReason.PROJECTILE, shooter);
-				Main.removeSprite(this);
+			if(!(shooter instanceof Player)){
+				if(getPolygon().getBounds().intersects(Main.getPlayer().getPolygon().getBounds())){
+					Main.getPlayer().damage(1, DamageReason.PROJECTILE, shooter);
+					Main.removeSprite(this);
+				}
+				
+			} else {
+				for(Sprite s : Main.getScreen().objects){
+					if(this.getPolygon().getBounds().intersects(s.getPolygon().getBounds())) continue;
+					if(!(s instanceof Entity)) continue;
+					if(!(s instanceof Player)) continue;
+					((Entity)s).damage(1, DamageReason.PROJECTILE, this);
+					Main.removeSprite(this);
+				}
 			}
+			
 		}
 	}
 	

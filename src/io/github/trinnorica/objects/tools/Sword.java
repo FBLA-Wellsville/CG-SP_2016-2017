@@ -35,7 +35,6 @@ public class Sword extends Tool {
 
 	public void use(int x, int y) {
 		super.use(x, y);
-		Utils.debug("X:" + x + "\n Y:" + y);
 		for (Sprite s : Main.getScreen().objects) {
 			if (!(s instanceof Particle || s instanceof Projectile))
 				if (getStrikeRange().getBounds().intersects(s.getPolygon().getBounds())) {

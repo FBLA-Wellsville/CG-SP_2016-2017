@@ -28,6 +28,7 @@ import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.particles.Particle;
 import io.github.trinnorica.utils.particles.ParticleType;
 import io.github.trinnorica.utils.particles.formats.Ghost;
+import io.github.trinnorica.utils.particles.formats.Shoot;
 import io.github.trinnorica.utils.sprites.EntityType;
 import io.github.trinnorica.utils.sprites.Keyable;
 import io.github.trinnorica.utils.sprites.Moveable;
@@ -464,7 +465,7 @@ public class Player extends Entity implements Moveable, Keyable {
 			Main.addSprite(new Enemy(x + 100, y, EntityType.KNIGHT));
 		}
 		if (key == KeyEvent.VK_K) {
-			Main.addSprite(new DarkSword(x + 100, y,ToolType.MELEE));
+			Utils.runParticles(new Point(x+100,y), new Shoot(), ParticleType.FIRE, Direction.LEFT, new Entity(50,50));
 		}
 
 	}

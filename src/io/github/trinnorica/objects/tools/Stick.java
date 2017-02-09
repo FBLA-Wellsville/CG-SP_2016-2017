@@ -15,7 +15,7 @@ public class Stick extends Tool{
 
 	public Stick(int x, int y, ToolType type) {
 		super(x, y, type);
-		power = 10;
+		power = 1;
 		init();
 		
 	}
@@ -35,7 +35,6 @@ public class Stick extends Tool{
 	
 	public void use(int x, int y) {
 		super.use(x, y);
-		Utils.debug("X:" + x + "\n Y:" + y);
 		for (Sprite s : Main.getScreen().objects) {
 			if (!(s instanceof Particle || s instanceof Projectile))
 				if (getStrikeRange().getBounds().intersects(s.getPolygon().getBounds())) {

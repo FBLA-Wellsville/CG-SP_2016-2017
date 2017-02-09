@@ -24,7 +24,7 @@ public class AsyncAttack implements Runnable {
 	public void run() {
 
 		if (attacker.getTool().getToolType().equals(ToolType.MELEE)) {
-			attacker.tool.use(attacker.x, attacker.y);
+			if(Utils.getDistanceX(attacker, entity) <= 30) attacker.tool.use(attacker.x, attacker.y);
 			return;
 		}
 

@@ -290,5 +290,15 @@ public class Utils {
 	public static Color getGreenColor() {
 		return Color.decode("#99db45");
 	}
+
+	public static int getDistanceX(Entity attacker, Entity entity) {
+		return (int) Math.sqrt(Math.pow(attacker.x - entity.x, 2));
+	}
+	public static int getDistanceY(Entity attacker, Entity entity) {
+		return (int) Math.sqrt(Math.pow(attacker.y - entity.y, 2));
+	}
+	public static int getDistance(Entity attacker, Entity entity) {
+		return (int) Math.sqrt(Math.pow(attacker.x - entity.x, 2) + Math.pow(attacker.y - entity.y, 2));
+	}
 	
 }

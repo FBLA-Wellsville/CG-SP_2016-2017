@@ -7,7 +7,6 @@ import java.util.Random;
 import io.github.trinnorica.Main;
 import io.github.trinnorica.objects.Collidable;
 import io.github.trinnorica.objects.tools.Bow;
-import io.github.trinnorica.objects.tools.DarkSword;
 import io.github.trinnorica.objects.tools.FireDagger;
 import io.github.trinnorica.objects.tools.FireStaff;
 import io.github.trinnorica.objects.tools.Stick;
@@ -54,13 +53,13 @@ public class Enemy extends Entity implements Moveable {
 			walking = ExternalFile.loadTexture("entity/knight/walk.gif");
 			standing = ExternalFile.loadTexture("entity/knight/bobbing.gif");
 			maxhealth = 10;
-			tool = new FireDagger(0, 0, ToolType.DIRECTIONAL);
+			tool = new Sword(0, 0, ToolType.MELEE);
 			break;
 		case DARK_KNIGHT:
 			walking = ExternalFile.loadTexture("entity/knight/dark/walk.gif");
 			standing = ExternalFile.loadTexture("entity/knight/dark/bobbing.gif");
 			maxhealth = 10;
-			tool = new DarkSword(0, 0, ToolType.MELEE);
+			tool = new FireDagger(0, 0, ToolType.DIRECTIONAL);
 			break;
 		case OGRE:
 			walking = ExternalFile.loadTexture("entity/ogre/walk.gif");
@@ -177,8 +176,7 @@ public class Enemy extends Entity implements Moveable {
 
 			Main.addSprite(tool);
 		}
-		Main.removeSprite(this);
-		Utils.runParticles(new Point(x, y), new Ghost(), ParticleType.GHOST, null, 100);
+		super.kill(reason);
 	}
 
 	@Override
