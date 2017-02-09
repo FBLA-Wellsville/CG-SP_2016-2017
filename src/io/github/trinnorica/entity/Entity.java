@@ -82,6 +82,15 @@ public class Entity extends Sprite implements Moveable {
 	// }
 
 	public void damage(int i, DamageReason reason, Entity damager) {
+		
+		if(damager instanceof Player && this instanceof Player) {
+			Utils.debug("Case 1");
+			return;
+		}
+		if(!(damager instanceof Player) && !(this instanceof Player)){
+			Utils.debug("Case 2");
+			return;
+		}
 
 		if (damager.x - x >= 0)
 			if (this instanceof Player) {

@@ -36,6 +36,7 @@ public class Stick extends Tool{
 	public void use(int x, int y) {
 		super.use(x, y);
 		for (Sprite s : Main.getScreen().objects) {
+			
 			if (!(s instanceof Particle || s instanceof Projectile))
 				if (getStrikeRange().getBounds().intersects(s.getPolygon().getBounds())) {
 					if (s instanceof Entity)
