@@ -40,8 +40,9 @@ public class Main {
 		     
 		     ge.registerFont(pixel);
 		} catch (Exception ex) {
-		     //Handle exception
+			pixel = new Font("Helvetica", Font.PLAIN, 20);
 		}
+		
 		
 		new Window();
 		

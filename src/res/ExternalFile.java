@@ -18,10 +18,10 @@ public class ExternalFile {
 	
 	
 	
-	public static void getDescriptionProperty(String list, String property){
+	public static String getDescriptionProperty(String list, String property){
 		try {
 
-			InputStream desc = ExternalFile.class.getResourceAsStream("description.xml");
+			InputStream desc = ExternalFile.class.getResourceAsStream("/src/description.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(desc);
@@ -34,40 +34,45 @@ public class ExternalFile {
 
 				Node nNode = nList.item(temp);
 
-				System.out.println("\nCurrent Element :" + nNode.getNodeName());
-
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
-					Element eElement = (Element) nNode;
+					Element e = (Element) nNode;
 
-					System.out.println("Staff id : " + eElement.getAttribute("id"));
-					System.out.println("First Name : " + eElement.getElementsByTagName("firstname").item(0).getTextContent());
-					System.out.println("Last Name : " + eElement.getElementsByTagName("lastname").item(0).getTextContent());
-					System.out.println("Nick Name : " + eElement.getElementsByTagName("nickname").item(0).getTextContent());
-					System.out.println("Salary : " + eElement.getElementsByTagName("salary").item(0).getTextContent());
+					return e.getElementsByTagName("major").item(0).getTextContent();
 
 				}
 			}
 		    } catch (Exception e) {
 		    	e.printStackTrace();
+		    	return "null";
 		    }
+		return "null";
 	}
 	
 	public static Image loadTexture(String resource){
 		
 		try {
-			return new ImageIcon(ExternalFile.class.getResource("/res/images/" + resource)).getImage();
+			return new ImageIcon(ExternalFile.class.getResource("/src/res/images/" + resource)).getImage();
 		} catch (Exception e) {
 			try {
-				return new ImageIcon(ExternalFile.class.getResource("/res/images/unknown.png")).getImage();
+				return new ImageIcon(ExternalFile.class.getResource("/src/res/images/unknown.png")).getImage();
 			} catch (Exception e1) {
-				return null;
+				try {
+					return new ImageIcon(ExternalFile.class.getResource("images/" + resource)).getImage();
+				} catch (Exception e2) {
+					try {
+						return new ImageIcon(ExternalFile.class.getResource("images/unknown.png")).getImage();
+					} catch (Exception e3) {
+						e1.printStackTrace();
+						return null;
+					}
+				}
 			}
 		}
 	}
 	public static Version getVersion__BOOT_ONLY__() {
 		try {
-			InputStream desc = ExternalFile.class.getResourceAsStream("/description.xml");
+			InputStream desc = ExternalFile.class.getResourceAsStream("/src/description.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(desc);
@@ -85,14 +90,17 @@ public class ExternalFile {
 					);
 			
 		    } catch (Exception e) {
-		    	e.printStackTrace();
 		    	System.out.println("Couldn't read 'description.xml'. Assuming version to be '2.0.1'");
 		    	return new Version("2","0","1");
 		    }
 	}
 
 	public static InputStream loadFont(String string) {
-		return ExternalFile.class.getResourceAsStream("/res/fonts/" + string);
+		try {
+			return ExternalFile.class.getResourceAsStream("/src/res/fonts/" + string);
+		} catch (Exception e) {
+			return ExternalFile.class.getResourceAsStream("fonts/" + string);
+		}
 	}
 
 	

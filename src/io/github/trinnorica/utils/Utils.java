@@ -94,7 +94,8 @@ public class Utils {
 	}
 
 	public static String getVersion() {
-		return version.getVersion();
+//		return version.getVersion();
+		return "1.1.1";
 	}
 
 	public static double drawScrollingImage(Graphics g, Image image, double x, int y, int width, int height,

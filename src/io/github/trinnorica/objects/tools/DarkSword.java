@@ -2,6 +2,7 @@ package io.github.trinnorica.objects.tools;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.Entity;
+import io.github.trinnorica.entity.Player;
 import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.particles.Particle;
 import io.github.trinnorica.utils.sprites.Projectile;
@@ -33,13 +34,23 @@ public class DarkSword extends Tool {
 	
 	public void use(int x, int y) {
 		super.use(x, y);
-		for (Sprite s : Main.getScreen().objects) {
-			if (!(s instanceof Particle || s instanceof Projectile))
-				if (getStrikeRange().getBounds().intersects(s.getPolygon().getBounds())) {
-					if (s instanceof Entity)
-						((Entity) s).damage(getPower(), DamageReason.ENEMY, this);
-				}
+		if(getUser() instanceof Player){
+			for (Sprite s : Main.getScreen().objects) {
+				if (!(s instanceof Particle || s instanceof Projectile))
+					if (getStrikeRange().getBounds().intersects(s.getPolygon().getBounds())) {
+						if (s instanceof Entity)
+							((Entity) s).damage(getPower(), DamageReason.ENEMY, getUser(), true, false);
+					}
+			}
 		}
+		else {
+			if (getStrikeRange().getBounds().intersects(Main.getPlayer().getPolygon().getBounds())) {
+				Main.getPlayer().damage(getPower(), DamageReason.ENEMY, getUser(), false, true);
+			}
+		}
+		
+		
+		
 	}
 
 }

@@ -20,6 +20,7 @@ import io.github.trinnorica.utils.particles.formats.Ghost;
 import io.github.trinnorica.utils.particles.formats.Stay;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
+import io.github.trinnorica.utils.sprites.SpriteType;
 import io.github.trinnorica.utils.sprites.Tool;
 import io.github.trinnorica.utils.tasks.CheckLanding;
 import res.ExternalFile;
@@ -37,7 +38,6 @@ public class Entity extends Sprite implements Moveable {
 	double dx = 0;
 	double dy = 0;
 
-	protected int score;
 	// protected Tool tool;
 	public boolean walkingb;
 	public Velocity velocity = new Velocity(0, 0);
@@ -59,6 +59,7 @@ public class Entity extends Sprite implements Moveable {
 	public int getMaxHealth() {
 		return (int) maxhealth;
 	}
+	
 
 	// public Direction getFacingDirection(){
 	// return facing;
@@ -81,16 +82,20 @@ public class Entity extends Sprite implements Moveable {
 	//
 	// }
 
-	public void damage(int i, DamageReason reason, Entity damager) {
+	public void damage(int i, DamageReason reason, Entity damager, boolean dplayer, boolean player) {
 		
-		if(damager instanceof Player && this instanceof Player) {
-			Utils.debug("Case 1");
+		
+		
+		if(dplayer && player){
+			Utils.debug("1");
 			return;
 		}
-		if(!(damager instanceof Player) && !(this instanceof Player)){
-			Utils.debug("Case 2");
+		
+		if(!(dplayer) && !player){
+			Utils.debug("2");
 			return;
 		}
+		
 
 		if (damager.x - x >= 0)
 			if (this instanceof Player) {
@@ -189,10 +194,19 @@ public class Entity extends Sprite implements Moveable {
 		// ParticleType.BLOOD, null);
 		Utils.runParticles(new Point(x, y), new Ghost(), ParticleType.GHOST, null, 100);
 		Main.removeSprite(this);
+		Main.score += 15;
 		// dead = true;
 		// Utils.debug("DEATH");
 		// interact();
 	}
+	
+	public void setTool(Tool tool) {
+		this.tool = tool;
+		tool.setUser(this);
+		Main.removeSprite(tool);
+	}
+	
+	
 
 	// public Tool getTool() {
 	// return tool;

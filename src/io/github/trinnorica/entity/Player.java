@@ -99,6 +99,7 @@ public class Player extends Entity implements Moveable, Keyable {
 		return xbounds;
 	}
 
+	@Override
 	public void kill(DamageReason reason) {
 		if (damaged) {
 			setVelocity(0, 0);
@@ -374,6 +375,9 @@ public class Player extends Entity implements Moveable, Keyable {
 			if(tool.getToolType().equals(ToolType.PROJECTILE)){
 				tool.use(x, y, new Velocity(8, -2), this);
 			}
+			if(tool.getToolType().equals(ToolType.DIRECTIONAL)){
+				tool.use(x, y, direction, new Shoot(), this);
+			}
 			if(tool.getToolType().equals(ToolType.MELEE)){
 				tool.use(x, y);
 			}
@@ -389,9 +393,7 @@ public class Player extends Entity implements Moveable, Keyable {
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		if (key == KeyEvent.VK_NUMPAD2) {
-			Utils.runParticles(new Point(x, y), new Ghost(), ParticleType.GHOST, null, 100);
-		}
+		
 		if (key == KeyEvent.VK_NUMPAD0) {
 			lives = lives + 1;
 			if (lives > MAXLIVES) {
@@ -411,6 +413,22 @@ public class Player extends Entity implements Moveable, Keyable {
 		if (key == KeyEvent.VK_W) {
 			if (flying || climbing)
 				setVelocity("", -2);
+		}
+		
+		if (key == KeyEvent.VK_1) {
+			setTool(new FireDagger(x, y, ToolType.DIRECTIONAL));
+		}
+		if (key == KeyEvent.VK_2) {
+			setTool(new FireStaff(x, y, ToolType.PROJECTILE));
+		}
+		if (key == KeyEvent.VK_3) {
+			setTool(new DarkSword(x, y, ToolType.MELEE));
+		}
+		if (key == KeyEvent.VK_4) {
+			setTool(new FireDagger(x, y, ToolType.DIRECTIONAL));
+		}
+		if (key == KeyEvent.VK_5) {
+			setTool(new FireDagger(x, y, ToolType.DIRECTIONAL));
 		}
 
 		if (key == KeyEvent.VK_S) {
@@ -502,11 +520,7 @@ public class Player extends Entity implements Moveable, Keyable {
 		}
 	}
 
-	public void setTool(Tool tooll) {
-		tool = tooll;
-		Main.removeSprite(tool);
-
-	}
+	
 
 	public int getLevel() {
 		return Utils.getLevel();

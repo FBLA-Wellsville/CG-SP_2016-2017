@@ -15,6 +15,7 @@ public class Tool extends Entity implements Moveable{
 	protected int cooldown = 1;
 	private Rectangle xbounds;
 	private ToolType tooltype;
+	protected Entity user = null;
 
 	public Tool(int x, int y, ToolType type) {
 		super(x, y);
@@ -27,6 +28,12 @@ public class Tool extends Entity implements Moveable{
 		xbounds = new Rectangle(x, y, width, height+2);
 	}
 	
+	public Entity getUser(){
+		return user;
+	}
+	public void setUser(Entity user){
+		this.user = user;
+	}
 
 	public void use(int x, int y) {
 		this.x = x;

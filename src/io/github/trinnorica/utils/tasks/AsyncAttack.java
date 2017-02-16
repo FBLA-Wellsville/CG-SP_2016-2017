@@ -24,13 +24,12 @@ public class AsyncAttack implements Runnable {
 	public void run() {
 
 		if (attacker.getTool().getToolType().equals(ToolType.MELEE)) {
-			if(Utils.getDistanceX(attacker, entity) <= 30) attacker.tool.use(attacker.x, attacker.y);
+			if(Utils.getDistanceX(attacker, entity) <= 30 && Utils.getDistanceY(attacker, entity) <= 30) attacker.tool.use(attacker.x, attacker.y);
 			return;
 		}
 
 		if (hasLineOfSight(attacker, entity)) {
 			if (attacker.getTool().getToolType().equals(ToolType.DIRECTIONAL)) {
-				Utils.debug("TESTS");
 				((Enemy)attacker).cooldown = true;
 				if (attacker.direction.equals(Direction.LEFT))
 					attacker.getTool().use(attacker.x, attacker.y, attacker.direction, new Shoot(), attacker);

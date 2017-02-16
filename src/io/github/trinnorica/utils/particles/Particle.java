@@ -13,6 +13,7 @@ import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
+import io.github.trinnorica.utils.sprites.Tool;
 import res.ExternalFile;
 
 public class Particle extends Sprite implements Moveable {
@@ -81,17 +82,22 @@ public class Particle extends Sprite implements Moveable {
 		x = (int) (x + v.x);
 		y = (int) (y + v.y);
 		if(d){
+			Utils.debug("1");
 			if(!(shooter instanceof Player)){
+				Utils.debug("2");
 				if(getPolygon().getBounds().intersects(Main.getPlayer().getPolygon().getBounds())){
-					Main.getPlayer().damage(1, DamageReason.PROJECTILE, shooter);
+					Main.getPlayer().damage(1, DamageReason.PROJECTILE, shooter, false, true);
 					Main.removeSprite(this);
 				}
 				
 			} else {
+				Utils.debug("3");
 				for(Sprite s : Main.getScreen().objects){
 					if(this.getPolygon().getBounds().intersects(s.getPolygon().getBounds())) continue;
+					if((s instanceof Particle)) continue;
+					if((s instanceof Player)) continue;
+					if((s instanceof Tool)) continue;
 					if(!(s instanceof Entity)) continue;
-					if(!(s instanceof Player)) continue;
 					((Entity)s).damage(1, DamageReason.PROJECTILE, this);
 					Main.removeSprite(this);
 				}
