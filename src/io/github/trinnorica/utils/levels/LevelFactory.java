@@ -21,6 +21,8 @@ public enum LevelFactory {
 	DARK_KNIGHT('♂',SpriteType.DARK_KNIGHT),
 	//ALT 12
 	WIZARD('♀',SpriteType.WIZARD),
+	//ALT 13
+	SKELETN('♪',SpriteType.SKELETON),
 	//ALT 1
 	PLAYER('☺',SpriteType.PLAYER),
 	//ALT 4

@@ -35,7 +35,7 @@ public class Audio {
 			
 			
 			final Clip clip = AudioSystem.getClip();
-			final AudioInputStream audioStream = AudioSystem.getAudioInputStream(new BufferedInputStream(Audio.class.getResourceAsStream("sounds/" + name)));
+			final AudioInputStream audioStream = AudioSystem.getAudioInputStream(new BufferedInputStream(Audio.class.getResourceAsStream("/src/res/sounds/" + name)));
 			
 			clip.open(audioStream);
 				
@@ -87,42 +87,47 @@ public class Audio {
 			
 			
 			final Clip clip = AudioSystem.getClip();
-			final AudioInputStream audioStream = AudioSystem.getAudioInputStream(new BufferedInputStream(Audio.class.getResourceAsStream("sounds/" + name)));
-			
-			clip.open(audioStream);
+			try{
+				final AudioInputStream audioStream = AudioSystem.getAudioInputStream(new BufferedInputStream(Audio.class.getResourceAsStream("/src/res/sounds/" + name)));
 				
-			
-			
-			
-			
-			if(sound.getSoundType().equals(SoundType.BACKGROUND)){
-				background = clip;
-				background.loop(Clip.LOOP_CONTINUOUSLY);
-				background.start();
-			
-				AudioFormat format = background.getFormat();
-				long frames = background.getFrameLength();
-				double time = (frames+0.0) / format.getFrameRate(); 			
-				
-				try{
-					timer.schedule(new TimerTask() {
-						@Override		
-						public void run() {	
-							clip.flush();
-							playSound(sound);
-							timer.cancel();	
-						}	
-					}, (long) time);
-				} catch(IllegalStateException ex){
+				clip.open(audioStream);
 					
-				}
 				
-				try {
-					audioStream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
+				
+				
+				
+				if(sound.getSoundType().equals(SoundType.BACKGROUND)){
+					background = clip;
+					background.loop(Clip.LOOP_CONTINUOUSLY);
+					background.start();
+				
+					AudioFormat format = background.getFormat();
+					long frames = background.getFrameLength();
+					double time = (frames+0.0) / format.getFrameRate(); 			
+					
+					try{
+						timer.schedule(new TimerTask() {
+							@Override		
+							public void run() {	
+								clip.flush();
+								playSound(sound);
+								timer.cancel();	
+							}	
+						}, (long) time);
+					} catch(IllegalStateException ex){
+						
+					}
+					
+					try {
+						audioStream.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
+			} catch(IOException exx){
+				Utils.debug("Stream closed.");
 			}
+			
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}

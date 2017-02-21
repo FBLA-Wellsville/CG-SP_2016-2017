@@ -32,7 +32,6 @@ import io.github.trinnorica.objects.tools.IceDagger;
 import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.Backgrounds;
 import io.github.trinnorica.utils.Board;
-import io.github.trinnorica.utils.Clickable;
 import io.github.trinnorica.utils.Images;
 import io.github.trinnorica.utils.Sound;
 import io.github.trinnorica.utils.Utils;
@@ -84,6 +83,7 @@ public class Screen extends JPanel implements ActionListener {
 	private Image ENEMY = ExternalFile.loadTexture("entity/knight/walk.gif");
 	private Image LOGO = ExternalFile.loadTexture("logos/logo-title.png");
 	private Image FBLA = ExternalFile.loadTexture("logos/fbla-logo.png");
+	public boolean confirm;
 
 	private boolean leaderboard = true;
 
@@ -101,8 +101,6 @@ public class Screen extends JPanel implements ActionListener {
 		timer.start();
 
 		addKeyListener(new TAdapter());
-		addMouseMotionListener(new MMListener());
-		addMouseListener(new MListener());
 
 		setLayout(null);
 
@@ -125,13 +123,16 @@ public class Screen extends JPanel implements ActionListener {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if (!paused && !help)
+		if (!paused && !help && !confirm)
 			drawMenu(g);
 		else {
 			if (paused)
 				drawPaused(g);
 			if (help)
 				drawHelp(g);
+			if(confirm)
+				drawConfirm(g);
+			
 		}
 		Toolkit.getDefaultToolkit().sync();
 	}
@@ -161,6 +162,17 @@ public class Screen extends JPanel implements ActionListener {
 						+ "F1 - Show this menu\n"
 						+ "R - Go to main menu\n\n\n" + "Press Esc to close this page.",
 				getWidth() / 2, getHeight() / 3, Utils.getGreenColor(), Color.WHITE, 0);
+
+	}
+	
+	public void drawConfirm(Graphics g) {
+		g.drawImage(Backgrounds.MAIN.getImage(), 0, 0, getWidth(), getHeight(), this);
+		g.drawImage(DARK, 0, 0, getWidth(), getHeight(), this);
+		g.setFont(Main.getFont().deriveFont(20.0F));
+		Utils.drawOutlineString(g, "Would you really like to restart? [y|n]",
+				(getWidth() / 2) - g.getFontMetrics()
+						.stringWidth("Would you really like to restart?") / 2,
+				getHeight()/2, Utils.getGreenColor(), Color.WHITE, 1);
 
 	}
 
@@ -448,35 +460,29 @@ public class Screen extends JPanel implements ActionListener {
 
 		}
 
-		for (Clickable c : Main.getClickables()) {
-			c.drawPolygon(g);
-		}
-
 		// Debug overlay
 		if (debug) {
 			g.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
 			Utils.drawOutlineString(g, "Version: " + Utils.getVersion(), 0, 20, Color.WHITE, Color.BLACK, 1);
-			Utils.drawOutlineString(g, "Clickables: " + Main.getClickables().size(), 0, 40, Color.WHITE, Color.BLACK,
-					1);
-			Utils.drawOutlineString(g, "Objects: " + objects.size(), 0, 60, Color.WHITE, Color.BLACK, 1);
-			Utils.drawOutlineString(g, "Playing: " + playing, 0, 80, Color.WHITE, Color.BLACK, 1);
+			Utils.drawOutlineString(g, "Objects: " + objects.size(), 0, 40, Color.WHITE, Color.BLACK, 1);
+			Utils.drawOutlineString(g, "Playing: " + playing, 0, 60, Color.WHITE, Color.BLACK, 1);
 			try {
-				Utils.drawOutlineString(g, "Flying: " + Main.getPlayer().flying, 0, 100, Color.WHITE, Color.BLACK, 1);
-				Utils.drawOutlineString(g, "Jumping: " + Main.getPlayer().jumping, 0, 120, Color.WHITE, Color.BLACK, 1);
-				Utils.drawOutlineString(g, "Falling: " + Main.getPlayer().falling, 0, 140, Color.WHITE, Color.BLACK, 1);
-				Utils.drawOutlineString(g, "Onground: " + Main.getPlayer().onground, 0, 160, Color.WHITE, Color.BLACK,
+				Utils.drawOutlineString(g, "Flying: " + Main.getPlayer().flying, 0, 80, Color.WHITE, Color.BLACK, 1);
+				Utils.drawOutlineString(g, "Jumping: " + Main.getPlayer().jumping, 0, 100, Color.WHITE, Color.BLACK, 1);
+				Utils.drawOutlineString(g, "Falling: " + Main.getPlayer().falling, 0, 120, Color.WHITE, Color.BLACK, 1);
+				Utils.drawOutlineString(g, "Onground: " + Main.getPlayer().onground, 0, 140, Color.WHITE, Color.BLACK,
 						1);
 
-				Utils.drawOutlineString(g, "Climbing: " + Main.getPlayer().climbing, 0, 180, Color.WHITE, Color.BLACK,
+				Utils.drawOutlineString(g, "Climbing: " + Main.getPlayer().climbing, 0, 160, Color.WHITE, Color.BLACK,
 						1);
 				if (Main.getPlayer().getTool() != null)
-					Utils.drawOutlineString(g, "Tool: " + Main.getPlayer().getTool().getClass().getSimpleName(), 0, 200,
+					Utils.drawOutlineString(g, "Tool: " + Main.getPlayer().getTool().getClass().getSimpleName(), 0, 180,
 							Color.WHITE, Color.BLACK, 1);
 				else
-					Utils.drawOutlineString(g, "Tool: None", 0, 200, Color.WHITE, Color.BLACK, 1);
-				Utils.drawOutlineString(g, "Left: " + Main.getPlayer().left, 0, 220, Color.WHITE, Color.BLACK, 1);
-				Utils.drawOutlineString(g, "Right: " + Main.getPlayer().right, 0, 240, Color.WHITE, Color.BLACK, 1);
-				Utils.drawOutlineString(g, "Location: " + Main.getPlayer().getLocation(), 0, 260, Color.WHITE,
+					Utils.drawOutlineString(g, "Tool: None", 0, 180, Color.WHITE, Color.BLACK, 1);
+				Utils.drawOutlineString(g, "Left: " + Main.getPlayer().left, 0, 200, Color.WHITE, Color.BLACK, 1);
+				Utils.drawOutlineString(g, "Right: " + Main.getPlayer().right, 0, 220, Color.WHITE, Color.BLACK, 1);
+				Utils.drawOutlineString(g, "Location: " + Main.getPlayer().getLocation(), 0, 240, Color.WHITE,
 						Color.BLACK, 1);
 				g.drawRect((int) Main.getPlayer().getPolygon().getBounds().getX(),
 						(int) Main.getPlayer().getPolygon().getBounds().getY(),
@@ -505,24 +511,9 @@ public class Screen extends JPanel implements ActionListener {
 		repaint();
 	}
 
-	private class MMListener extends MouseMotionAdapter {
-
-	}
-
-	private class MListener extends MouseAdapter {
-
-		public void mousePressed(MouseEvent e) {
-			try {
-				Main.getPlayer().x = e.getX();
-				Main.getPlayer().y = e.getY();
-			} catch (NullPointerException ex) {
-				// This just means the player hasn't been set. Not a big deal.
-			}
-		}
-
-	}
-
 	private class TAdapter extends KeyAdapter {
+
+		
 
 		@Override
 		public void keyReleased(KeyEvent e) {
@@ -629,6 +620,34 @@ public class Screen extends JPanel implements ActionListener {
 				Main.setBoard(Board.CREDITS);
 
 			}
+			
+			if(confirm){
+				if (key == KeyEvent.VK_Y) {
+					confirm = false;
+					Main.setBoard(Board.MAIN);
+					Utils.setLevel(0);
+				}
+				
+				if (key == KeyEvent.VK_N) {
+					confirm = false;
+					playing = true;
+				}
+			}
+			
+			
+			
+			if (key == KeyEvent.VK_R) {
+				if(playing && ! confirm){
+					confirm = true;
+					playing = false;
+					
+				} else {
+					Main.setBoard(Board.MAIN);
+					playing = false;
+					Utils.setLevel(0);
+				}
+				
+			}
 
 			if (key == KeyEvent.VK_6) {
 				for (Sprite sprite : objects) {
@@ -672,13 +691,8 @@ public class Screen extends JPanel implements ActionListener {
 			if (key == KeyEvent.VK_F3) {
 				debug = !debug;
 			}
-			if (key == KeyEvent.VK_R) {
-				Main.setBoard(Board.MAIN);
-				Utils.setLevel(0);
-			}
-			if (key == KeyEvent.VK_F5) {
-				Main.setBoard(Board.WIN);
-			}
+			
+			
 
 			try {
 				Main.getPlayer().keyPressed(e);

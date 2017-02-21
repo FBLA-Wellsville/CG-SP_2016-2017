@@ -94,6 +94,65 @@ public class Enemy extends Entity implements Moveable {
 
 	@Override
 	public void move() {
+		if(type.equals(EntityType.SKELETON)){
+			
+			if (velocity.x != 0) {
+				if (moving == false) {
+					moving = true;
+					loadImage(walking);
+				}
+			} else {
+				if (moving) {
+					loadImage(standing);
+					moving = false;
+				}
+			}
+			onground = false;
+			
+
+			attack(Main.getPlayer());
+
+			
+			for (Sprite s : Main.getScreen().objects) {
+				if (!getPolygon().intersects(s.getPolygon().getBounds()))
+					continue;
+
+				if (s instanceof Collidable) {
+					onground = true;
+					y = s.getY() - this.getHeight() + 1;
+
+				}
+			}
+			if (velocity.y <= 0)
+				onground = false;
+
+			if (onground) {
+				if (x > Main.getPlayer().x) {
+					direction = Direction.LEFT;
+				}
+				if (x < Main.getPlayer().x) {
+					direction = Direction.RIGHT;
+				}
+			}
+			dy = velocity.y;
+			dx = velocity.x;
+
+			y = (int) (y + dy);
+			x = (int) (x + dx);
+
+			dx = 0;
+			dy = 0;
+
+			if (!onground)
+				velocity.y = velocity.y + 0.2;
+
+			// Utils.debug("X: " + velocity.x + "\nY: " + velocity.y);
+			if (onground)
+				setVelocity("", 0);
+			
+			
+			return;
+		}
 		if (velocity.x != 0) {
 			if (moving == false) {
 				moving = true;
@@ -156,13 +215,14 @@ public class Enemy extends Entity implements Moveable {
 	private void attack(Entity e) {
 		if(Main.getPlayer() == null) return;
 		if(!cooldown){
+			cooldown = true;
 			new Thread(new AsyncAttack(this, e)).start();
 			new java.util.Timer().schedule(new java.util.TimerTask() {
 				@Override
 				public void run() {
 					cooldown = false;
 				}
-			}, random.nextInt(6) * 1000);
+			}, (random.nextInt(6)+1) * 500);
 		}
 		
 

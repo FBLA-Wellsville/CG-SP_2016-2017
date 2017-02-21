@@ -50,10 +50,10 @@ public class Tool extends Entity implements Moveable{
 	
 	public Rectangle getStrikeRange() {
 
-		if (direction == Direction.LEFT) {
-			return new Rectangle(x, y, 60, 30);
+		if (user.direction == Direction.LEFT) {
+			return new Rectangle(x-30, y, 60, 30);
 		}
-		if (direction == Direction.RIGHT) {
+		if (user.direction == Direction.RIGHT) {
 			return new Rectangle(x, y, 60, 30);
 		}
 		return null;

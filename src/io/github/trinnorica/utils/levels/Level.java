@@ -3,7 +3,6 @@ package io.github.trinnorica.utils.levels;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.Enemy;
 import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.entity.Player;
@@ -12,6 +11,8 @@ import io.github.trinnorica.objects.Flag;
 import io.github.trinnorica.objects.Floor;
 import io.github.trinnorica.objects.GoldCoin;
 import io.github.trinnorica.objects.Ladder;
+import io.github.trinnorica.objects.tools.Bow;
+import io.github.trinnorica.objects.tools.DarkSword;
 import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.sprites.Empty;
 import io.github.trinnorica.utils.sprites.EntityType;
@@ -61,16 +62,25 @@ public class Level {
 				entities.add(new Enemy(x*30, y*30,EntityType.OGRE));
 				break;
 			case KNIGHT:
-				entities.add(new Enemy(x*30, y*20, EntityType.KNIGHT));
+				entities.add(new Enemy(x*30, y*30, EntityType.KNIGHT));
 				break;
 			case DARK_KNIGHT:
-				entities.add(new Enemy(x*30, y*20, EntityType.DARK_KNIGHT));
+				entities.add(new Enemy(x*30, y*30, EntityType.DARK_KNIGHT));
 				break;
 			case WIZARD:
-				entities.add(new Enemy(x*30, y*20, EntityType.WIZARD));
+				entities.add(new Enemy(x*30, y*30, EntityType.WIZARD));
+				break;
+			case SKELETON:
+				entities.add(new Enemy(x*30, y*30, EntityType.SKELETON));
 				break;
 			case STONE_SWORD:
 				entities.add(new Sword(x*30, y*30,ToolType.MELEE));
+				break;
+			case DARK_SWORD:
+				entities.add(new DarkSword(x*30, y*30,ToolType.MELEE));
+				break;
+			case BOW:
+				entities.add(new Bow(x*30, y*30,ToolType.PROJECTILE));
 				break;
 			case DIRT:
 				sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/dirt.png"),30,30));

@@ -93,7 +93,7 @@ public class Particle extends Sprite implements Moveable {
 			} else {
 				Utils.debug("3");
 				for(Sprite s : Main.getScreen().objects){
-					if(this.getPolygon().getBounds().intersects(s.getPolygon().getBounds())) continue;
+					if(!this.getPolygon().getBounds().intersects(s.getPolygon().getBounds())) continue;
 					if((s instanceof Particle)) continue;
 					if((s instanceof Player)) continue;
 					if((s instanceof Tool)) continue;

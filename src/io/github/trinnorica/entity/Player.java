@@ -394,55 +394,29 @@ public class Player extends Entity implements Moveable, Keyable {
 		int key = e.getKeyCode();
 
 		
-		if (key == KeyEvent.VK_NUMPAD0) {
-			lives = lives + 1;
-			if (lives > MAXLIVES) {
-				MAXLIVES = lives;
-			}
-			if (lives <= 5) {
-				MAXLIVES = 5;
-			}
-		}
-		if (key == KeyEvent.VK_NUMPAD1) {
-			kill(DamageReason.VOID);
-		}
+		
+		
 		if (key == KeyEvent.VK_CONTROL) {
 			sprint = true;
 		}
 
-		if (key == KeyEvent.VK_W) {
+		if (key == KeyEvent.VK_W||key == KeyEvent.VK_UP) {
 			if (flying || climbing)
 				setVelocity("", -2);
 		}
-		
-		if (key == KeyEvent.VK_1) {
-			setTool(new FireDagger(x, y, ToolType.DIRECTIONAL));
-		}
-		if (key == KeyEvent.VK_2) {
-			setTool(new FireStaff(x, y, ToolType.PROJECTILE));
-		}
-		if (key == KeyEvent.VK_3) {
-			setTool(new DarkSword(x, y, ToolType.MELEE));
-		}
-		if (key == KeyEvent.VK_4) {
-			setTool(new FireDagger(x, y, ToolType.DIRECTIONAL));
-		}
-		if (key == KeyEvent.VK_5) {
-			setTool(new FireDagger(x, y, ToolType.DIRECTIONAL));
-		}
 
-		if (key == KeyEvent.VK_S) {
+		if (key == KeyEvent.VK_S||key == KeyEvent.VK_DOWN) {
 			if (flying || climbing)
 				setVelocity("", 2);
 		}
 
 		if (!damaged) {
-			if (key == KeyEvent.VK_D) {
+			if (key == KeyEvent.VK_D||key == KeyEvent.VK_RIGHT) {
 				direction = Direction.RIGHT;
 				right = true;
 				setVelocity(3, "");
 			}
-			if (key == KeyEvent.VK_A) {
+			if (key == KeyEvent.VK_A||key == KeyEvent.VK_LEFT) {
 				direction = Direction.LEFT;
 				left = true;
 				setVelocity(-3, "");
@@ -454,37 +428,12 @@ public class Player extends Entity implements Moveable, Keyable {
 			}
 		}
 
-		if (key == KeyEvent.VK_UP) {
-			if (!(health + 0.5 > maxhealth))
-				health = health + 0.5;
-			setImageDimensions(27 + s, 30 + s);
-
-		}
-		if (key == KeyEvent.VK_DOWN) {
-			if (!(health - 0.5 < 0))
-				health = health - 0.5;
-			setImageDimensions(27 + s, 30 + s);
-		}
-
 		if (key == KeyEvent.VK_SPACE && onground) {
 			jumping = true;
 			onground = false;
 			setVelocity("", -5 - (s / 10));
 		}
 
-		if (key == KeyEvent.VK_F) {
-			if (flying)
-				flying = false;
-			else
-				flying = true;
-		}
-
-		if (key == KeyEvent.VK_L) {
-			Main.addSprite(new Enemy(x + 100, y, EntityType.KNIGHT));
-		}
-		if (key == KeyEvent.VK_K) {
-			Utils.runParticles(new Point(x+100,y), new Shoot(), ParticleType.FIRE, Direction.LEFT, new Entity(50,50));
-		}
 
 	}
 	
@@ -498,20 +447,20 @@ public class Player extends Entity implements Moveable, Keyable {
 		int key = e.getKeyCode();
 
 		if (!damaged) {
-			if (key == KeyEvent.VK_D) {
+			if (key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT) {
 				right = false;
 				setVelocity(0, "");
 			}
-			if (key == KeyEvent.VK_A) {
+			if (key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT) {
 				left = false;
 				setVelocity(0, "");
 			}
 		}
-		if (key == KeyEvent.VK_W) {
+		if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
 			if (flying || climbing)
 				setVelocity("", 0);
 		}
-		if (key == KeyEvent.VK_S) {
+		if (key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN) {
 			if (flying || climbing)
 				setVelocity("", 0);
 		}
