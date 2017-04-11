@@ -6,6 +6,7 @@ import java.util.Random;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.objects.Collidable;
+import io.github.trinnorica.objects.Flag;
 import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.FireDagger;
 import io.github.trinnorica.objects.tools.FireStaff;
@@ -46,7 +47,7 @@ public class Enemy extends Entity implements Moveable {
 		case WIZARD:
 			walking = ExternalFile.loadTexture("entity/wizard/walk.gif");
 			standing = ExternalFile.loadTexture("entity/wizard/bobbing.gif");
-			maxhealth = 10;
+			maxhealth = 100;
 			setTool(new FireStaff(0, 0, ToolType.DIRECTIONAL));
 			break;
 		case KNIGHT:
@@ -58,7 +59,7 @@ public class Enemy extends Entity implements Moveable {
 		case DARK_KNIGHT:
 			walking = ExternalFile.loadTexture("entity/knight/dark/walk.gif");
 			standing = ExternalFile.loadTexture("entity/knight/dark/bobbing.gif");
-			maxhealth = 10;
+			maxhealth = 100;
 			setTool(new FireDagger(0, 0, ToolType.DIRECTIONAL));
 			break;
 		case OGRE:
@@ -70,7 +71,7 @@ public class Enemy extends Entity implements Moveable {
 		case SKELETON:
 			walking = ExternalFile.loadTexture("entity/skeleton/walk.gif");
 			standing = ExternalFile.loadTexture("entity/skeleton/bobbing.gif");
-			maxhealth = 10;
+			maxhealth = 1;
 			setTool(new Bow(0, 0, ToolType.PROJECTILE));
 			break;
 		default:
@@ -120,6 +121,8 @@ public class Enemy extends Entity implements Moveable {
 				if (s instanceof Collidable) {
 					onground = true;
 					y = s.getY() - this.getHeight() + 1;
+					
+					
 
 				}
 			}
@@ -127,6 +130,7 @@ public class Enemy extends Entity implements Moveable {
 				onground = false;
 
 			if (onground) {
+				
 				if (x > Main.getPlayer().x) {
 					direction = Direction.LEFT;
 				}
@@ -236,6 +240,9 @@ public class Enemy extends Entity implements Moveable {
 			tool.y = y;
 
 			Main.addSprite(tool);
+		}
+		if(type.equals(EntityType.DARK_KNIGHT)){
+			Main.addSprite(new Flag(x, y, Flag.FLAG));
 		}
 		super.kill(reason);
 	}

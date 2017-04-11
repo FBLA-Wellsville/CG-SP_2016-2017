@@ -11,6 +11,7 @@ public enum LevelFactory {
 	FLOOR('E',SpriteType.FLOOR),
 	DYNAMIC_DIRT('F',SpriteType.DYNAMIC_DIRT),
 	GRASS('G',SpriteType.GRASS),
+	FALLING_FLOOR('H',SpriteType.FALLING_FLOOR),
 	//ALT 9
 	COIN('○',SpriteType.GOLD),
 	//ALT 2

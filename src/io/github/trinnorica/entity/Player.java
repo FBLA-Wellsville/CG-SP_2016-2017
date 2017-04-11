@@ -1,38 +1,28 @@
 package io.github.trinnorica.entity;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.util.ConcurrentModificationException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.objects.Collidable;
+import io.github.trinnorica.objects.FallingFloor;
 import io.github.trinnorica.objects.Flag;
 import io.github.trinnorica.objects.GoldCoin;
 import io.github.trinnorica.objects.Ladder;
-import io.github.trinnorica.objects.tools.Bow;
-import io.github.trinnorica.objects.tools.DarkSword;
-import io.github.trinnorica.objects.tools.FireDagger;
-import io.github.trinnorica.objects.tools.FireStaff;
-import io.github.trinnorica.objects.tools.IceDagger;
 import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Direction;
 import io.github.trinnorica.utils.Sound;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
-import io.github.trinnorica.utils.particles.Particle;
-import io.github.trinnorica.utils.particles.ParticleType;
-import io.github.trinnorica.utils.particles.formats.Ghost;
 import io.github.trinnorica.utils.particles.formats.Shoot;
-import io.github.trinnorica.utils.sprites.EntityType;
 import io.github.trinnorica.utils.sprites.Keyable;
 import io.github.trinnorica.utils.sprites.Moveable;
-import io.github.trinnorica.utils.sprites.Projectile;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.SpriteType;
 import io.github.trinnorica.utils.sprites.Tool;
@@ -71,7 +61,7 @@ public class Player extends Entity implements Moveable, Keyable {
 		this.spawny = y;
 		this.x = spawnx;
 		this.y = spawny;
-		
+
 		initPlayer();
 		maxhealth = 20;
 		health = maxhealth;
@@ -155,13 +145,22 @@ public class Player extends Entity implements Moveable, Keyable {
 		getPolygon();
 		climbing = false;
 		try {
-			for (Sprite s : Main.getScreen().objects) {
+			for (final Sprite s : Main.getScreen().objects) {
 				if (!getXBounds().intersects(s.getPolygon().getBounds()))
 					continue;
 				if (s instanceof GoldCoin) {
 					Main.removeSprite(s);
 					Main.score = Main.score + 10;
 					Audio.playSound(Sound.SCORE);
+				}
+				if (s instanceof FallingFloor) {
+					Timer timer = new Timer();
+					timer.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							((FallingFloor) s).a();
+						}
+					}, 500);
 				}
 				if (s instanceof Flag) {
 					// TODO
@@ -219,13 +218,12 @@ public class Player extends Entity implements Moveable, Keyable {
 						}
 						break;
 					case LEFT:
-						if (left&&!falling)
+						if (left && !falling)
 							velocity.x = 0;
-							
-							
+
 						break;
 					case RIGHT:
-						if (right&&!jumping&&!falling)
+						if (right && !jumping && !falling)
 							velocity.x = 0;
 						break;
 					default:
@@ -280,7 +278,7 @@ public class Player extends Entity implements Moveable, Keyable {
 		{
 			if (velocity.y < 0) {
 				// jumping = true;
-			} else{
+			} else {
 				jumping = false;
 				falling = true;
 			}
@@ -361,62 +359,62 @@ public class Player extends Entity implements Moveable, Keyable {
 		utool = true;
 		cooldown = tool.getCooldown();
 		utoolt = 10;
-//		if (tool instanceof FireDagger || tool instanceof IceDagger) {
-//			tool.use(x, y, direction, new io.github.trinnorica.utils.particles.formats.Shoot());
-//			return;
-//		}
-//		if (direction == Direction.LEFT) {
-//			if (tool instanceof Bow || tool instanceof FireStaff)
-//				tool.use(x, y, new Velocity(-8, -2), this);
-//		}
+		// if (tool instanceof FireDagger || tool instanceof IceDagger) {
+		// tool.use(x, y, direction, new
+		// io.github.trinnorica.utils.particles.formats.Shoot());
+		// return;
+		// }
+		// if (direction == Direction.LEFT) {
+		// if (tool instanceof Bow || tool instanceof FireStaff)
+		// tool.use(x, y, new Velocity(-8, -2), this);
+		// }
 
-//		} else {
-			
-			if(tool.getToolType().equals(ToolType.PROJECTILE)){
+		// } else {
+
+		if (tool.getToolType().equals(ToolType.PROJECTILE)) {
+			if (direction.equals(Direction.LEFT)) {
+				tool.use(x, y, new Velocity(-8, -2), this);
+			}
+			if (direction.equals(Direction.RIGHT)) {
 				tool.use(x, y, new Velocity(8, -2), this);
 			}
-			if(tool.getToolType().equals(ToolType.DIRECTIONAL)){
-				tool.use(x, y, direction, new Shoot(), this);
-			}
-			if(tool.getToolType().equals(ToolType.MELEE)){
-				tool.use(x, y);
-			}
 
-				
-			
-//		}
+		}
+		if (tool.getToolType().equals(ToolType.DIRECTIONAL)) {
+			tool.use(x, y, direction, new Shoot(), this);
+		}
+		if (tool.getToolType().equals(ToolType.MELEE)) {
+			tool.use(x, y);
+		}
+
+		// }
 	}
-
-	
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		
-		
-		
 		if (key == KeyEvent.VK_CONTROL) {
 			sprint = true;
 		}
 
-		if (key == KeyEvent.VK_W||key == KeyEvent.VK_UP) {
+		if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
 			if (flying || climbing)
 				setVelocity("", -2);
 		}
 
-		if (key == KeyEvent.VK_S||key == KeyEvent.VK_DOWN) {
+		if (key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN) {
 			if (flying || climbing)
 				setVelocity("", 2);
 		}
 
 		if (!damaged) {
-			if (key == KeyEvent.VK_D||key == KeyEvent.VK_RIGHT) {
+			if (key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT) {
 				direction = Direction.RIGHT;
 				right = true;
 				setVelocity(3, "");
 			}
-			if (key == KeyEvent.VK_A||key == KeyEvent.VK_LEFT) {
+			if (key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT) {
 				direction = Direction.LEFT;
 				left = true;
 				setVelocity(-3, "");
@@ -434,11 +432,10 @@ public class Player extends Entity implements Moveable, Keyable {
 			setVelocity("", -5 - (s / 10));
 		}
 
-
 	}
-	
+
 	@Override
-	public SpriteType getType(){
+	public SpriteType getType() {
 		return SpriteType.PLAYER;
 	}
 
@@ -468,8 +465,6 @@ public class Player extends Entity implements Moveable, Keyable {
 			sprint = false;
 		}
 	}
-
-	
 
 	public int getLevel() {
 		return Utils.getLevel();

@@ -80,7 +80,11 @@ public class Screen extends JPanel implements ActionListener {
 	private int s = 0;
 	private boolean help = false;
 	private Image SWORD = ExternalFile.loadTexture("objects/tools/sword.png");
-	private Image ENEMY = ExternalFile.loadTexture("entity/knight/walk.gif");
+	private Image ENEMY1 = ExternalFile.loadTexture("entity/knight/walk.gif");
+	private Image ENEMY2 = ExternalFile.loadTexture("entity/knight/dark/walk.gif");
+	private Image ENEMY3 = ExternalFile.loadTexture("entity/skeleton/walk.gif");
+	private Image ENEMY4 = ExternalFile.loadTexture("entity/ogre/walk.gif");
+//	private Image ENEMY5 = ExternalFile.loadTexture("entity/knight/walk.gif");
 	private Image LOGO = ExternalFile.loadTexture("logos/logo-title.png");
 	private Image FBLA = ExternalFile.loadTexture("logos/fbla-logo.png");
 	public boolean confirm;
@@ -130,9 +134,9 @@ public class Screen extends JPanel implements ActionListener {
 				drawPaused(g);
 			if (help)
 				drawHelp(g);
-			if(confirm)
+			if (confirm)
 				drawConfirm(g);
-			
+
 		}
 		Toolkit.getDefaultToolkit().sync();
 	}
@@ -153,26 +157,30 @@ public class Screen extends JPanel implements ActionListener {
 
 		Utils.drawOutlineString(g, "This is an enemy.\n\nThe only way to damage them is with a weapon.",
 				getWidth() - 200, 50, Utils.getGreenColor(), Color.WHITE, 0);
-		g.drawImage(ENEMY, getWidth() - 200, 50, 30, 30, this);
-
+		g.drawImage(ENEMY1, getWidth() - (200-30*1), 50, 30, 30, this);
+		g.drawImage(ENEMY2, getWidth() - (200-30*0), 50, 30, 30, this);
+		g.drawImage(ENEMY3, getWidth() - (200+30*1), 50, 30, 30, this);
+		g.drawImage(ENEMY4, getWidth() - (200+30*2), 50, 30, 30, this);
+//		g.drawImage(ENEMY5, getWidth() - (200+30*2), 50, 30, 30, this);
+		g.setFont(new Font("Helvetica", Font.PLAIN, 14));
 		Utils.drawOutlineString(g,
 				"Controls\n" + "W or Up Arrow - Climb up\n" + "A or Left Arrow - Move Left\n"
 						+ "S or Down Arrow - Climb down\n" + "D or Right Arrow - Move Right\n" + "SPACE - Jump\n"
 						+ "T - Toggle leaderboard\n" + "Ctrl - Sprint\n" + "Shift - Use item\n" + "Esc - Pause menu\n"
-						+ "F1 - Show this menu\n"
-						+ "R - Go to main menu\n\n\n" + "Press Esc to close this page.",
+						+ "F1 - Show this menu\n" + "R - Go to main menu\n\n"
+						+ "The files that contain the scores is located at C:/KANSAS_WELLSVILLE_HIGHSCHOOL/Eldiseth/\n\n"
+						+ "Press Esc to close this page.",
 				getWidth() / 2, getHeight() / 3, Utils.getGreenColor(), Color.WHITE, 0);
 
 	}
-	
+
 	public void drawConfirm(Graphics g) {
 		g.drawImage(Backgrounds.MAIN.getImage(), 0, 0, getWidth(), getHeight(), this);
 		g.drawImage(DARK, 0, 0, getWidth(), getHeight(), this);
 		g.setFont(Main.getFont().deriveFont(20.0F));
 		Utils.drawOutlineString(g, "Would you really like to restart? [y|n]",
-				(getWidth() / 2) - g.getFontMetrics()
-						.stringWidth("Would you really like to restart?") / 2,
-				getHeight()/2, Utils.getGreenColor(), Color.WHITE, 1);
+				(getWidth() / 2) - g.getFontMetrics().stringWidth("Would you really like to restart?") / 2,
+				getHeight() / 2, Utils.getGreenColor(), Color.WHITE, 1);
 
 	}
 
@@ -279,12 +287,11 @@ public class Screen extends JPanel implements ActionListener {
 			Utils.drawCredit(g, "Chris Green", creditvar, 13, Color.BLACK, Color.WHITE, 1);
 			Utils.drawCredit(g, "Chad Guthrie", creditvar, 14, Color.BLACK, Color.WHITE, 1);
 
-			
-
 			Utils.drawCreditImage(g, LOGO, creditvar, 17);
-			
+
 			g.setFont(new Font("Helvetica", Font.BOLD, getWidth() / 50));
-			Utils.drawCredit(g, "And a big thanks to FBLA for giving us the chance to create this game!", creditvar, 25, Color.BLACK, Color.WHITE, 1);
+			Utils.drawCredit(g, "And a big thanks to FBLA for giving us the chance to create this game!", creditvar, 25,
+					Color.BLACK, Color.WHITE, 1);
 			Utils.drawCreditImage(g, FBLA, creditvar, 29);
 
 			creditvar -= 1;
@@ -513,8 +520,6 @@ public class Screen extends JPanel implements ActionListener {
 
 	private class TAdapter extends KeyAdapter {
 
-		
-
 		@Override
 		public void keyReleased(KeyEvent e) {
 			try {
@@ -533,10 +538,24 @@ public class Screen extends JPanel implements ActionListener {
 			int key = e.getKeyCode();
 
 			if (key == KeyEvent.VK_ESCAPE) {
+				
+				if(board == Board.MAIN){
+					Main.close();
+				}
+
 				if (help) {
 					Utils.hasPlayedBefore(true);
 					help = false;
 					return;
+				}
+
+				if (playing)
+					paused = !paused;
+				else {
+					if (board == Board.WIN)
+						Utils.setLevel(0);
+
+					Main.setBoard(Board.MAIN);
 				}
 			}
 
@@ -548,7 +567,6 @@ public class Screen extends JPanel implements ActionListener {
 			}
 			if (help)
 				return;
-
 
 			if (typing) {
 				if (key == KeyEvent.VK_ENTER) {
@@ -588,18 +606,11 @@ public class Screen extends JPanel implements ActionListener {
 
 					if (sprite instanceof Player) {
 						Player player = (Player) sprite;
-						player.setTool(new Sword(0, 0,ToolType.MELEE));
+						player.setTool(new Sword(0, 0, ToolType.MELEE));
 					}
 				}
 			}
 
-			if (key == KeyEvent.VK_ESCAPE) {
-				if (playing)
-					paused = !paused;
-				else {
-					Main.setBoard(Board.MAIN);
-				}
-			}
 			if (key == KeyEvent.VK_P) {
 				if (Main.getBoard() == Board.WIN) {
 					Main.setBoard(Board.GAME);
@@ -620,33 +631,31 @@ public class Screen extends JPanel implements ActionListener {
 				Main.setBoard(Board.CREDITS);
 
 			}
-			
-			if(confirm){
+
+			if (confirm) {
 				if (key == KeyEvent.VK_Y) {
 					confirm = false;
 					Main.setBoard(Board.MAIN);
 					Utils.setLevel(0);
 				}
-				
+
 				if (key == KeyEvent.VK_N) {
 					confirm = false;
 					playing = true;
 				}
 			}
-			
-			
-			
+
 			if (key == KeyEvent.VK_R) {
-				if(playing && ! confirm){
+				if (playing && !confirm) {
 					confirm = true;
 					playing = false;
-					
+
 				} else {
 					Main.setBoard(Board.MAIN);
 					playing = false;
 					Utils.setLevel(0);
 				}
-				
+
 			}
 
 			if (key == KeyEvent.VK_6) {
@@ -654,7 +663,7 @@ public class Screen extends JPanel implements ActionListener {
 
 					if (sprite instanceof Player) {
 						Player player = (Player) sprite;
-						player.setTool(new FireStaff(0, 0,ToolType.DIRECTIONAL));
+						player.setTool(new FireStaff(0, 0, ToolType.DIRECTIONAL));
 					}
 				}
 			}
@@ -664,7 +673,7 @@ public class Screen extends JPanel implements ActionListener {
 
 					if (sprite instanceof Player) {
 						Player player = (Player) sprite;
-						player.setTool(new Bow(0, 0,ToolType.DIRECTIONAL));
+						player.setTool(new Bow(0, 0, ToolType.DIRECTIONAL));
 					}
 				}
 			}
@@ -673,7 +682,7 @@ public class Screen extends JPanel implements ActionListener {
 
 					if (sprite instanceof Player) {
 						Player player = (Player) sprite;
-						player.setTool(new IceDagger(0, 0,ToolType.DIRECTIONAL));
+						player.setTool(new IceDagger(0, 0, ToolType.DIRECTIONAL));
 					}
 				}
 			}
@@ -683,7 +692,7 @@ public class Screen extends JPanel implements ActionListener {
 
 					if (sprite instanceof Player) {
 						Player player = (Player) sprite;
-						player.setTool(new FireDagger(0, 0,ToolType.DIRECTIONAL));
+						player.setTool(new FireDagger(0, 0, ToolType.DIRECTIONAL));
 					}
 				}
 			}
@@ -691,8 +700,6 @@ public class Screen extends JPanel implements ActionListener {
 			if (key == KeyEvent.VK_F3) {
 				debug = !debug;
 			}
-			
-			
 
 			try {
 				Main.getPlayer().keyPressed(e);

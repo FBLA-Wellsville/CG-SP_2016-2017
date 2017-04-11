@@ -141,4 +141,8 @@ public class Main {
 		score = sscore;
 	}
 	
+	public static void close(){
+		System.exit(0);
+	}
+	
 }

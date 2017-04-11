@@ -7,6 +7,7 @@ import io.github.trinnorica.entity.Enemy;
 import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.entity.Player;
 import io.github.trinnorica.objects.Cloud;
+import io.github.trinnorica.objects.FallingFloor;
 import io.github.trinnorica.objects.Flag;
 import io.github.trinnorica.objects.Floor;
 import io.github.trinnorica.objects.GoldCoin;
@@ -60,6 +61,9 @@ public class Level {
 				break;
 			case OGRE:
 				entities.add(new Enemy(x*30, y*30,EntityType.OGRE));
+				break;
+			case FALLING_FLOOR:
+				sprites.add(new FallingFloor(x*30, y*30));
 				break;
 			case KNIGHT:
 				entities.add(new Enemy(x*30, y*30, EntityType.KNIGHT));

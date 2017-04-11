@@ -10,6 +10,7 @@ public class Arrow extends Projectile {
 	public Arrow(int x, int y, Velocity vec, Entity shooter) {
 		super(x, y, vec, shooter);
 		init();
+		power = 6;
 	}
 	
 	public void init(){

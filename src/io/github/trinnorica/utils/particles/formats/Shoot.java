@@ -16,7 +16,7 @@ public class Shoot implements ParticleFormat {
 	public void run(Point p, ParticleType t, Direction d, Entity shooter) {
 		int a = p.x;
 		int b = p.y;
-		int r = new java.util.Random().nextInt(20)+10;
+		int r = new java.util.Random().nextInt(70)+30;
 		int g = 5;
 		
 		for(int i=0;i!=r;i++){
