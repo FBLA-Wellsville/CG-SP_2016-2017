@@ -6,10 +6,8 @@ import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.entity.Player;
 import io.github.trinnorica.objects.Cloud;
-import io.github.trinnorica.objects.Collidable;
 import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Images;
-import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.particles.Particle;
 
@@ -51,7 +49,7 @@ public class Projectile extends Entity implements Moveable{
 				return;
 			}
 					
-			if(s instanceof Collidable){
+			if(s instanceof PartialCollidable){
 				Main.removeSprite(this);
 			}
 			

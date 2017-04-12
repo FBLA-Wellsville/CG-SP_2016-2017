@@ -1,10 +1,9 @@
 package io.github.trinnorica.objects;
 
-import io.github.trinnorica.utils.sprites.Sprite;
-import io.github.trinnorica.utils.sprites.SpriteType;
+import io.github.trinnorica.utils.sprites.PartialCollidable;
 import res.ExternalFile;
 
-public class Cloud extends Collidable {
+public class Cloud extends PartialCollidable {
 	
 	public static final int BEGIN = 0;
 	public static final int MIDDLE = 1;

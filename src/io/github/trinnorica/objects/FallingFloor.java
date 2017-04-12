@@ -1,15 +1,16 @@
 package io.github.trinnorica.objects;
 
 import io.github.trinnorica.utils.sprites.Moveable;
+import io.github.trinnorica.utils.sprites.PartialCollidable;
 import res.ExternalFile;
 
-public class FallingFloor extends Collidable implements Moveable {
+public class FallingFloor extends PartialCollidable implements Moveable {
 	
 	private boolean falling = false;
 
 	public FallingFloor(int x, int y) {
 		super(x, y);
-		loadImage(ExternalFile.loadTexture("objects/floor/floor.png"));
+		loadImage(ExternalFile.loadTexture("objects/floor/floor-cracked.png"));
 		setImageDimensions(30, 30);
 	}
 	

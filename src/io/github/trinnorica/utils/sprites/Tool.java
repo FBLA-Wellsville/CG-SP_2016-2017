@@ -4,7 +4,6 @@ import java.awt.Rectangle;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.Entity;
-import io.github.trinnorica.objects.Collidable;
 import io.github.trinnorica.utils.Direction;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.particles.ParticleFormat;
@@ -87,7 +86,7 @@ public class Tool extends Entity implements Moveable{
 		for(Sprite s : Main.getScreen().objects){
 			if(!xbounds.intersects(s.getPolygon().getBounds())) continue;
 					
-			if(s instanceof Collidable){
+			if(s instanceof PartialCollidable){
 				velocity.x=0;
 				velocity.y=0;
 				y = s.y-height;

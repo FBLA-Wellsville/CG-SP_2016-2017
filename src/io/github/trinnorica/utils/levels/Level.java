@@ -7,6 +7,7 @@ import io.github.trinnorica.entity.Enemy;
 import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.entity.Player;
 import io.github.trinnorica.objects.Cloud;
+import io.github.trinnorica.objects.Door;
 import io.github.trinnorica.objects.FallingFloor;
 import io.github.trinnorica.objects.Flag;
 import io.github.trinnorica.objects.Floor;
@@ -14,6 +15,7 @@ import io.github.trinnorica.objects.GoldCoin;
 import io.github.trinnorica.objects.Ladder;
 import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.DarkSword;
+import io.github.trinnorica.objects.tools.Key;
 import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.sprites.Empty;
 import io.github.trinnorica.utils.sprites.EntityType;
@@ -53,6 +55,42 @@ public class Level {
 				break;
 			case GOLD:
 				sprites.add(new GoldCoin(x*30+(15/2), y*30+(15/2)));
+				break;
+			case DOOR:
+				switch(LevelFactory.decode(c[i])){
+				case DOOR_1:
+					sprites.add(new Door(x*30, y*30,1));
+					break;
+				case DOOR_2:
+					sprites.add(new Door(x*30, y*30,2));
+					break;
+				case DOOR_3:
+					sprites.add(new Door(x*30, y*30,3));
+					break;
+				case DOOR_4:
+					sprites.add(new Door(x*30, y*30,4));
+					break;
+				default:
+					break;
+				}
+				break;
+			case KEY:
+				switch(LevelFactory.decode(c[i])){
+				case KEY_1:
+					sprites.add(new Key(x*30, y*30,ToolType.NONE,1));
+					break;
+				case KEY_2:
+					sprites.add(new Key(x*30, y*30,ToolType.NONE,2));
+					break;
+				case KEY_3:
+					sprites.add(new Key(x*30, y*30,ToolType.NONE,3));
+					break;
+				case KEY_4:
+					sprites.add(new Key(x*30, y*30,ToolType.NONE,4));
+					break;
+				default:
+					break;
+				}
 				break;
 			case PLAYER:
 				entities.add(new Player(x*30,y*30));

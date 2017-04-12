@@ -93,6 +93,17 @@ public class Images {
 		// Return the buffered image
 		return bimage;
 	}
+	
+	public static Image replaceColor(BufferedImage image, Color color1, Color color2) {
+		for(int x=0;x!=image.getWidth();x++){
+			for(int y=0;y!=image.getHeight();y++){
+				if(image.getRGB(x, y) == color1.getRGB())
+					image.setRGB(x, y, color2.getRGB());
+			}
+		}
+		return image;
+		
+	}
 
 	
 	

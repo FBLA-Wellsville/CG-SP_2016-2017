@@ -9,7 +9,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import io.github.trinnorica.Main;
-import io.github.trinnorica.objects.Collidable;
 import io.github.trinnorica.objects.FallingFloor;
 import io.github.trinnorica.objects.Flag;
 import io.github.trinnorica.objects.GoldCoin;
@@ -23,6 +22,7 @@ import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.particles.formats.Shoot;
 import io.github.trinnorica.utils.sprites.Keyable;
 import io.github.trinnorica.utils.sprites.Moveable;
+import io.github.trinnorica.utils.sprites.PartialCollidable;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.SpriteType;
 import io.github.trinnorica.utils.sprites.Tool;
@@ -203,7 +203,7 @@ public class Player extends Entity implements Moveable, Keyable {
 					}
 
 				}
-				if (s instanceof Collidable) {
+				if (s instanceof PartialCollidable) {
 					if (damaged && !jumping) {
 						setVelocity(0, 0);
 

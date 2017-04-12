@@ -1,11 +1,9 @@
 package io.github.trinnorica.entity;
 
 import java.awt.Graphics;
-import java.awt.Point;
 import java.util.Random;
 
 import io.github.trinnorica.Main;
-import io.github.trinnorica.objects.Collidable;
 import io.github.trinnorica.objects.Flag;
 import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.FireDagger;
@@ -14,14 +12,11 @@ import io.github.trinnorica.objects.tools.Stick;
 import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Direction;
-import io.github.trinnorica.utils.Utils;
-import io.github.trinnorica.utils.particles.ParticleType;
-import io.github.trinnorica.utils.particles.formats.Ghost;
 import io.github.trinnorica.utils.sprites.EntityType;
 import io.github.trinnorica.utils.sprites.Moveable;
+import io.github.trinnorica.utils.sprites.PartialCollidable;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.SpriteType;
-import io.github.trinnorica.utils.sprites.Tool;
 import io.github.trinnorica.utils.sprites.ToolType;
 import io.github.trinnorica.utils.tasks.AsyncAttack;
 import res.ExternalFile;
@@ -118,7 +113,7 @@ public class Enemy extends Entity implements Moveable {
 				if (!getPolygon().intersects(s.getPolygon().getBounds()))
 					continue;
 
-				if (s instanceof Collidable) {
+				if (s instanceof PartialCollidable) {
 					onground = true;
 					y = s.getY() - this.getHeight() + 1;
 					
@@ -178,7 +173,7 @@ public class Enemy extends Entity implements Moveable {
 			if (!getPolygon().intersects(s.getPolygon().getBounds()))
 				continue;
 
-			if (s instanceof Collidable) {
+			if (s instanceof PartialCollidable) {
 				onground = true;
 				y = s.getY() - this.getHeight() + 1;
 

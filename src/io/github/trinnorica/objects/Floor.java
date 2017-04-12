@@ -1,8 +1,9 @@
 package io.github.trinnorica.objects;
 
+import io.github.trinnorica.utils.sprites.PartialCollidable;
 import res.ExternalFile;
 
-public class Floor extends Collidable {
+public class Floor extends PartialCollidable {
 
 	public static final int DIRT = 0;
 	public static final int STONE = 1;
