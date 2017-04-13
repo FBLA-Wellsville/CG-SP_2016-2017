@@ -81,8 +81,26 @@ public class Main {
 		if(board == Board.GAME){
 			try{
 				Main.clearObjects();
-				Audio.playBackground(Sound.BACKGROUND_GRASS);
 				LevelBuilder l = new LevelBuilder();
+				switch(Utils.getLevelType(Utils.getLevel())){
+				case GROUND:
+					Audio.playBackground(Sound.BACKGROUND_GRASS);
+					break;
+				case HELL:
+					Audio.playBackground(Sound.BACKGROUND_CAVE);
+					break;
+				case CAVE:
+					Audio.playBackground(Sound.BACKGROUND_CAVE);
+					break;
+				case SKY:
+					Audio.playBackground(Sound.BACKGROUND_MENU);
+					break;
+				case BOSS:
+					Audio.playBackground(Sound.BACKGROUND_BOSS);
+					break;
+				
+				}
+				
 				int level = Utils.getLevel();
 				l.buildLevel(LevelUtils.getLevelBlueprint(level),LevelUtils.getLevelWidth(level),LevelUtils.getLevelHeight(level));
 			} catch(NullPointerException ex){

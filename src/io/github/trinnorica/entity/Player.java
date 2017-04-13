@@ -144,7 +144,7 @@ public class Player extends Entity implements Moveable, Keyable {
 				moving = false;
 			}
 		}
-		if (y + height + 29 >= 570 & !jumping) {
+		if (y + height + 29 >= 650 & !jumping) {
 			kill(DamageReason.VOID);
 		} else {
 			onground = false;
@@ -266,13 +266,17 @@ public class Player extends Entity implements Moveable, Keyable {
 						}
 						break;
 					case LEFT:
-						if (left)
+						if (left){
 							velocity.x = 0;
+							x = s.x-width;
+						}
 
 						break;
 					case RIGHT:
-						if (right)
+						if (right){
 							velocity.x = 0;
+							x = (int) s.getPolygon().getBounds().getMaxX();
+						}
 						break;
 					case UP:
 						velocity.y = 0;

@@ -53,8 +53,8 @@ public class Utils {
 		levelTypes.put(1, LevelType.GROUND);
 		levelTypes.put(2, LevelType.GROUND);
 		levelTypes.put(3, LevelType.GROUND);
-		levelTypes.put(4, LevelType.GROUND);
-		levelTypes.put(5, LevelType.GROUND);
+		levelTypes.put(4, LevelType.SKY);
+		levelTypes.put(5, LevelType.SKY);
 		levelTypes.put(6, LevelType.GROUND);
 		levelTypes.put(7, LevelType.GROUND);
 		levelTypes.put(8, LevelType.GROUND);

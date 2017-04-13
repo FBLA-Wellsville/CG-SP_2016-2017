@@ -307,8 +307,27 @@ public class Screen extends JPanel implements ActionListener {
 				drawHelp(g);
 				return;
 			}
+			switch(Utils.getLevelType(Utils.getLevel())){
+			case GROUND:
+				g.drawImage(Backgrounds.GRASS.getImage(), 0, 0, getWidth(), getHeight(), this);
+				break;
+			case HELL:
+				g.drawImage(Backgrounds.HELL.getImage(), 0, 0, getWidth(), getHeight(), this);
+				break;
+			case CAVE:
+				g.drawImage(Backgrounds.CAVE.getImage(), 0, 0, getWidth(), getHeight(), this);
+				break;
+			case SKY:
+				g.drawImage(Backgrounds.SKY.getImage(), 0, 0, getWidth(), getHeight(), this);
+				break;
+			case BOSS:
+				g.drawImage(Backgrounds.BOSS.getImage(), 0, 0, getWidth(), getHeight(), this);
+				break;
+			
+			}
+			
 
-			g.drawImage(Backgrounds.SKY.getImage(), 0, 0, getWidth(), getHeight(), this);
+			
 
 			for (Sprite sprite : objects_temp) {
 				objects.add(sprite);
@@ -628,27 +647,13 @@ public class Screen extends JPanel implements ActionListener {
 				if (Main.getBoard() == Board.WIN) {
 					Main.setBoard(Board.GAME);
 					Utils.setLevel(0);
-				} else if (!(Main.getBoard() == Board.GAME)) {
+				}
+				if(Main.getBoard() == Board.NAME){
+					return;
+				}
+				if (!(Main.getBoard() == Board.GAME)) {
 					Utils.setLevel(Utils.getLevel() + 1);
 					Main.setBoard(Board.GAME);
-					switch(Utils.getLevelType(Utils.getLevel())){
-					case GROUND:
-						Audio.playBackground(Sound.BACKGROUND_GRASS);
-						break;
-					case HELL:
-						Audio.playBackground(Sound.BACKGROUND_CAVE);
-						break;
-					case CAVE:
-						Audio.playBackground(Sound.BACKGROUND_CAVE);
-						break;
-					case SKY:
-						Audio.playBackground(Sound.BACKGROUND_MENU);
-						break;
-					case BOSS:
-						Audio.playBackground(Sound.BACKGROUND_BOSS);
-						break;
-					
-					}
 					
 					playing = true;
 				}

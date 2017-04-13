@@ -7,8 +7,11 @@ import res.ExternalFile;
 public enum Backgrounds {
 	
 	MAIN("backgrounds/menu-background.png"),
-	CREDITS("backgrounds/credits-background.png"),
+	CREDITS("backgrounds/credit-background.png"),
 	GRASS("backgrounds/grass-background.png"), 
+	HELL("backgrounds/hell-background.png"), 
+	CAVE("backgrounds/cave-background.png"), 
+	BOSS("backgrounds/boss-background.png"), 
 	SKY("backgrounds/sky-background.png");
 	
 	String image;
