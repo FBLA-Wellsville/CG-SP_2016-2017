@@ -7,6 +7,7 @@ import res.ExternalFile;
 public class FallingFloor extends PartialCollidable implements Moveable {
 	
 	private boolean falling = false;
+	double i = 2;
 
 	public FallingFloor(int x, int y) {
 		super(x, y);
@@ -20,7 +21,10 @@ public class FallingFloor extends PartialCollidable implements Moveable {
 
 	@Override
 	public void move() {
-		if(falling) y=y+1;
+		if(falling) {
+			i=i*1.5;
+			y=(int) (y+i);
+		}
 	}
 
 }

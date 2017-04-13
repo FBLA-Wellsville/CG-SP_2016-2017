@@ -18,12 +18,16 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.TimerTask;
 import java.util.TreeMap;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.utils.particles.ParticleFormat;
 import io.github.trinnorica.utils.particles.ParticleType;
+import io.github.trinnorica.utils.sprites.Sprite;
+import io.github.trinnorica.utils.ui.Message;
 import res.ExternalFile;
 
 public class Utils {
@@ -33,8 +37,11 @@ public class Utils {
 	private static HashMap<String,Integer> highscores = new HashMap<>();
 	private static ValueComparator bvc = new ValueComparator(highscores);
 	private static TreeMap<String,Integer> thighscores = new TreeMap<>(bvc);
+	private static Map<Integer, Message> messages = new HashMap<>();
 	private static File file = null;
 	private static File folder;
+	
+	private static Map<Integer, LevelType> levelTypes = new HashMap<>();
 
 	private static boolean hasplayedbefore = true;
 	
@@ -42,6 +49,20 @@ public class Utils {
 		folder = new File("C:/KANSAS_WELLSVILLE_HIGHSCHOOL/Eldiseth/");
 		if (!folder.exists())
 			folder.mkdirs();
+		
+		levelTypes.put(1, LevelType.GROUND);
+		levelTypes.put(2, LevelType.GROUND);
+		levelTypes.put(3, LevelType.GROUND);
+		levelTypes.put(4, LevelType.GROUND);
+		levelTypes.put(5, LevelType.GROUND);
+		levelTypes.put(6, LevelType.GROUND);
+		levelTypes.put(7, LevelType.GROUND);
+		levelTypes.put(8, LevelType.GROUND);
+		levelTypes.put(9, LevelType.GROUND);
+		levelTypes.put(10, LevelType.GROUND);
+		levelTypes.put(11, LevelType.GROUND);
+		levelTypes.put(12, LevelType.GROUND);
+		levelTypes.put(13, LevelType.GROUND);
 		
 		
 		version = ExternalFile.getVersion__BOOT_ONLY__();
@@ -300,6 +321,30 @@ public class Utils {
 	}
 	public static int getDistance(Entity attacker, Entity entity) {
 		return (int) Math.sqrt(Math.pow(attacker.x - entity.x, 2) + Math.pow(attacker.y - entity.y, 2));
+	}
+
+	public static LevelType getLevelType(int level) {
+		return levelTypes.get(level);
+	}
+	
+	public static Map<Integer,Message> getMessages(){
+		return messages;
+	}
+	
+	public static void addStaticMessage(String message, int x, int y, Color text, Color outline, int thickness, int seconds){
+		final int id = new Random().nextInt();
+		messages.put(id, new Message(message,x,y,text,outline,thickness));
+		java.util.Timer t = new java.util.Timer();
+		t.schedule(new TimerTask() {
+			public void run() {
+				messages.remove(id);
+			}
+		}, seconds*1000);
+	}
+
+	public static void swapObjects(Sprite sprite1, Sprite sprite2) {
+		Main.removeSprite(sprite1);
+		Main.addSprite(sprite2);
 	}
 	
 }

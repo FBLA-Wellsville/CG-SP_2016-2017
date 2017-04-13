@@ -18,6 +18,7 @@ import io.github.trinnorica.utils.particles.ParticleType;
 import io.github.trinnorica.utils.particles.formats.Explode;
 import io.github.trinnorica.utils.particles.formats.Ghost;
 import io.github.trinnorica.utils.particles.formats.Stay;
+import io.github.trinnorica.utils.sprites.Collidable;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.SpriteType;
@@ -37,6 +38,8 @@ public class Entity extends Sprite implements Moveable {
 	public Tool tool;
 	double dx = 0;
 	double dy = 0;
+	boolean left = false;
+	boolean right = false;
 
 	// protected Tool tool;
 	public boolean walkingb;
@@ -326,8 +329,37 @@ public class Entity extends Sprite implements Moveable {
 					continue;
 				if (!bounds.intersects(s.getPolygon().getBounds()))
 					continue;
-				else
-					onground = true;
+				if (s instanceof Collidable) {
+					if (damaged) {
+						setVelocity(0, 0);
+
+					}
+					damaged = false;
+
+					switch (getIntercectingDirection(bounds.getBounds(), s.getPolygon().getBounds())) {
+					case DOWN:
+						if ((bounds.intersects(s.getPolygon().getBounds()))) {
+							y = s.getY() - getHeight() + 1;
+							onground = true;
+						}
+						break;
+					case LEFT:
+						if (left)
+							velocity.x = 0;
+
+						break;
+					case RIGHT:
+						if (right)
+							velocity.x = 0;
+						break;
+					case UP:
+						velocity.y = 0;
+						break;
+					default:
+						break;
+					}
+
+				}
 			}
 		} catch (ConcurrentModificationException ex) {
 			Utils.debug("ConcurrentModificationException 1 (Entity)");

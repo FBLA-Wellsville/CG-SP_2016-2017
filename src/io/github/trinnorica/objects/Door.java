@@ -3,7 +3,9 @@ package io.github.trinnorica.objects;
 import java.awt.Color;
 
 import io.github.trinnorica.utils.Images;
+import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.sprites.Collidable;
+import io.github.trinnorica.utils.sprites.Sprite;
 import res.ExternalFile;
 
 public class Door extends Collidable {
@@ -36,6 +38,10 @@ public class Door extends Collidable {
 	
 	public int getID(){
 		return id;
+	}
+
+	public void open() {
+		Utils.swapObjects(this, new Sprite(this.x,this.y,ExternalFile.loadTexture("objects/door-open.png"),this.getWidth(),this.height));
 	}
 	
 	

@@ -55,4 +55,8 @@ public class Key extends Tool {
 		Main.addSprite(new IceSpike((int)x,(int)y,velocity, shooter));
 	}
 
+	public int getID() {
+		return id;
+	}
+
 }

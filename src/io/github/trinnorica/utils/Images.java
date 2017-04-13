@@ -162,9 +162,9 @@ public class Images {
 	
 	
 
-	public static Image createColorImage(String string) {
+	public static Image createColorImage(Color color) {
 		BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
-		image.setRGB(0, 0, Color.decode(string).getRGB());
+		image.setRGB(0, 0, color.getRGB());
 		return image;
 		
 	}

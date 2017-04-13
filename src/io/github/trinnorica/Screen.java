@@ -10,9 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
@@ -41,6 +38,7 @@ import io.github.trinnorica.utils.sprites.Keyable;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.ToolType;
+import io.github.trinnorica.utils.ui.Message;
 import res.Audio;
 import res.ExternalFile;
 
@@ -71,7 +69,7 @@ public class Screen extends JPanel implements ActionListener {
 	private boolean loading = true;
 	private boolean paused = false;
 	private Image DIRT = ExternalFile.loadTexture("objects/background/dirt.png");
-	private Image DARK = Images.makeImageTranslucent(Images.toBufferedImage(Images.createColorImage("#000000")), 0.5);
+	private Image DARK = Images.makeImageTranslucent(Images.toBufferedImage(Images.createColorImage(Color.decode("#000000"))), 0.5);
 	private boolean playing = false;
 	private Pattern alphanumeric = Pattern.compile("[^a-zA-Z0-9]");
 	private String name = "___";
@@ -381,12 +379,27 @@ public class Screen extends JPanel implements ActionListener {
 			Utils.drawOutlineString(g, "Score: " + Main.score,
 					getWidth() - (g.getFontMetrics().stringWidth("Score: " + Main.score)), 42, Color.decode("#99db45"),
 					Color.white, 1);
+			try{
+				if(Main.getPlayer().hasKey()){
+					Utils.drawOutlineString(g, "Key: ",
+							getWidth() - (g.getFontMetrics().stringWidth("Key: "))-40, 64, Color.decode("#99db45"),
+							Color.white, 1);
+					g.drawImage(Main.getPlayer().getKey().getImage(), getWidth()-35, 64-15, this);
+				}
+			} catch (NullPointerException ex){}
+			
+			
+			//Draw messages
+			
+			for(Entry<Integer,Message> entry : Utils.getMessages().entrySet()){
+				entry.getValue().draw(g);
+			}
 
 			// Draw Leaderboard
 
 			if (leaderboard) {
 				g.drawImage(
-						Images.makeImageTranslucent(Images.toBufferedImage(Images.createColorImage("#000000")), 0.5),
+						Images.makeImageTranslucent(Images.toBufferedImage(Images.createColorImage(Color.decode("#000000"))), 0.5),
 						getWidth() - 200, getHeight() / 3, 200, 110, this);
 				g.setFont(Main.getFont().deriveFont(10f));
 
@@ -618,7 +631,25 @@ public class Screen extends JPanel implements ActionListener {
 				} else if (!(Main.getBoard() == Board.GAME)) {
 					Utils.setLevel(Utils.getLevel() + 1);
 					Main.setBoard(Board.GAME);
-					Audio.playBackground(Sound.BACKGROUND_GRASS);
+					switch(Utils.getLevelType(Utils.getLevel())){
+					case GROUND:
+						Audio.playBackground(Sound.BACKGROUND_GRASS);
+						break;
+					case HELL:
+						Audio.playBackground(Sound.BACKGROUND_CAVE);
+						break;
+					case CAVE:
+						Audio.playBackground(Sound.BACKGROUND_CAVE);
+						break;
+					case SKY:
+						Audio.playBackground(Sound.BACKGROUND_MENU);
+						break;
+					case BOSS:
+						Audio.playBackground(Sound.BACKGROUND_BOSS);
+						break;
+					
+					}
+					
 					playing = true;
 				}
 

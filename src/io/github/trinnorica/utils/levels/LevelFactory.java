@@ -12,6 +12,7 @@ public enum LevelFactory {
 	DYNAMIC_DIRT('F',SpriteType.DYNAMIC_DIRT),
 	GRASS('G',SpriteType.GRASS),
 	FALLING_FLOOR('H',SpriteType.FALLING_FLOOR),
+	INVISIBLE_WALL('I',SpriteType.WALL),
 	//For all doors, type Alt 100<door ID>
 	DOOR_1('Θ',SpriteType.DOOR),
 	DOOR_2('Ω',SpriteType.DOOR),

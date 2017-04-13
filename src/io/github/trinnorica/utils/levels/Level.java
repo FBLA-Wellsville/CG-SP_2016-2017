@@ -13,6 +13,7 @@ import io.github.trinnorica.objects.Flag;
 import io.github.trinnorica.objects.Floor;
 import io.github.trinnorica.objects.GoldCoin;
 import io.github.trinnorica.objects.Ladder;
+import io.github.trinnorica.objects.Wall;
 import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.DarkSword;
 import io.github.trinnorica.objects.tools.Key;
@@ -56,19 +57,28 @@ public class Level {
 			case GOLD:
 				sprites.add(new GoldCoin(x*30+(15/2), y*30+(15/2)));
 				break;
+			case WALL:
+				switch(LevelFactory.decode(c[i])){
+				case INVISIBLE_WALL:
+					sprites.add(new Wall(x*30, y*30));
+					break;
+				default:
+					break;
+				}
+				break;
 			case DOOR:
 				switch(LevelFactory.decode(c[i])){
 				case DOOR_1:
-					sprites.add(new Door(x*30, y*30,1));
+					sprites.add(new Door(x*30, y*30-15,1));
 					break;
 				case DOOR_2:
-					sprites.add(new Door(x*30, y*30,2));
+					sprites.add(new Door(x*30, y*30-15,2));
 					break;
 				case DOOR_3:
-					sprites.add(new Door(x*30, y*30,3));
+					sprites.add(new Door(x*30, y*30-15,3));
 					break;
 				case DOOR_4:
-					sprites.add(new Door(x*30, y*30,4));
+					sprites.add(new Door(x*30, y*30-15,4));
 					break;
 				default:
 					break;

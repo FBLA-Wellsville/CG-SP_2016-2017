@@ -1,5 +1,6 @@
 package io.github.trinnorica.entity;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Polygon;
 import java.awt.Rectangle;
@@ -9,20 +10,25 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import io.github.trinnorica.Main;
+import io.github.trinnorica.objects.Door;
 import io.github.trinnorica.objects.FallingFloor;
 import io.github.trinnorica.objects.Flag;
 import io.github.trinnorica.objects.GoldCoin;
 import io.github.trinnorica.objects.Ladder;
+import io.github.trinnorica.objects.tools.Key;
 import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Direction;
 import io.github.trinnorica.utils.Sound;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
+import io.github.trinnorica.utils.particles.Particle;
 import io.github.trinnorica.utils.particles.formats.Shoot;
+import io.github.trinnorica.utils.sprites.Collidable;
 import io.github.trinnorica.utils.sprites.Keyable;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.PartialCollidable;
+import io.github.trinnorica.utils.sprites.Projectile;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.SpriteType;
 import io.github.trinnorica.utils.sprites.Tool;
@@ -54,6 +60,7 @@ public class Player extends Entity implements Moveable, Keyable {
 	private int b = 5;
 	int spawnx = 0;
 	int spawny = 0;
+	Key key = null;
 
 	public Player(int x, int y) {
 		super(x, y);
@@ -183,6 +190,18 @@ public class Player extends Entity implements Moveable, Keyable {
 				}
 
 				if (s instanceof Tool) {
+					if(s instanceof Key){
+						if(hasKey()){
+							tool.velocity.y = -2;
+							if (direction.equals(Direction.LEFT))
+								tool.velocity.x = 2;
+							else
+								tool.velocity.x = -2;
+							Main.addSprite(getTool());
+						}
+						setKey(((Key) s));
+						Main.removeSprite(s);
+					} else
 					if (!tooling) {
 						tooling = true;
 						try {
@@ -225,6 +244,38 @@ public class Player extends Entity implements Moveable, Keyable {
 					case RIGHT:
 						if (right && !jumping && !falling)
 							velocity.x = 0;
+						break;
+					default:
+						break;
+					}
+
+				}
+				
+				if (s instanceof Collidable) {
+					if (damaged && !jumping) {
+						setVelocity(0, 0);
+
+					}
+					damaged = false;
+
+					switch (getIntercectingDirection(xbounds.getBounds(), s.getPolygon().getBounds())) {
+					case DOWN:
+						if (!jumping && (bounds.intersects(s.getPolygon().getBounds()))) {
+							y = s.getY() - getHeight() + 1;
+							onground = true;
+						}
+						break;
+					case LEFT:
+						if (left)
+							velocity.x = 0;
+
+						break;
+					case RIGHT:
+						if (right)
+							velocity.x = 0;
+						break;
+					case UP:
+						velocity.y = 0;
 						break;
 					default:
 						break;
@@ -310,6 +361,11 @@ public class Player extends Entity implements Moveable, Keyable {
 			dy = 0;
 		}
 
+	}
+
+	private void setKey(Key key) {
+		this.key = key;
+		key.setUser(this);
 	}
 
 	@Override
@@ -421,9 +477,35 @@ public class Player extends Entity implements Moveable, Keyable {
 			}
 		}
 		if (key == KeyEvent.VK_SHIFT) {
-			if (tool != null && !utool) {
-				useTool();
-			}
+			if(hasKey()){
+				
+				getKey().x = x;
+				getKey().y = y;
+				
+				getKey().registerXBounds();
+				
+				for (Sprite s : Main.getScreen().objects) {
+					
+					
+					if (!getKey().getStrikeRange().getBounds().intersects(s.getPolygon().getBounds())) continue;
+					Utils.addStaticMessage(s.getClass().getSimpleName(), x, y, Color.WHITE, Color.BLACK, 1, 10);
+					if((s instanceof Door)){
+						
+						if(((Door)s).getID() == getKey().getID()){
+							((Door)s).open();
+							removeKey();
+							Utils.addStaticMessage("You have opened the door!", Main.getScreen().getWidth()/2 - (Main.getScreen().getGraphics().getFontMetrics().stringWidth("You have opened the door!")/2), Main.getScreen().getHeight()-50, Color.WHITE, Color.BLACK, 1, 10);
+							
+						}else
+						Utils.addStaticMessage("You can't open this door!", Main.getScreen().getWidth()/2 - (Main.getScreen().getGraphics().getFontMetrics().stringWidth("You don't have the right key to open this door!")/2), Main.getScreen().getHeight()-50, Color.WHITE, Color.BLACK, 1, 10);
+						return;
+					} 
+					
+				}
+			} 
+				if (tool != null && !utool) {
+					useTool();
+				}
 		}
 
 		if (key == KeyEvent.VK_SPACE && onground) {
@@ -432,6 +514,10 @@ public class Player extends Entity implements Moveable, Keyable {
 			setVelocity("", -5 - (s / 10));
 		}
 
+	}
+
+	private void removeKey() {
+		key = null;
 	}
 
 	@Override
@@ -491,6 +577,16 @@ public class Player extends Entity implements Moveable, Keyable {
 		} catch (NullPointerException ex) {
 			Utils.debug("TESTIMG");
 		}
+	}
+
+	public boolean hasKey() {
+		return (key != null);
+	}
+	
+	
+
+	public Key getKey() {
+		return key;
 	}
 
 }

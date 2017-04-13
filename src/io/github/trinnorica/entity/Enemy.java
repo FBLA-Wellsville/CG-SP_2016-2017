@@ -12,6 +12,7 @@ import io.github.trinnorica.objects.tools.Stick;
 import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Direction;
+import io.github.trinnorica.utils.sprites.Collidable;
 import io.github.trinnorica.utils.sprites.EntityType;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.PartialCollidable;
@@ -176,6 +177,46 @@ public class Enemy extends Entity implements Moveable {
 			if (s instanceof PartialCollidable) {
 				onground = true;
 				y = s.getY() - this.getHeight() + 1;
+				if (damaged) {
+					setVelocity(0, 0);
+
+				}
+				damaged = false;
+
+			}
+			if (s instanceof Collidable) {
+				if (damaged) {
+					setVelocity(0, 0);
+
+				}
+				damaged = false;
+
+				switch (getIntercectingDirection(bounds.getBounds(), s.getPolygon().getBounds())) {
+				case DOWN:
+					if (!jumping && (bounds.intersects(s.getPolygon().getBounds()))) {
+						y = s.getY() - getHeight() + 1;
+						onground = true;
+					}
+					break;
+				case LEFT:
+					if (direction.equals(Direction.LEFT)){
+						velocity.x = 0;
+						x=(int) s.getPolygon().getBounds().getMaxX();
+					}
+
+					break;
+				case RIGHT:
+					if (direction.equals(Direction.RIGHT)){
+						velocity.x = 0;
+						x=(int) ((int) s.getPolygon().getBounds().getX()-bounds.getBounds().getWidth());
+					}
+					break;
+				case UP:
+					velocity.y = 0;
+					break;
+				default:
+					break;
+				}
 
 			}
 		}
