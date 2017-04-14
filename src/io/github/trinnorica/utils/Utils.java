@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -38,6 +39,7 @@ public class Utils {
 	private static ValueComparator bvc = new ValueComparator(highscores);
 	private static TreeMap<String,Integer> thighscores = new TreeMap<>(bvc);
 	private static Map<Integer, Message> messages = new HashMap<>();
+	private static List<Message> levelMessages = new ArrayList<>();
 	private static File file = null;
 	private static File folder;
 	
@@ -59,7 +61,7 @@ public class Utils {
 		levelTypes.put(7, LevelType.GROUND);
 		levelTypes.put(8, LevelType.GROUND);
 		levelTypes.put(9, LevelType.GROUND);
-		levelTypes.put(10, LevelType.GROUND);
+		levelTypes.put(10, LevelType.CAVE);
 		levelTypes.put(11, LevelType.GROUND);
 		levelTypes.put(12, LevelType.GROUND);
 		levelTypes.put(13, LevelType.GROUND);
@@ -330,6 +332,9 @@ public class Utils {
 	public static Map<Integer,Message> getMessages(){
 		return messages;
 	}
+	public static List<Message> getLevelMessages(){
+		return levelMessages;
+	}
 	
 	public static void addStaticMessage(String message, int x, int y, Color text, Color outline, int thickness, int seconds){
 		final int id = new Random().nextInt();
@@ -341,10 +346,19 @@ public class Utils {
 			}
 		}, seconds*1000);
 	}
+	public static void addStaticLevelMessage(String message, int x, int y, Color text, Color outline, int thickness) {
+		levelMessages.add(new Message(message,x,y,text,outline,thickness));
+	}
+	
+	public static void removeLevelMessages(){
+		levelMessages.clear();
+	}
 
 	public static void swapObjects(Sprite sprite1, Sprite sprite2) {
 		Main.removeSprite(sprite1);
 		Main.addSprite(sprite2);
 	}
+
+	
 	
 }

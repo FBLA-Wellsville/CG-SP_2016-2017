@@ -17,7 +17,8 @@ public enum Sound {
 	BACKGROUND_BOSS("background_boss_1.wav"),
 	BACKGROUND_GRASS("background_grass_1.wav:background_grass_2.wav"), 
 	BACKGROUND_MENU("background_menu.wav"), 
-	BACKGROUND_CREDITS("background_credits.wav");
+	BACKGROUND_CREDITS("background_credits.wav"), 
+	BACKGROUND_HELL("background_menu.wav");
 	
 	String sound;
 	

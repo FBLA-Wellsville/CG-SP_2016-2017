@@ -413,6 +413,9 @@ public class Screen extends JPanel implements ActionListener {
 			for(Entry<Integer,Message> entry : Utils.getMessages().entrySet()){
 				entry.getValue().draw(g);
 			}
+			for(Message message : Utils.getLevelMessages()){
+				message.draw(g);
+			}
 
 			// Draw Leaderboard
 

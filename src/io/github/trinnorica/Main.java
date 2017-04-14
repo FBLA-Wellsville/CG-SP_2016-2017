@@ -1,5 +1,6 @@
 package io.github.trinnorica;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
@@ -80,6 +81,7 @@ public class Main {
 		
 		if(board == Board.GAME){
 			try{
+				Utils.removeLevelMessages();
 				Main.clearObjects();
 				LevelBuilder l = new LevelBuilder();
 				switch(Utils.getLevelType(Utils.getLevel())){
@@ -87,7 +89,7 @@ public class Main {
 					Audio.playBackground(Sound.BACKGROUND_GRASS);
 					break;
 				case HELL:
-					Audio.playBackground(Sound.BACKGROUND_CAVE);
+					Audio.playBackground(Sound.BACKGROUND_HELL);
 					break;
 				case CAVE:
 					Audio.playBackground(Sound.BACKGROUND_CAVE);
@@ -102,6 +104,30 @@ public class Main {
 				}
 				
 				int level = Utils.getLevel();
+				if(level == 6){
+					Utils.addStaticLevelMessage("This is your first enemy! Grab that sword to defend yourself.\nIf you have forgotten how to use weapons, press F1!",
+							getScreen().getWidth()/2,
+							70, 
+							Color.decode("#99db45"), 
+							Color.WHITE, 
+							1);
+				}
+				if(level == 7){
+					Utils.addStaticLevelMessage("Don not forget you can sprint!\nIf you ever get stuck on a level, try pressing F1.",
+							getScreen().getWidth()/2,
+							70, 
+							Color.decode("#99db45"), 
+							Color.WHITE, 
+							1);
+				}
+				if(level == 10){
+					Utils.addStaticLevelMessage("Keys work like weapons. They can be used by pressing SHIFT.\nKeys and doors are color coded.",
+							getScreen().getWidth()/2,
+							70, 
+							Color.decode("#99db45"), 
+							Color.WHITE, 
+							1);
+				}
 				l.buildLevel(LevelUtils.getLevelBlueprint(level),LevelUtils.getLevelWidth(level),LevelUtils.getLevelHeight(level));
 			} catch(NullPointerException ex){
 				setBoard(Board.WIN);

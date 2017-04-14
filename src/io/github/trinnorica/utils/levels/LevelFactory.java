@@ -13,7 +13,9 @@ public enum LevelFactory {
 	GRASS('G',SpriteType.GRASS),
 	FALLING_FLOOR('H',SpriteType.FALLING_FLOOR),
 	INVISIBLE_WALL('I',SpriteType.WALL),
+	DARK_GRAY('J',SpriteType.DIRT),
 	//For all doors, type Alt 100<door ID>
+	
 	DOOR_1('Θ',SpriteType.DOOR),
 	DOOR_2('Ω',SpriteType.DOOR),
 	DOOR_3('δ',SpriteType.DOOR),
@@ -26,7 +28,7 @@ public enum LevelFactory {
 	//ALT 9
 	COIN('○',SpriteType.GOLD),
 	//ALT 2
-	OGRE('☻',SpriteType.OGRE),
+		OGRE('☻',SpriteType.OGRE),
 	//ALT 10
 	KNIGHT('◙',SpriteType.KNIGHT),
 	//ALT 11
@@ -35,6 +37,8 @@ public enum LevelFactory {
 	WIZARD('♀',SpriteType.WIZARD),
 	//ALT 13
 	SKELETON('♪',SpriteType.SKELETON),
+	//ALT 14
+	SUPER_OGRE('♫',SpriteType.OGRE),
 	//ALT 1
 	PLAYER('☺',SpriteType.PLAYER),
 	//ALT 4
@@ -47,6 +51,7 @@ public enum LevelFactory {
 	BOW('•',SpriteType.BOW),
 	
 	GATE('K',SpriteType.GATE),
+	CAVE('L',SpriteType.GATE),
 	LADDER('M',SpriteType.LADDER),
 	AIR('X',SpriteType.AIR);
 	

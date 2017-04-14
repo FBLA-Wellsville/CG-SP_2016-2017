@@ -268,14 +268,14 @@ public class Player extends Entity implements Moveable, Keyable {
 					case LEFT:
 						if (left){
 							velocity.x = 0;
-							x = s.x-width;
+							x = (int) s.getPolygon().getBounds().getMaxX();
 						}
 
 						break;
 					case RIGHT:
 						if (right){
 							velocity.x = 0;
-							x = (int) s.getPolygon().getBounds().getMaxX();
+							x = s.x-width;
 						}
 						break;
 					case UP:

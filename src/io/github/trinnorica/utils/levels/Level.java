@@ -1,5 +1,6 @@
 package io.github.trinnorica.utils.levels;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.DarkSword;
 import io.github.trinnorica.objects.tools.Key;
 import io.github.trinnorica.objects.tools.Sword;
+import io.github.trinnorica.utils.Images;
 import io.github.trinnorica.utils.sprites.Empty;
 import io.github.trinnorica.utils.sprites.EntityType;
 import io.github.trinnorica.utils.sprites.Sprite;
@@ -135,7 +137,10 @@ public class Level {
 				entities.add(new Bow(x*30, y*30,ToolType.PROJECTILE));
 				break;
 			case DIRT:
-				sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/dirt.png"),30,30));
+				if(LevelFactory.decode(c[i]).equals(LevelFactory.DARK_GRAY)){
+					sprites.add(new Sprite(x*30,y*30,Images.createColorImage(Color.DARK_GRAY),30,30));
+				} else 
+					sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/dirt.png"),30,30));
 				break;
 			case DIRT_ARCH_DOWN:
 				sprites.add(new Sprite(x*30,y*30,ExternalFile.loadTexture("objects/background/dirt-arch-middle.png"),30,30));
@@ -222,14 +227,20 @@ public class Level {
 				
 				break;
 			case GATE:
-				try{
-					if(LevelFactory.decode(c[i-width]).getSpriteType().equals(SpriteType.GATE)){
-						sprites.add(new Flag(x*30,y*30,Flag.POLE));
-					}
-					else sprites.add(new Flag(x*30,y*30,Flag.FLAG));
-				} catch(ArrayIndexOutOfBoundsException ex){
-					sprites.add(new Flag(x*30,y*30,Flag.FLAG));
+				if(LevelFactory.decode(c[i]).equals(LevelFactory.CAVE)){
+					sprites.add(new Flag(x*30,y*30,Flag.CAVE));
 				}
+				if(LevelFactory.decode(c[i]).equals(LevelFactory.GATE)){
+					try{
+						if(LevelFactory.decode(c[i-width]).getSpriteType().equals(SpriteType.GATE)){
+							sprites.add(new Flag(x*30,y*30,Flag.POLE));
+						}
+						else sprites.add(new Flag(x*30,y*30,Flag.FLAG));
+					} catch(ArrayIndexOutOfBoundsException ex){
+						sprites.add(new Flag(x*30,y*30,Flag.FLAG));
+					}
+				}
+				
 				
 				break;
 			case LADDER:

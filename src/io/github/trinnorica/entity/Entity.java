@@ -90,12 +90,10 @@ public class Entity extends Sprite implements Moveable {
 		
 		
 		if(dplayer && player){
-			Utils.debug("1");
 			return;
 		}
 		
 		if(!(dplayer) && !player){
-			Utils.debug("2");
 			return;
 		}
 		
@@ -124,6 +122,9 @@ public class Entity extends Sprite implements Moveable {
 		// 15,Bridge.getGame().getFont());
 		//
 		if (health <= 0) {
+			if(damager instanceof Player){
+				Main.score = Main.score + 5;
+			}
 			this.kill(reason);
 		}
 

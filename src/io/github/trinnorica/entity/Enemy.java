@@ -34,6 +34,8 @@ public class Enemy extends Entity implements Moveable {
 	private EntityType type;
 	public boolean cooldown = false;
 	private Random random = new Random();
+	private boolean follow = true;
+	private boolean walk = true;
 
 	public Enemy(int x, int y, EntityType type) {
 		super(x, y);
@@ -59,12 +61,23 @@ public class Enemy extends Entity implements Moveable {
 			setTool(new FireDagger(0, 0, ToolType.DIRECTIONAL));
 			break;
 		case OGRE:
+			follow = false;
+			direction = Direction.LEFT;
+			walking = ExternalFile.loadTexture("entity/ogre/walk.gif");
+			standing = ExternalFile.loadTexture("entity/ogre/bobbing.gif");
+			maxhealth = 5;
+			setTool(new Stick(0, 0, ToolType.MELEE));
+			break;
+		case SUPER_OGRE:
+			follow = false;
+			direction = Direction.LEFT;
 			walking = ExternalFile.loadTexture("entity/ogre/walk.gif");
 			standing = ExternalFile.loadTexture("entity/ogre/bobbing.gif");
 			maxhealth = 10;
-			setTool(new Stick(0, 0, ToolType.MELEE));
+			setTool(new Sword(0, 0, ToolType.MELEE));
 			break;
 		case SKELETON:
+			walk = false;
 			walking = ExternalFile.loadTexture("entity/skeleton/walk.gif");
 			standing = ExternalFile.loadTexture("entity/skeleton/bobbing.gif");
 			maxhealth = 1;
@@ -91,7 +104,21 @@ public class Enemy extends Entity implements Moveable {
 
 	@Override
 	public void move() {
-		if(type.equals(EntityType.SKELETON)){
+		
+		if(jumping && velocity.y <= 0){
+			jumping = false;
+		}
+		
+		if(x + width >= Main.getScreen().getWidth()){
+			if(!follow){
+				direction = Direction.LEFT;
+			} else {
+				velocity.x = 0;
+				x = (Main.getScreen().getWidth()-width-1);
+			}
+		}
+		
+		if(!walk){
 			
 			if (velocity.x != 0) {
 				if (moving == false) {
@@ -107,7 +134,7 @@ public class Enemy extends Entity implements Moveable {
 			onground = false;
 			
 
-			attack(Main.getPlayer());
+			if(tool.getToolType().equals(ToolType.DIRECTIONAL) || tool.getToolType().equals(ToolType.PROJECTILE))attack(Main.getPlayer());
 
 			
 			for (Sprite s : Main.getScreen().objects) {
@@ -126,13 +153,17 @@ public class Enemy extends Entity implements Moveable {
 				onground = false;
 
 			if (onground) {
+				if(follow){
+					if (x > Main.getPlayer().x) {
+						direction = Direction.LEFT;	
+					}
+					if (x < Main.getPlayer().x) {
+						direction = Direction.RIGHT;	
+					}
+				}
 				
-				if (x > Main.getPlayer().x) {
-					direction = Direction.LEFT;
-				}
-				if (x < Main.getPlayer().x) {
-					direction = Direction.RIGHT;
-				}
+				
+				
 			}
 			dy = velocity.y;
 			dx = velocity.x;
@@ -175,13 +206,47 @@ public class Enemy extends Entity implements Moveable {
 				continue;
 
 			if (s instanceof PartialCollidable) {
-				onground = true;
-				y = s.getY() - this.getHeight() + 1;
+				if(follow){
+					jump();
+				}
 				if (damaged) {
 					setVelocity(0, 0);
 
 				}
 				damaged = false;
+				
+				switch (getIntercectingDirection(bounds.getBounds(), s.getPolygon().getBounds())) {
+				case DOWN:
+					if (!jumping && (bounds.intersects(s.getPolygon().getBounds()))) {
+						y = s.getY() - getHeight() + 1;
+						onground = true;
+					}
+					break;
+				case LEFT:
+					if (direction.equals(Direction.LEFT)){
+						velocity.x = 0;
+						x=(int) s.getPolygon().getBounds().getMaxX();
+						if(!follow){
+							direction = Direction.RIGHT;
+						}
+					}
+
+					break;
+				case RIGHT:
+					if (direction.equals(Direction.RIGHT)){
+						velocity.x = 0;
+						x=(int) ((int) s.getPolygon().getBounds().getX()-bounds.getBounds().getWidth());
+						if(!follow){
+							direction = Direction.LEFT;
+						}
+					}
+					break;
+				case UP:
+					velocity.y = 0;
+					break;
+				default:
+					break;
+				}
 
 			}
 			if (s instanceof Collidable) {
@@ -202,6 +267,9 @@ public class Enemy extends Entity implements Moveable {
 					if (direction.equals(Direction.LEFT)){
 						velocity.x = 0;
 						x=(int) s.getPolygon().getBounds().getMaxX();
+						if(!follow){
+							direction = Direction.RIGHT;
+						}
 					}
 
 					break;
@@ -209,6 +277,9 @@ public class Enemy extends Entity implements Moveable {
 					if (direction.equals(Direction.RIGHT)){
 						velocity.x = 0;
 						x=(int) ((int) s.getPolygon().getBounds().getX()-bounds.getBounds().getWidth());
+						if(!follow){
+							direction = Direction.LEFT;
+						}
 					}
 					break;
 				case UP:
@@ -219,20 +290,29 @@ public class Enemy extends Entity implements Moveable {
 				}
 
 			}
+			if(s instanceof Player){
+				attack(((Player)s));
+			}
 		}
 		if (velocity.y <= 0)
 			onground = false;
 
 		if (onground) {
-			if (x > Main.getPlayer().x) {
-				setVelocity(-1, "");
-				direction = Direction.LEFT;
+			if(follow){
+				if (x > Main.getPlayer().x) {
+					setVelocity(-1, "");
+					direction = Direction.LEFT;
+				}
+				if (x < Main.getPlayer().x) {
+					setVelocity(1, "");
+					direction = Direction.RIGHT;
+				}
 			}
-			if (x < Main.getPlayer().x) {
-				setVelocity(1, "");
-				direction = Direction.RIGHT;
-			}
+			if(direction.equals(Direction.LEFT)) velocity.x = -1;
+			if(direction.equals(Direction.RIGHT)) velocity.x = 1;
 		}
+		
+		
 		dy = velocity.y;
 		dx = velocity.x;
 
@@ -252,6 +332,14 @@ public class Enemy extends Entity implements Moveable {
 	}
 
 	
+	private void jump() {
+		if(onground){
+			onground = false;
+			jumping = true;
+			velocity.y = -5 - (s / 10);
+		}
+	}
+
 	private void attack(Entity e) {
 		if(Main.getPlayer() == null) return;
 		if(!cooldown){
