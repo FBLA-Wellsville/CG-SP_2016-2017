@@ -1,6 +1,7 @@
 package io.github.trinnorica.objects;
 
 import java.awt.Color;
+import java.awt.Image;
 
 import io.github.trinnorica.utils.Images;
 import io.github.trinnorica.utils.Utils;
@@ -19,21 +20,24 @@ public class Door extends Collidable {
 
 	private void init(int id) {
 		this.id = id;
+		loadImage(color(ExternalFile.loadTexture("objects/door.png"), id));
+		setImageDimensions(30, 45);
+	}
+	
+	private Image color(Image img, int id){
 		switch(id){
 		case 1:
-			loadImage(Images.replaceColor(Images.toBufferedImage(ExternalFile.loadTexture("objects/door.png")), Color.decode("#C4C400"), Color.RED));
-			break;
+			return (Images.replaceColor(Images.toBufferedImage(img), Color.decode("#C4C400"), Color.RED));
 		case 2:
-			loadImage(Images.replaceColor(Images.toBufferedImage(ExternalFile.loadTexture("objects/door.png")), Color.decode("#C4C400"), Color.BLUE));
-			break;
+			return(Images.replaceColor(Images.toBufferedImage(img), Color.decode("#C4C400"), Color.BLUE));
 		case 3:
-			loadImage(Images.replaceColor(Images.toBufferedImage(ExternalFile.loadTexture("objects/door.png")), Color.decode("#C4C400"), Color.GREEN));
-			break;
+			return(Images.replaceColor(Images.toBufferedImage(img), Color.decode("#C4C400"), Color.GREEN));
 		case 4:
-			loadImage(Images.replaceColor(Images.toBufferedImage(ExternalFile.loadTexture("objects/door.png")), Color.decode("#C4C400"), Color.YELLOW));
-			break;
+			return(Images.replaceColor(Images.toBufferedImage(img), Color.decode("#C4C400"), Color.YELLOW));
+		default:
+			return img;
 		}
-		setImageDimensions(30, 45);
+		
 	}
 	
 	public int getID(){
@@ -41,7 +45,9 @@ public class Door extends Collidable {
 	}
 
 	public void open() {
-		Utils.swapObjects(this, new Sprite(this.x,this.y,ExternalFile.loadTexture("objects/door-open.png"),this.getWidth(),this.height));
+		Image c = ExternalFile.loadTexture("objects/door-open.png");
+		
+		Utils.swapObjects(this, new Sprite(this.x,this.y,color(c,id),this.getWidth(),this.height));
 	}
 	
 	
