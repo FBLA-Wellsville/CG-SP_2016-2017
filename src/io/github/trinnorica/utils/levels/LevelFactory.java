@@ -25,6 +25,12 @@ public enum LevelFactory {
 	KEY_2('╥',SpriteType.KEY),
 	KEY_3('╙',SpriteType.KEY),
 	KEY_4('╘',SpriteType.KEY),
+	
+	//For all switches, type Alt 300<switch ID>
+	SWITCH_1('、',SpriteType.SWITCH),
+	SWITCH_2('。',SpriteType.SWITCH),
+	SWITCH_3('〃',SpriteType.SWITCH),
+	SWITCH_4('〄',SpriteType.SWITCH),
 	//ALT 9
 	COIN('○',SpriteType.GOLD),
 	//ALT 2

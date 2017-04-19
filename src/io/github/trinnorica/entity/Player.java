@@ -10,11 +10,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import io.github.trinnorica.Main;
-import io.github.trinnorica.objects.Door;
 import io.github.trinnorica.objects.FallingFloor;
 import io.github.trinnorica.objects.Flag;
 import io.github.trinnorica.objects.GoldCoin;
 import io.github.trinnorica.objects.Ladder;
+import io.github.trinnorica.objects.Switch;
+import io.github.trinnorica.objects.doors.Door;
 import io.github.trinnorica.objects.tools.Key;
 import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.DamageReason;
@@ -22,13 +23,11 @@ import io.github.trinnorica.utils.Direction;
 import io.github.trinnorica.utils.Sound;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
-import io.github.trinnorica.utils.particles.Particle;
 import io.github.trinnorica.utils.particles.formats.Shoot;
 import io.github.trinnorica.utils.sprites.Collidable;
 import io.github.trinnorica.utils.sprites.Keyable;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.PartialCollidable;
-import io.github.trinnorica.utils.sprites.Projectile;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.SpriteType;
 import io.github.trinnorica.utils.sprites.Tool;
@@ -190,19 +189,21 @@ public class Player extends Entity implements Moveable, Keyable {
 				}
 
 				if (s instanceof Tool) {
-					if(s instanceof Key){
-						if(hasKey()){
-							tool.velocity.y = -2;
+					if (s instanceof Key) {
+						if (hasKey()) {
+							Main.addSprite(key);
+							key.x = x;
+							key.y = y - 30;
+							key.velocity.y = -2;
 							if (direction.equals(Direction.LEFT))
-								tool.velocity.x = 2;
+								key.velocity.x = 2;
 							else
-								tool.velocity.x = -2;
-							Main.addSprite(getTool());
+								key.velocity.x = -2;
+
 						}
 						setKey(((Key) s));
 						Main.removeSprite(s);
-					} else
-					if (!tooling) {
+					} else if (!tooling) {
 						tooling = true;
 						try {
 
@@ -250,7 +251,7 @@ public class Player extends Entity implements Moveable, Keyable {
 					}
 
 				}
-				
+
 				if (s instanceof Collidable) {
 					if (damaged && !jumping) {
 						setVelocity(0, 0);
@@ -266,16 +267,16 @@ public class Player extends Entity implements Moveable, Keyable {
 						}
 						break;
 					case LEFT:
-						if (left){
+						if (left) {
 							velocity.x = 0;
 							x = (int) s.getPolygon().getBounds().getMaxX();
 						}
 
 						break;
 					case RIGHT:
-						if (right){
+						if (right) {
 							velocity.x = 0;
-							x = s.x-width;
+							x = s.x - width;
 						}
 						break;
 					case UP:
@@ -481,35 +482,46 @@ public class Player extends Entity implements Moveable, Keyable {
 			}
 		}
 		if (key == KeyEvent.VK_SHIFT) {
-			if(hasKey()){
+
+			for (Sprite s : Main.getScreen().objects) {
+				if (!getStrikeRange().getBounds().intersects(s.getPolygon().getBounds()))
+					continue;
 				
-				getKey().x = x;
-				getKey().y = y;
+				if(s instanceof Switch){
+					((Switch)s).toggle();
+					return;
+				}
 				
-				getKey().registerXBounds();
-				
-				for (Sprite s : Main.getScreen().objects) {
-					
-					
-					if (!getKey().getStrikeRange().getBounds().intersects(s.getPolygon().getBounds())) continue;
-					Utils.addStaticMessage(s.getClass().getSimpleName(), x, y, Color.WHITE, Color.BLACK, 1, 10);
-					if((s instanceof Door)){
-						
-						if(((Door)s).getID() == getKey().getID()){
-							((Door)s).open();
+				if (hasKey()) {
+					getKey().x = x;
+					getKey().y = y;
+
+					getKey().registerXBounds();
+					if ((s instanceof Door)) {
+
+						if (((Door) s).getID() == getKey().getID()) {
+							((Door) s).open();
 							removeKey();
-							Utils.addStaticMessage("You have opened the door!", Main.getScreen().getWidth()/2 - (Main.getScreen().getGraphics().getFontMetrics().stringWidth("You have opened the door!")/2), Main.getScreen().getHeight()-50, Color.WHITE, Color.BLACK, 1, 10);
-							
-						}else
-						Utils.addStaticMessage("You can't open this door!", Main.getScreen().getWidth()/2 - (Main.getScreen().getGraphics().getFontMetrics().stringWidth("You don't have the right key to open this door!")/2), Main.getScreen().getHeight()-50, Color.WHITE, Color.BLACK, 1, 10);
+							Utils.addStaticMessage("You have opened the door!",
+									Main.getScreen().getWidth() / 2 - (Main.getScreen().getGraphics().getFontMetrics()
+											.stringWidth("You have opened the door!") / 2),
+									Main.getScreen().getHeight() - 50, Color.WHITE, Color.BLACK, 1, 10);
+
+						} else
+							Utils.addStaticMessage("You can't open this door!",
+									Main.getScreen().getWidth() / 2 - (Main.getScreen().getGraphics().getFontMetrics()
+											.stringWidth("You don't have the right key to open this door!") / 2),
+									Main.getScreen().getHeight() - 50, Color.WHITE, Color.BLACK, 1, 10);
 						return;
-					} 
-					
+					}
+
 				}
-			} 
-				if (tool != null && !utool) {
-					useTool();
-				}
+
+			}
+
+			if (tool != null && !utool) {
+				useTool();
+			}
 		}
 
 		if (key == KeyEvent.VK_SPACE && onground) {
@@ -518,6 +530,21 @@ public class Player extends Entity implements Moveable, Keyable {
 			setVelocity("", -5 - (s / 10));
 		}
 
+		if (key == KeyEvent.VK_K) {
+			levelup();
+		}
+
+	}
+
+	public Rectangle getStrikeRange() {
+
+		if (direction == Direction.LEFT) {
+			return new Rectangle(x - 30, y, 60, 30);
+		}
+		if (direction == Direction.RIGHT) {
+			return new Rectangle(x, y, 60, 30);
+		}
+		return null;
 	}
 
 	private void removeKey() {
@@ -586,8 +613,6 @@ public class Player extends Entity implements Moveable, Keyable {
 	public boolean hasKey() {
 		return (key != null);
 	}
-	
-	
 
 	public Key getKey() {
 		return key;

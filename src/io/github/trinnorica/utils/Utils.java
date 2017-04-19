@@ -62,7 +62,7 @@ public class Utils {
 		levelTypes.put(8, LevelType.GROUND);
 		levelTypes.put(9, LevelType.GROUND);
 		levelTypes.put(10, LevelType.CAVE);
-		levelTypes.put(11, LevelType.GROUND);
+		levelTypes.put(11, LevelType.CAVE);
 		levelTypes.put(12, LevelType.GROUND);
 		levelTypes.put(13, LevelType.GROUND);
 		
