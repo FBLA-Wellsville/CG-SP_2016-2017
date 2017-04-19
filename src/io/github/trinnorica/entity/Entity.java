@@ -100,6 +100,9 @@ public class Entity extends Sprite implements Moveable {
 
 		if (damager.x - x >= 0)
 			if (this instanceof Player) {
+				if(((Player)this).hasArmour()){
+					i = i - ((Player)this).getArmour().getProtection();
+				}
 				if (damaged)
 					return;
 				damaged = true;
@@ -107,6 +110,9 @@ public class Entity extends Sprite implements Moveable {
 			} else
 				setVelocity(new Velocity(-2, -3));
 		else if (this instanceof Player) {
+			if(((Player)this).hasArmour()){
+				i = i - ((Player)this).getArmour().getProtection();
+			}
 			if (damaged)
 				return;
 			damaged = true;
@@ -134,6 +140,9 @@ public class Entity extends Sprite implements Moveable {
 
 		if (damager.x - x >= 0)
 			if (this instanceof Player) {
+				if(((Player)this).hasArmour()){
+					i = i - ((Player)this).getArmour().getProtection();
+				}
 				if (damaged)
 					return;
 				damaged = true;
@@ -141,6 +150,9 @@ public class Entity extends Sprite implements Moveable {
 			} else
 				setVelocity(new Velocity(-2, -3));
 		else if (this instanceof Player) {
+			if(((Player)this).hasArmour()){
+				i = i - ((Player)this).getArmour().getProtection();
+			}
 			if (damaged)
 				return;
 			damaged = true;
@@ -162,6 +174,9 @@ public class Entity extends Sprite implements Moveable {
 	}
 
 	public void damage(int i, DamageReason reason, Entity damager, Velocity v) {
+		if(((Player)this).hasArmour()){
+			i = i - ((Player)this).getArmour().getProtection();
+		}
 		health = health - i;
 		setVelocity(v);
 		// Utils.displayMessage(new Random().nextInt(), "-" + i, x, y, 100,
@@ -330,7 +345,7 @@ public class Entity extends Sprite implements Moveable {
 					continue;
 				if (!bounds.intersects(s.getPolygon().getBounds()))
 					continue;
-				if (s instanceof Collidable) {
+				if (s instanceof Collidable && ((Collidable)s).isColliding()) {
 					if (damaged) {
 						setVelocity(0, 0);
 

@@ -104,6 +104,14 @@ public class Main {
 				}
 				
 				int level = Utils.getLevel();
+				if(level == 1){
+					Utils.addStaticLevelMessage("Your son has been taken by the Dark Knight of Eldiseth!\nYou must travel away from your village and save your son from the Dark Castle.\nYou have never left your village before, and you do not know what to expect!",
+							getScreen().getWidth()/2,
+							70, 
+							Color.decode("#99db45"), 
+							Color.WHITE, 
+							1);
+				}
 				if(level == 6){
 					Utils.addStaticLevelMessage("This is your first enemy! Grab that sword to defend yourself.\nIf you have forgotten how to use weapons, press F1!",
 							getScreen().getWidth()/2,

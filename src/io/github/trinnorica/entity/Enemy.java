@@ -217,12 +217,14 @@ public class Enemy extends Entity implements Moveable {
 				
 				switch (getIntercectingDirection(bounds.getBounds(), s.getPolygon().getBounds())) {
 				case DOWN:
+					if(!((PartialCollidable)s).getCollidableDirections().contains(Direction.DOWN)) break;
 					if (!jumping && (bounds.intersects(s.getPolygon().getBounds()))) {
 						y = s.getY() - getHeight() + 1;
 						onground = true;
 					}
 					break;
 				case LEFT:
+					if(!((PartialCollidable)s).getCollidableDirections().contains(Direction.LEFT)) break;
 					if (direction.equals(Direction.LEFT)){
 						velocity.x = 0;
 						x=(int) s.getPolygon().getBounds().getMaxX();
@@ -233,6 +235,7 @@ public class Enemy extends Entity implements Moveable {
 
 					break;
 				case RIGHT:
+					if(!((PartialCollidable)s).getCollidableDirections().contains(Direction.RIGHT)) break;
 					if (direction.equals(Direction.RIGHT)){
 						velocity.x = 0;
 						x=(int) ((int) s.getPolygon().getBounds().getX()-bounds.getBounds().getWidth());
@@ -242,6 +245,7 @@ public class Enemy extends Entity implements Moveable {
 					}
 					break;
 				case UP:
+					if(!((PartialCollidable)s).getCollidableDirections().contains(Direction.UP)) break;
 					velocity.y = 0;
 					break;
 				default:
@@ -249,7 +253,7 @@ public class Enemy extends Entity implements Moveable {
 				}
 
 			}
-			if (s instanceof Collidable) {
+			if (s instanceof Collidable && ((Collidable)s).isColliding()) {
 				if (damaged) {
 					setVelocity(0, 0);
 

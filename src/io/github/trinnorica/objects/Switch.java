@@ -5,7 +5,6 @@ import java.awt.Image;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.objects.doors.Door;
-import io.github.trinnorica.objects.doors.DoorOpen;
 import io.github.trinnorica.utils.Images;
 import io.github.trinnorica.utils.Rotation;
 import io.github.trinnorica.utils.sprites.Collidable;
@@ -51,28 +50,26 @@ public class Switch extends Collidable {
 	}
 
 	public void toggle() {
+		
 		if(status == 0){
 			status = 1;
 			loadImage(color(ExternalFile.loadTexture("objects/switch-on.png"), id));
-			for(Sprite s : Main.getScreen().objects){
-				if(s instanceof Door){
-					((Door)s).open();
-					return;
-				}
-			}
-			return;
 		}
-		if(status == 1){
+		else if(status == 1){
 			status = 0;
 			loadImage(color(ExternalFile.loadTexture("objects/switch-off.png"), id));
-			for(Sprite s : Main.getScreen().objects){
-				if(s instanceof DoorOpen){
-					((DoorOpen)s).close();
-					return;
-				}
-			}
-			return;
 		}
+		
+		for(Sprite s : Main.getScreen().objects){
+			if(s instanceof Door){
+				if(((Door)s).getID() == getID()){
+					if(status == 1) ((Door)s).open();
+					if(status == 0) ((Door)s).close();
+					return;	
+				}	
+			}	
+		}		
+		
 	}
 	
 	

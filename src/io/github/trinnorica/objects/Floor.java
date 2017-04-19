@@ -1,5 +1,6 @@
 package io.github.trinnorica.objects;
 
+import io.github.trinnorica.utils.Direction;
 import io.github.trinnorica.utils.sprites.PartialCollidable;
 import res.ExternalFile;
 
@@ -24,6 +25,39 @@ public class Floor extends PartialCollidable {
 
 	private void init(int type) {
 		loadImage(ExternalFile.loadTexture("objects/floor/floor-" + type + ".png"));
+		switch(type){
+		case DIRT:
+			addCollidableDirection(Direction.DOWN);
+			break;
+		case STONE:
+			addCollidableDirection(Direction.DOWN);
+			break;
+		case STONE_DIRT:
+			addCollidableDirection(Direction.DOWN);
+			break;
+		case GRASS:
+			addCollidableDirection(Direction.DOWN);
+			break;
+		case DIRT_BACKGROUND:
+			addCollidableDirection(Direction.DOWN);
+			addCollidableDirection(Direction.LEFT);
+			addCollidableDirection(Direction.RIGHT);
+			break;
+		case DIRT_WALL_RIGHT:
+			addCollidableDirection(Direction.RIGHT);
+			addCollidableDirection(Direction.DOWN);
+			break;
+		case DIRT_WALL_LEFT:
+			addCollidableDirection(Direction.LEFT);
+			addCollidableDirection(Direction.DOWN);
+			break;
+		case DIRT_WALL_BOTH:
+			addCollidableDirection(Direction.DOWN);
+			addCollidableDirection(Direction.RIGHT);
+			addCollidableDirection(Direction.LEFT);
+			break;
+		
+		}
 		setImageDimensions(30, 30);
 	}
 	

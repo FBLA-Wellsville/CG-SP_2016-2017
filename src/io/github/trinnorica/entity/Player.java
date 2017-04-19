@@ -16,6 +16,7 @@ import io.github.trinnorica.objects.GoldCoin;
 import io.github.trinnorica.objects.Ladder;
 import io.github.trinnorica.objects.Switch;
 import io.github.trinnorica.objects.doors.Door;
+import io.github.trinnorica.objects.tools.Armour;
 import io.github.trinnorica.objects.tools.Key;
 import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.DamageReason;
@@ -60,6 +61,7 @@ public class Player extends Entity implements Moveable, Keyable {
 	int spawnx = 0;
 	int spawny = 0;
 	Key key = null;
+	Armour armour = null;
 
 	public Player(int x, int y) {
 		super(x, y);
@@ -189,6 +191,21 @@ public class Player extends Entity implements Moveable, Keyable {
 				}
 
 				if (s instanceof Tool) {
+					if(s instanceof Armour){
+						if (hasArmour()) {
+							Main.addSprite(armour);
+							armour.x = x;
+							armour.y = y - 30;
+							armour.velocity.y = -2;
+							if (direction.equals(Direction.LEFT))
+								armour.velocity.x = 2;
+							else
+								armour.velocity.x = -2;
+
+						}
+						setArmour(((Armour) s));
+						Main.removeSprite(s);
+					}
 					if (s instanceof Key) {
 						if (hasKey()) {
 							Main.addSprite(key);
@@ -203,7 +220,7 @@ public class Player extends Entity implements Moveable, Keyable {
 						}
 						setKey(((Key) s));
 						Main.removeSprite(s);
-					} else if (!tooling) {
+					} else if (!tooling && !(s instanceof Armour) && !(s instanceof Key)) {
 						tooling = true;
 						try {
 
@@ -232,18 +249,21 @@ public class Player extends Entity implements Moveable, Keyable {
 
 					switch (getIntercectingDirection(xbounds.getBounds(), s.getPolygon().getBounds())) {
 					case DOWN:
+						if(!((PartialCollidable)s).getCollidableDirections().contains(Direction.DOWN)) break;
 						if (!jumping && (bounds.intersects(s.getPolygon().getBounds()))) {
 							y = s.getY() - getHeight() + 1;
 							onground = true;
 						}
 						break;
 					case LEFT:
-						if (left && !falling)
+						if(!((PartialCollidable)s).getCollidableDirections().contains(Direction.LEFT)) break;
+						if (left)
 							velocity.x = 0;
 
 						break;
 					case RIGHT:
-						if (right && !jumping && !falling)
+						if(!((PartialCollidable)s).getCollidableDirections().contains(Direction.RIGHT)) break;
+						if (right)
 							velocity.x = 0;
 						break;
 					default:
@@ -252,7 +272,7 @@ public class Player extends Entity implements Moveable, Keyable {
 
 				}
 
-				if (s instanceof Collidable) {
+				if (s instanceof Collidable && ((Collidable)s).isColliding()) {
 					if (damaged && !jumping) {
 						setVelocity(0, 0);
 
@@ -372,6 +392,18 @@ public class Player extends Entity implements Moveable, Keyable {
 		this.key = key;
 		key.setUser(this);
 	}
+	
+	public boolean hasArmour() {
+		return armour != null;
+	}
+	
+	public void setArmour(Armour armour) {
+		this.armour = armour;
+		armour.setUser(this);
+	}
+	public Armour getArmour() {
+		return armour;
+	}
 
 	@Override
 	public void draw(Graphics g) {
@@ -393,6 +425,9 @@ public class Player extends Entity implements Moveable, Keyable {
 				}
 
 			}
+			if(hasArmour()){
+				g.drawImage(armour.getImage(), x, y, width-1, height, null);
+			}
 			// if(tool != null) g.drawImage(Images.rotate(tool.getImage(), 0.0),
 			// x+20, y, tool.getWidth(), tool.getHeight(), null);
 		} else {
@@ -410,6 +445,11 @@ public class Player extends Entity implements Moveable, Keyable {
 				// g.drawImage(ExternalFile.loadTexture("swipe.gif"),
 				// x+30+tool.width, y, 7*2 * - tool.width, 15*2, null);
 			}
+			
+			if(hasArmour()){
+				g.drawImage(armour.getImage(), x + width, y, (-(width))+1, height, null);
+			}
+			
 			// if(tool != null) g.drawImage(Images.rotate(tool.getImage(), 0.0),
 			// x+tool.getWidth()-20, y, - tool.getWidth(), tool.getHeight(),
 			// null);

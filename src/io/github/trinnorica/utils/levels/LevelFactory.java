@@ -27,14 +27,14 @@ public enum LevelFactory {
 	KEY_4('╘',SpriteType.KEY),
 	
 	//For all switches, type Alt 300<switch ID>
-	SWITCH_1('、',SpriteType.SWITCH),
-	SWITCH_2('。',SpriteType.SWITCH),
-	SWITCH_3('〃',SpriteType.SWITCH),
-	SWITCH_4('〄',SpriteType.SWITCH),
+	SWITCH_1('╣',SpriteType.SWITCH),
+	SWITCH_2('║',SpriteType.SWITCH),
+	SWITCH_3('╗',SpriteType.SWITCH),
+	SWITCH_4('╝',SpriteType.SWITCH),
 	//ALT 9
 	COIN('○',SpriteType.GOLD),
 	//ALT 2
-		OGRE('☻',SpriteType.OGRE),
+	OGRE('☻',SpriteType.OGRE),
 	//ALT 10
 	KNIGHT('◙',SpriteType.KNIGHT),
 	//ALT 11
@@ -55,6 +55,12 @@ public enum LevelFactory {
 	STICK('♠',SpriteType.STICK),
 	//ALT 7
 	BOW('•',SpriteType.BOW),
+	
+	
+	//Alt 20
+	IRON_ARMOUR('¶',SpriteType.ARMOUR),
+	//Alt 21
+	GOLD_ARMOUR('§',SpriteType.ARMOUR),
 	
 	GATE('K',SpriteType.GATE),
 	CAVE('L',SpriteType.GATE),

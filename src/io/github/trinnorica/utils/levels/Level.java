@@ -16,6 +16,7 @@ import io.github.trinnorica.objects.Ladder;
 import io.github.trinnorica.objects.Switch;
 import io.github.trinnorica.objects.Wall;
 import io.github.trinnorica.objects.doors.Door;
+import io.github.trinnorica.objects.tools.Armour;
 import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.DarkSword;
 import io.github.trinnorica.objects.tools.Key;
@@ -57,6 +58,16 @@ public class Level {
 				}
 				
 		
+				break;
+			case ARMOUR:
+				switch(LevelFactory.decode(c[i])){
+				case IRON_ARMOUR:
+					sprites.add(new Armour(x*30, y*30, ToolType.NONE, Armour.IRON));
+					break;
+				case GOLD_ARMOUR:
+					sprites.add(new Armour(x*30, y*30, ToolType.NONE, Armour.GOLD));
+					break;
+				}
 				break;
 			case GOLD:
 				sprites.add(new GoldCoin(x*30+(15/2), y*30+(15/2)));

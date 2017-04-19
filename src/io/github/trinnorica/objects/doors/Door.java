@@ -45,7 +45,22 @@ public class Door extends Collidable {
 	}
 
 	public void open() {
-		Utils.swapObjects(this, new DoorOpen(x,y,id));
+		loadImage(color(ExternalFile.loadTexture("objects/door-open.png"), id));
+		setImageDimensions(30, 45);
+		setColliding(false);
+	}
+	public void close() {
+		loadImage(color(ExternalFile.loadTexture("objects/door.png"), id));
+		setImageDimensions(30, 45);
+		setColliding(true);
+	}
+	public void toggle() {
+		if(isColliding()){
+			open();
+		} else {
+			close();
+		}
+		
 	}
 	
 	
