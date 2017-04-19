@@ -1,5 +1,6 @@
 package io.github.trinnorica.objects;
 
+import io.github.trinnorica.utils.Direction;
 import io.github.trinnorica.utils.sprites.PartialCollidable;
 import res.ExternalFile;
 
@@ -11,7 +12,7 @@ public class Cloud extends PartialCollidable {
 	int type;
 	public Cloud(int x, int y, int cloudtype){
 		super(x,y);
-		
+		addCollidableDirection(Direction.DOWN);
 		type = cloudtype;
 		init();
 	}

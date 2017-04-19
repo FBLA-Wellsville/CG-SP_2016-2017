@@ -105,7 +105,7 @@ public class Main {
 				
 				int level = Utils.getLevel();
 				if(level == 1){
-					Utils.addStaticLevelMessage("Your son has been taken by the Dark Knight of Eldiseth!\nYou must travel away from your village and save your son from the Dark Castle.\nYou have never left your village before, and you do not know what to expect!",
+					Utils.addStaticLevelMessage("Your son has been taken by the Dark Knight of Eldiseth!\nYou must travel away from your village and\nsave your son from the Dark Castle.\nYou have never left your\nvillage before, and you do not know what to expect!",
 							getScreen().getWidth()/2,
 							70, 
 							Color.decode("#99db45"), 

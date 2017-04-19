@@ -101,7 +101,7 @@ public class Entity extends Sprite implements Moveable {
 		if (damager.x - x >= 0)
 			if (this instanceof Player) {
 				if(((Player)this).hasArmour()){
-					i = i - ((Player)this).getArmour().getProtection();
+					i = i /( ((Player)this).getArmour().getProtection());
 				}
 				if (damaged)
 					return;
@@ -111,7 +111,7 @@ public class Entity extends Sprite implements Moveable {
 				setVelocity(new Velocity(-2, -3));
 		else if (this instanceof Player) {
 			if(((Player)this).hasArmour()){
-				i = i - ((Player)this).getArmour().getProtection();
+				i = i /( ((Player)this).getArmour().getProtection());
 			}
 			if (damaged)
 				return;
@@ -141,7 +141,7 @@ public class Entity extends Sprite implements Moveable {
 		if (damager.x - x >= 0)
 			if (this instanceof Player) {
 				if(((Player)this).hasArmour()){
-					i = i - ((Player)this).getArmour().getProtection();
+					i = i /( ((Player)this).getArmour().getProtection());
 				}
 				if (damaged)
 					return;
@@ -151,7 +151,7 @@ public class Entity extends Sprite implements Moveable {
 				setVelocity(new Velocity(-2, -3));
 		else if (this instanceof Player) {
 			if(((Player)this).hasArmour()){
-				i = i - ((Player)this).getArmour().getProtection();
+				i = i /( ((Player)this).getArmour().getProtection());
 			}
 			if (damaged)
 				return;
@@ -175,7 +175,7 @@ public class Entity extends Sprite implements Moveable {
 
 	public void damage(int i, DamageReason reason, Entity damager, Velocity v) {
 		if(((Player)this).hasArmour()){
-			i = i - ((Player)this).getArmour().getProtection();
+			i = i /( ((Player)this).getArmour().getProtection());
 		}
 		health = health - i;
 		setVelocity(v);
