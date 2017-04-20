@@ -5,6 +5,7 @@ import java.util.Random;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.objects.Flag;
+import io.github.trinnorica.objects.tools.Armour;
 import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.FireDagger;
 import io.github.trinnorica.objects.tools.FireStaff;
@@ -368,6 +369,11 @@ public class Enemy extends Entity implements Moveable {
 			tool.y = y;
 
 			Main.addSprite(tool);
+		}
+		if (new Random().nextInt(100) <= 10) {
+			if(type.equals(EntityType.KNIGHT)){
+				Main.addSprite(new Armour(x, y, ToolType.NONE, Armour.IRON));
+			}
 		}
 		if(type.equals(EntityType.DARK_KNIGHT)){
 			Main.addSprite(new Flag(x, y, Flag.FLAG));

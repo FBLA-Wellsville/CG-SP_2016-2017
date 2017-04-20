@@ -107,7 +107,6 @@ public class Player extends Entity implements Moveable, Keyable {
 		y = spawny;
 		lives = lives - 1;
 		health = maxhealth;
-		Main.setBoard(Board.GAME);
 		if (lives == 0) {
 			Main.deathmessage = reason.getDeathLine();
 			Main.setBoard(Board.GAME_OVER);
