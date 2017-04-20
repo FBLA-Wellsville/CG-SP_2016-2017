@@ -108,7 +108,7 @@ public class Main {
 					Utils.addStaticLevelMessage("Your son has been taken by the Dark Knight of Eldiseth!\nYou must travel away from your village and\nsave your son from the Dark Castle.\nYou have never left your\nvillage before, and you do not know what to expect!",
 							getScreen().getWidth()/2,
 							70, 
-							Color.decode("#99db45"), 
+							Color.BLACK,
 							Color.WHITE, 
 							1);
 				}

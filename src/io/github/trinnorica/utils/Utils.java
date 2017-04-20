@@ -65,6 +65,7 @@ public class Utils {
 		levelTypes.put(11, LevelType.CAVE);
 		levelTypes.put(12, LevelType.CAVE);
 		levelTypes.put(13, LevelType.BOSS);
+		levelTypes.put(14, LevelType.GROUND);
 		
 		
 		version = ExternalFile.getVersion__BOOT_ONLY__();

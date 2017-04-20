@@ -55,6 +55,10 @@ public enum LevelFactory {
 	STICK('♠',SpriteType.STICK),
 	//ALT 7
 	BOW('•',SpriteType.BOW),
+	//ALT 8
+	ICE_DAGGER('◘',SpriteType.ICE_DAGGER),
+	//ALT 30
+	FIRE_DAGGER('▲',SpriteType.FIRE_DAGGER),
 	
 	
 	//Alt 20

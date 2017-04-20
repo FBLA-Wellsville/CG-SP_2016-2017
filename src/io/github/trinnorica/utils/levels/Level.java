@@ -19,6 +19,8 @@ import io.github.trinnorica.objects.doors.Door;
 import io.github.trinnorica.objects.tools.Armour;
 import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.DarkSword;
+import io.github.trinnorica.objects.tools.FireDagger;
+import io.github.trinnorica.objects.tools.IceDagger;
 import io.github.trinnorica.objects.tools.Key;
 import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.Images;
@@ -58,6 +60,13 @@ public class Level {
 				}
 				
 		
+				break;
+				
+			case ICE_DAGGER:
+				sprites.add(new IceDagger(x*30, y*30, ToolType.DIRECTIONAL));
+				break;
+			case FIRE_DAGGER:
+				sprites.add(new FireDagger(x*30, y*30, ToolType.DIRECTIONAL));
 				break;
 			case ARMOUR:
 				switch(LevelFactory.decode(c[i])){
