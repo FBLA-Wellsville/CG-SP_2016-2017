@@ -43,7 +43,7 @@
 		<copy todir="${build}/res/images">
 		    <fileset dir="${src}/res/images"/>
 		</copy>
-		<copy todir="sounds">
+		<copy todir="${build}/res/sounds">
 		    <fileset dir="${src}/res/sounds"/>
 		</copy>
 		<echo message="Compiled project." />
