@@ -5,10 +5,8 @@
 	<property name="build" location="build"/>
 	<property name="dist" location="downloads"/>
 	<property name="title" value="Eldiseth" />
-	<property name="major" value="2" />
-	<property name="minor" value="4" />
-	<property name="distro" value="15" />
-	<property name="version" value="${major}.${minor}.${distro}" />
+	<xmlproperty file="src/description.xml" semanticAttributes="true"/>
+	<property name="version" value="${desc.version.major}.${desc.version.minor}.${desc.version.distro}" />
 	
 	
 	
