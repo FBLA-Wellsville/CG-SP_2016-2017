@@ -12,7 +12,7 @@ import io.github.trinnorica.utils.sprites.ToolType;
 
 public class IceDagger extends Tool {
 
-	public IceDagger(int x, int y, ToolType type) {
+	public IceDagger(int x, int y,ToolType type) {
 		super(x, y, type);
 		initSword();
 	}
@@ -33,7 +33,8 @@ public class IceDagger extends Tool {
 	
 	@Override
 	public void use(int x, int y, Direction d, ParticleFormat f, Entity shooter){
-		Utils.runParticles(new Point(x,y), f, ParticleType.ICE,d);
+		Utils.runParticles(new Point(x,y), f, ParticleType.ICE,d,shooter);
 	}
 
 }
+

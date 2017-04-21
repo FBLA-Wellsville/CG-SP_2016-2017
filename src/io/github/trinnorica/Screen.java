@@ -22,15 +22,17 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import io.github.trinnorica.entity.Player;
+import io.github.trinnorica.objects.tools.Armour;
 import io.github.trinnorica.objects.tools.Bow;
 import io.github.trinnorica.objects.tools.FireDagger;
 import io.github.trinnorica.objects.tools.FireStaff;
 import io.github.trinnorica.objects.tools.IceDagger;
+import io.github.trinnorica.objects.tools.IceStaff;
+import io.github.trinnorica.objects.tools.Stick;
 import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.Backgrounds;
 import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.Images;
-import io.github.trinnorica.utils.Sound;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.levels.LevelBuilder;
 import io.github.trinnorica.utils.levels.LevelUtils;
@@ -41,7 +43,6 @@ import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.ToolType;
 import io.github.trinnorica.utils.ui.Message;
-import res.Audio;
 import res.ExternalFile;
 
 public class Screen extends JPanel implements ActionListener {
@@ -87,6 +88,8 @@ public class Screen extends JPanel implements ActionListener {
 //	private Image ENEMY5 = ExternalFile.loadTexture("entity/knight/walk.gif");
 	private Image LOGO = ExternalFile.loadTexture("logos/logo-title.png");
 	private Image FBLA = ExternalFile.loadTexture("logos/fbla-logo.png");
+	
+	
 	
 	private boolean level = false;
 	public boolean confirm;
@@ -594,13 +597,14 @@ public class Screen extends JPanel implements ActionListener {
 		// Debug overlay
 		if (debug) {
 			g.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
-			Utils.drawOutlineString(g, "Version: " + Utils.getVersion(), 0, 20, Color.WHITE, Color.BLACK, 1);
-			Utils.drawOutlineString(g, "Objects: " + objects.size(), 0, 40, Color.WHITE, Color.BLACK, 1);
-			Utils.drawOutlineString(g, "Playing: " + playing, 0, 60, Color.WHITE, Color.BLACK, 1);
+			Utils.drawOutlineString(g, "FPS: " + Main.getFPS(), 0, 20, Color.WHITE, Color.BLACK, 1);
+			Utils.drawOutlineString(g, "Version: " + Utils.getVersion(), 40, 20, Color.WHITE, Color.BLACK, 1);
+			Utils.drawOutlineString(g, "Objects: " + objects.size(), 0, 60, Color.WHITE, Color.BLACK, 1);
+			Utils.drawOutlineString(g, "Playing: " + playing, 0, 80, Color.WHITE, Color.BLACK, 1);
 			try {
-				Utils.drawOutlineString(g, "Flying: " + Main.getPlayer().flying, 0, 80, Color.WHITE, Color.BLACK, 1);
-				Utils.drawOutlineString(g, "Jumping: " + Main.getPlayer().jumping, 0, 100, Color.WHITE, Color.BLACK, 1);
-				Utils.drawOutlineString(g, "Falling: " + Main.getPlayer().falling, 0, 120, Color.WHITE, Color.BLACK, 1);
+				Utils.drawOutlineString(g, "Flying: " + Main.getPlayer().flying, 0, 100, Color.WHITE, Color.BLACK, 1);
+				Utils.drawOutlineString(g, "Jumping: " + Main.getPlayer().jumping, 0, 120, Color.WHITE, Color.BLACK, 1);
+
 				Utils.drawOutlineString(g, "Onground: " + Main.getPlayer().onground, 0, 140, Color.WHITE, Color.BLACK,
 						1);
 
@@ -639,8 +643,20 @@ public class Screen extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		repaint();
+        long beforeTime = System.nanoTime();
+        Main.now=System.currentTimeMillis(); 
+        Main.framesCount++; 
+        if(Main.now-Main.framesTimer>1000){
+        	Main.framesTimer=Main.now; 
+        	Main.framesCountAvg=Main.framesCount; 
+        	Main.framesCount=0;
+        }
+        
+        
+        repaint();
 	}
+	
+	
 
 	private class TAdapter extends KeyAdapter {
 
@@ -667,6 +683,45 @@ public class Screen extends JPanel implements ActionListener {
 					level = true;
 				}
 				
+			}
+			
+			if(board == Board.GAME){
+				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_I)){
+					Main.addSprite(new Armour(Main.getPlayer().getX(), Main.getPlayer().getY()-10, ToolType.NONE, Armour.IRON));
+				}
+				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_G)){
+					Main.addSprite(new Armour(Main.getPlayer().getX(), Main.getPlayer().getY()-10, ToolType.NONE, Armour.GOLD));
+				}
+				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_1)){
+					Main.addSprite(new Sword(Main.getPlayer().getX(), Main.getPlayer().getY(),ToolType.MELEE));
+				}
+				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_2)){
+					Main.addSprite(new Stick(Main.getPlayer().getX(), Main.getPlayer().getY(),ToolType.MELEE));
+				}
+				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_3)){
+					Main.addSprite(new Bow(Main.getPlayer().getX(), Main.getPlayer().getY(),ToolType.PROJECTILE));
+				}
+				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_4)){
+					Main.addSprite(new FireStaff(Main.getPlayer().getX(), Main.getPlayer().getY(),ToolType.PROJECTILE));
+				}
+				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_5)){
+					Main.addSprite(new IceStaff(Main.getPlayer().getX(), Main.getPlayer().getY(),ToolType.PROJECTILE));
+				}
+				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_6)){
+					Main.addSprite(new FireDagger(Main.getPlayer().getX(), Main.getPlayer().getY(),ToolType.DIRECTIONAL));
+				}
+				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_7)){
+					Main.addSprite(new IceDagger(Main.getPlayer().getX(), Main.getPlayer().getY(),ToolType.DIRECTIONAL));
+				}
+				if(Utils.codeEquals("flyme")){
+					Main.getPlayer().flying = true;
+				}
+				if(Utils.codeEquals("land")){
+					Main.getPlayer().flying = false;
+				}
+				if(Utils.codeEquals("fly")){
+					Main.getPlayer().flying = !Main.getPlayer().flying;
+				}
 			}
 			
 			if(level){

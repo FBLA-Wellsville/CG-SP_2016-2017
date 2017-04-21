@@ -13,7 +13,7 @@ public class IceSpike extends Projectile {
 	}
 	
 	public void init(){
-		loadImage(ExternalFile.loadTexture("entity/projectiles/ice.gif"));
+		loadImage(ExternalFile.loadTexture("particles/ice.png"));
 		setImageDimensions(30, 30);
 	}
 	

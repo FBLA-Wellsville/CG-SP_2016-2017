@@ -385,6 +385,10 @@ public class Utils {
 		return pressedKeys.endsWith(e);
 	}
 
+	public static boolean codeEqualsRaw(String code) {
+		return pressedKeys.endsWith(code);
+	}
+
 	
 	
 }

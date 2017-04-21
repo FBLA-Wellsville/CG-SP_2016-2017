@@ -32,6 +32,11 @@ public class Main {
 	public static int score = 0;
 	
 	
+	static long now;
+	static int framesCount = 0;
+	static int framesCountAvg=0; 
+	static long framesTimer=0;
+	
 	public static void main(String[] args){
 		
 		try {
@@ -50,6 +55,11 @@ public class Main {
 		Audio.playBackground(Sound.BACKGROUND_MENU);
 		
 	}
+	
+	public static int getFPS(){
+		return framesCountAvg;
+	}
+	
 	public static Font getFont(){
 		return pixel;
 	}
