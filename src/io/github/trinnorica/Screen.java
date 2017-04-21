@@ -598,7 +598,7 @@ public class Screen extends JPanel implements ActionListener {
 		if (debug) {
 			g.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
 			Utils.drawOutlineString(g, "FPS: " + Main.getFPS(), 0, 20, Color.WHITE, Color.BLACK, 1);
-			Utils.drawOutlineString(g, "Version: " + Utils.getVersion(), 40, 20, Color.WHITE, Color.BLACK, 1);
+			Utils.drawOutlineString(g, "Version: " + Utils.getVersion(), 0, 40, Color.WHITE, Color.BLACK, 1);
 			Utils.drawOutlineString(g, "Objects: " + objects.size(), 0, 60, Color.WHITE, Color.BLACK, 1);
 			Utils.drawOutlineString(g, "Playing: " + playing, 0, 80, Color.WHITE, Color.BLACK, 1);
 			try {
