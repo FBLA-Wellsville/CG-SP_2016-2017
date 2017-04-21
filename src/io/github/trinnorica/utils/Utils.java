@@ -8,6 +8,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -47,6 +48,8 @@ public class Utils {
 
 	private static boolean hasplayedbefore = true;
 	
+	private static String pressedKeys = "";
+	
 	public static void start() {
 		folder = new File("C:/KANSAS_WELLSVILLE_HIGHSCHOOL/Eldiseth/");
 		if (!folder.exists())
@@ -70,6 +73,10 @@ public class Utils {
 		
 		version = ExternalFile.getVersion__BOOT_ONLY__();
 		
+	}
+	
+	public static int getLevels(){
+		return levelTypes.size();
 	}
 	
 	public static boolean hasPlayedBefore(){
@@ -358,6 +365,24 @@ public class Utils {
 	public static void swapObjects(Sprite sprite1, Sprite sprite2) {
 		Main.removeSprite(sprite1);
 		Main.addSprite(sprite2);
+	}
+
+	public static void pressKey(int key) {
+		pressedKeys = pressedKeys + "-" + String.valueOf(key);
+	}
+	
+	public static boolean codeEquals(String code){
+		String e = "";
+		for(int d=0;d!=code.length();d++){
+			try {
+				Field key = ReflectionUtils.getField("KeyEvent", "java.awt.event", true, "VK_" + ((code.charAt(d) + "").toUpperCase()));
+				e = e + "-" + (String.valueOf(key.get(null)));
+			} catch (NoSuchFieldException | SecurityException | ClassNotFoundException |IllegalAccessException  e1) {
+				e1.printStackTrace();
+			}
+			
+		}
+		return pressedKeys.endsWith(e);
 	}
 
 	

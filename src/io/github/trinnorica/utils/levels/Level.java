@@ -198,7 +198,14 @@ public class Level {
 //				Main.getPlayer().y = y*30;
 				break;
 			case OGRE:
-				entities.add(new Enemy(x*30, y*30,EntityType.OGRE));
+				switch(LevelFactory.decode(c[i])){
+				case OGRE:
+					entities.add(new Enemy(x*30, y*30,EntityType.OGRE));
+					break;
+				case SUPER_OGRE:
+					entities.add(new Enemy(x*30, y*30,EntityType.SUPER_OGRE));
+					break;
+				}
 				break;
 			case FALLING_FLOOR:
 				sprites.add(new FallingFloor(x*30, y*30));

@@ -32,6 +32,8 @@ import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.Images;
 import io.github.trinnorica.utils.Sound;
 import io.github.trinnorica.utils.Utils;
+import io.github.trinnorica.utils.levels.LevelBuilder;
+import io.github.trinnorica.utils.levels.LevelUtils;
 import io.github.trinnorica.utils.particles.Particle;
 import io.github.trinnorica.utils.sprites.Empty;
 import io.github.trinnorica.utils.sprites.Keyable;
@@ -85,6 +87,8 @@ public class Screen extends JPanel implements ActionListener {
 //	private Image ENEMY5 = ExternalFile.loadTexture("entity/knight/walk.gif");
 	private Image LOGO = ExternalFile.loadTexture("logos/logo-title.png");
 	private Image FBLA = ExternalFile.loadTexture("logos/fbla-logo.png");
+	
+	private boolean level = false;
 	public boolean confirm;
 
 	private boolean leaderboard = true;
@@ -125,6 +129,11 @@ public class Screen extends JPanel implements ActionListener {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		
+		if(level){
+			drawLevelDebug(g);
+			return;
+		}
 		if (!paused && !help && !confirm)
 			drawMenu(g);
 		else {
@@ -137,6 +146,86 @@ public class Screen extends JPanel implements ActionListener {
 
 		}
 		Toolkit.getDefaultToolkit().sync();
+	}
+	
+	public void drawLevelDebug(Graphics g) {
+		
+		if(Utils.getLevel() == 0){
+			Utils.setLevel(1);
+		}
+		
+		if(Utils.getLevel() > Utils.getLevels()){
+			Utils.setLevel(Utils.getLevels());
+		}
+		
+		
+
+		Utils.removeLevelMessages();
+		Main.clearObjects();
+		objects_temp.clear();
+		LevelBuilder l = new LevelBuilder();
+		switch(Utils.getLevelType(Utils.getLevel())){
+		case GROUND:
+			g.drawImage(Backgrounds.GRASS.getImage(), 0, 0, getWidth(), getHeight(), this);
+			break;
+		case HELL:
+			g.drawImage(Backgrounds.HELL.getImage(), 0, 0, getWidth(), getHeight(), this);
+			break;
+		case CAVE:
+			g.drawImage(Backgrounds.CAVE.getImage(), 0, 0, getWidth(), getHeight(), this);
+			break;
+		case SKY:
+			g.drawImage(Backgrounds.SKY.getImage(), 0, 0, getWidth(), getHeight(), this);
+			break;
+		case BOSS:
+			g.drawImage(Backgrounds.BOSS.getImage(), 0, 0, getWidth(), getHeight(), this);
+			break;
+		
+		}
+		
+		int level = Utils.getLevel();
+		if(level == 1){
+			Utils.addStaticLevelMessage("Your son has been taken by the Dark Knight of Eldiseth!\nYou must travel away from your village and\nsave your son from the Dark Castle.\nYou have never left your\nvillage before, and you do not know what to expect!",
+					getWidth()/2,
+					70, 
+					Color.BLACK,
+					Color.WHITE, 
+					1);
+		}
+		if(level == 6){
+			Utils.addStaticLevelMessage("This is your first enemy! Grab that sword to defend yourself.\nIf you have forgotten how to use weapons, press F1!",
+					getWidth()/2,
+					70, 
+					Color.decode("#99db45"), 
+					Color.WHITE, 
+					1);
+		}
+		if(level == 7){
+			Utils.addStaticLevelMessage("Don not forget you can sprint!\nIf you ever get stuck on a level, try pressing F1.",
+					getWidth()/2,
+					70, 
+					Color.decode("#99db45"), 
+					Color.WHITE, 
+					1);
+		}
+		if(level == 10){
+			Utils.addStaticLevelMessage("Keys work like weapons. They can be used by pressing SHIFT.\nKeys and doors are color coded.",
+					getWidth()/2,
+					70, 
+					Color.decode("#99db45"), 
+					Color.WHITE, 
+					1);
+		}
+		l.buildLevel(LevelUtils.getLevelBlueprint(level),LevelUtils.getLevelWidth(level),LevelUtils.getLevelHeight(level));
+		
+		for(Sprite sprite : objects_temp){
+			sprite.draw(g);
+		}
+		
+		g.setFont(new Font("Helvetica", Font.PLAIN, 25));
+		g.setColor(Color.WHITE);
+		g.drawString("Level: " + Utils.getLevel(), getWidth()/2 - g.getFontMetrics().stringWidth("Level: " + Utils.getLevel()), 30);
+	
 	}
 
 	public void drawHelp(Graphics g) {
@@ -571,6 +660,24 @@ public class Screen extends JPanel implements ActionListener {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			int key = e.getKeyCode();
+			Utils.pressKey(key);
+			
+			if(board == Board.MAIN){
+				if(Utils.codeEquals("level")){
+					level = true;
+				}
+				
+			}
+			
+			if(level){
+				if(key == KeyEvent.VK_UP){
+					Utils.setLevel(Utils.getLevel()+1);
+				}
+				if(key == KeyEvent.VK_DOWN){
+					Utils.setLevel(Utils.getLevel()-1);
+				}
+			}
+			
 
 			if (key == KeyEvent.VK_ESCAPE) {
 				

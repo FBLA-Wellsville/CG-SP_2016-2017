@@ -73,8 +73,8 @@ public class Enemy extends Entity implements Moveable {
 		case SUPER_OGRE:
 			follow = false;
 			direction = Direction.LEFT;
-			walking = ExternalFile.loadTexture("entity/ogre/walk.gif");
-			standing = ExternalFile.loadTexture("entity/ogre/bobbing.gif");
+			walking = ExternalFile.loadTexture("entity/ogre/super/stand.png");
+			standing = ExternalFile.loadTexture("entity/ogre/super/stand.png");
 			maxhealth = 10;
 			setTool(new Sword(0, 0, ToolType.MELEE));
 			break;
