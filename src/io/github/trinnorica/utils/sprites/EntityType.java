@@ -5,7 +5,7 @@ public enum EntityType {
 	KNIGHT,
 	DARK_KNIGHT,
 	OGRE,
-	SKELETON, WIZARD, SUPER_OGRE;
+	SKELETON, WIZARD, MEGA_OGRE;
 
 	public SpriteType getSpriteType() {
 		

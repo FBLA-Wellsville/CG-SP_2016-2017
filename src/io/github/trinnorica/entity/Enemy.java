@@ -46,7 +46,7 @@ public class Enemy extends Entity implements Moveable {
 		switch (type) {
 		case WIZARD:
 			walking = ExternalFile.loadTexture("entity/wizard/walk.gif");
-			standing = ExternalFile.loadTexture("entity/wizard/bobbing.gif");
+			standing = ExternalFile.loadTexture("entity/wizard/standing.png");
 			maxhealth = 100;
 			setTool(new FireStaff(0, 0, ToolType.DIRECTIONAL));
 			break;
@@ -70,11 +70,11 @@ public class Enemy extends Entity implements Moveable {
 			maxhealth = 5;
 			setTool(new Stick(0, 0, ToolType.MELEE));
 			break;
-		case SUPER_OGRE:
+		case MEGA_OGRE:
 			follow = false;
 			direction = Direction.LEFT;
-			walking = ExternalFile.loadTexture("entity/ogre/super/stand.png");
-			standing = ExternalFile.loadTexture("entity/ogre/super/stand.png");
+			walking = ExternalFile.loadTexture("entity/ogre/mega/stand.png");
+			standing = ExternalFile.loadTexture("entity/ogre/mega/stand.png");
 			maxhealth = 10;
 			setTool(new Sword(0, 0, ToolType.MELEE));
 			break;
@@ -112,12 +112,11 @@ public class Enemy extends Entity implements Moveable {
 		}
 		
 		if(x + width >= Main.getScreen().getWidth()){
+			x = (Main.getScreen().getWidth()-width-1);
+			velocity.x = 0;
 			if(!follow){
 				direction = Direction.LEFT;
-			} else {
-				velocity.x = 0;
-				x = (Main.getScreen().getWidth()-width-1);
-			}
+			}	
 		}
 		
 		if(!walk){

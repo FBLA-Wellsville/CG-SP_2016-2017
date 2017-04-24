@@ -202,8 +202,8 @@ public class Level {
 				case OGRE:
 					entities.add(new Enemy(x*30, y*30,EntityType.OGRE));
 					break;
-				case SUPER_OGRE:
-					entities.add(new Enemy(x*30, y*30,EntityType.SUPER_OGRE));
+				case MEGA_OGRE:
+					entities.add(new Enemy(x*30, y*30,EntityType.MEGA_OGRE));
 					break;
 				}
 				break;

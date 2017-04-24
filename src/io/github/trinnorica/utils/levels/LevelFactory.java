@@ -44,7 +44,7 @@ public enum LevelFactory {
 	//ALT 13
 	SKELETON('♪',SpriteType.SKELETON),
 	//ALT 14
-	SUPER_OGRE('♫',SpriteType.OGRE),
+	MEGA_OGRE('♫',SpriteType.OGRE),
 	//ALT 1
 	PLAYER('☺',SpriteType.PLAYER),
 	//ALT 4
