@@ -130,7 +130,7 @@ public class Entity extends Sprite implements Moveable {
 		
 		
 		
-		Utils.addMovingMessage();
+//		Utils.addMovingMessage();
 		
 		if (health <= 0) {
 			if(damager instanceof Player){
