@@ -30,6 +30,7 @@ import io.github.trinnorica.utils.particles.ParticleFormat;
 import io.github.trinnorica.utils.particles.ParticleType;
 import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.ui.Message;
+import io.github.trinnorica.utils.ui.UIEmpty;
 import res.ExternalFile;
 
 public class Utils {
@@ -39,7 +40,8 @@ public class Utils {
 	private static HashMap<String,Integer> highscores = new HashMap<>();
 	private static ValueComparator bvc = new ValueComparator(highscores);
 	private static TreeMap<String,Integer> thighscores = new TreeMap<>(bvc);
-	private static Map<Integer, Message> messages = new HashMap<>();
+	private static Map<Integer, Message> staticMessages = new HashMap<>();
+	private static Map<Integer, Message> movingMessages = new HashMap<>();
 	private static List<Message> levelMessages = new ArrayList<>();
 	private static File file = null;
 	private static File folder;
@@ -338,7 +340,7 @@ public class Utils {
 	}
 	
 	public static Map<Integer,Message> getMessages(){
-		return messages;
+		return staticMessages;
 	}
 	public static List<Message> getLevelMessages(){
 		return levelMessages;
@@ -346,17 +348,34 @@ public class Utils {
 	
 	public static void addStaticMessage(String message, int x, int y, Color text, Color outline, int thickness, int seconds){
 		final int id = new Random().nextInt();
-		messages.put(id, new Message(message,x,y,text,outline,thickness));
+		staticMessages.put(id, new Message(message,x,y,text,outline,thickness));
 		java.util.Timer t = new java.util.Timer();
 		t.schedule(new TimerTask() {
 			public void run() {
-				messages.remove(id);
+				staticMessages.remove(id);
 			}
 		}, seconds*1000);
 	}
 	public static void addStaticLevelMessage(String message, int x, int y, Color text, Color outline, int thickness) {
 		levelMessages.add(new Message(message,x,y,text,outline,thickness));
 	}
+	
+//	public static void addMovingMessage(String message, int x, int y, Color text, Color outline, int thickness, int seconds, Velocity v) {
+//		UIEmpty e = new UIEmpty(x, y);
+//		e.addAttachment(new Message(message, x, y, text, outline, thickness));
+//		e.setVelocity(v);
+//		Main.addSprite(e);
+//		final int id = new Random().nextInt();
+//		movingMessages.put(id, new Message(message,x,y,text,outline,thickness));
+//		java.util.Timer t = new java.util.Timer();
+//		t.schedule(new TimerTask() {
+//			public void run() {
+//				Main.removeSprite(e);
+//				movingMessages.remove(id);
+//			}
+//		}, seconds*1000);
+//		
+//	}
 	
 	public static void removeLevelMessages(){
 		levelMessages.clear();
@@ -388,6 +407,8 @@ public class Utils {
 	public static boolean codeEqualsRaw(String code) {
 		return pressedKeys.endsWith(code);
 	}
+
+	
 
 	
 	

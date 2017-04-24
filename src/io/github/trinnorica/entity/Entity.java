@@ -127,6 +127,11 @@ public class Entity extends Sprite implements Moveable {
 		// getMaxHealth(), x, y - 15, 100, "#FF0000",
 		// 15,Bridge.getGame().getFont());
 		//
+		
+		
+		
+		Utils.addMovingMessage();
+		
 		if (health <= 0) {
 			if(damager instanceof Player){
 				Main.score = Main.score + 5;
