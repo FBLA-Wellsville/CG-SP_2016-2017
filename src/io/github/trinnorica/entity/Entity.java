@@ -216,7 +216,7 @@ public class Entity extends Sprite implements Moveable {
 	public void kill(DamageReason reason) {
 		// Utils.runParticles(new Point(x,y), new Explode(4),
 		// ParticleType.BLOOD, null);
-		Utils.runParticles(new Point(x, y), new Ghost(), ParticleType.GHOST, null, 100);
+		Utils.runParticles(new Point((int)x, (int)y), new Ghost(), ParticleType.GHOST, null, 100);
 		Main.removeSprite(this);
 		Main.score += 15;
 		// dead = true;
@@ -339,6 +339,8 @@ public class Entity extends Sprite implements Moveable {
 
 	@Override
 	public void move() {
+		
+		
 
 		onground = false;
 

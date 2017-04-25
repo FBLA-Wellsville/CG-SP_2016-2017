@@ -70,11 +70,11 @@ public class Projectile extends Entity implements Moveable{
 	@Override
 	public void draw(Graphics g){
 		if(vector.x > 0){
-			g.drawImage(Images.rotate(Images.rotate(getImage(), 45), Math.toDegrees(Math.atan(vector.y/vector.x))), x, y, width, height, null);
+			g.drawImage(Images.rotate(Images.rotate(getImage(), 45), Math.toDegrees(Math.atan(vector.y/vector.x))), (int)x,(int) y, width, height, null);
 //			g.drawImage(Images.rotate(Images.rotate(getImage(), 45), Math.toDegrees(Math.atan(vector.y/vector.x))), x, y, getWidth(), getHeight(), null);
 			
 		} else {
-			g.drawImage(Images.rotate(Images.rotate(getImage(), 45), -Math.toDegrees(Math.atan(vector.y/vector.x))), x+getWidth(), y, - getWidth(), getHeight(), null);
+			g.drawImage(Images.rotate(Images.rotate(getImage(), 45), -Math.toDegrees(Math.atan(vector.y/vector.x))), (int)x+getWidth(), (int)y, - getWidth(), getHeight(), null);
 		}
 	}
 	

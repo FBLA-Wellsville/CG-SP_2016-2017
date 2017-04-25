@@ -24,7 +24,7 @@ public class Tool extends Entity implements Moveable{
 	}
 
 	public void registerXBounds(){
-		xbounds = new Rectangle(x, y, width, height+2);
+		xbounds = new Rectangle((int)x, (int)y, width, height+2);
 	}
 	
 	public Entity getUser(){
@@ -50,10 +50,10 @@ public class Tool extends Entity implements Moveable{
 	public Rectangle getStrikeRange() {
 
 		if (user.direction == Direction.LEFT) {
-			return new Rectangle(x-30, y, 60, 30);
+			return new Rectangle((int)x-30, (int)y, 60, 30);
 		}
 		if (user.direction == Direction.RIGHT) {
-			return new Rectangle(x, y, 60, 30);
+			return new Rectangle((int)x,(int) y, 60, 30);
 		}
 		return null;
 	}

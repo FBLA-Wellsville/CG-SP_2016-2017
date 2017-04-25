@@ -45,7 +45,7 @@ public class Enemy extends Entity implements Moveable {
 		this.type = type;
 		switch (type) {
 		case WIZARD:
-			walking = ExternalFile.loadTexture("entity/wizard/walk.gif");
+			walking = ExternalFile.loadTexture("entity/wizard/walking.gif");
 			standing = ExternalFile.loadTexture("entity/wizard/standing.png");
 			maxhealth = 100;
 			setTool(new FireStaff(0, 0, ToolType.DIRECTIONAL));
@@ -107,6 +107,12 @@ public class Enemy extends Entity implements Moveable {
 	@Override
 	public void move() {
 		
+		boolean temp_down = false;
+
+
+		
+		
+		
 		if(jumping && velocity.y <= 0){
 			jumping = false;
 		}
@@ -132,7 +138,6 @@ public class Enemy extends Entity implements Moveable {
 					moving = false;
 				}
 			}
-			onground = false;
 			
 
 			if(tool.getToolType().equals(ToolType.DIRECTIONAL) || tool.getToolType().equals(ToolType.PROJECTILE))attack(Main.getPlayer());
@@ -185,6 +190,8 @@ public class Enemy extends Entity implements Moveable {
 			
 			return;
 		}
+		
+		
 		if (velocity.x != 0) {
 			if (moving == false) {
 				moving = true;
@@ -196,7 +203,6 @@ public class Enemy extends Entity implements Moveable {
 				moving = false;
 			}
 		}
-		onground = false;
 		
 
 		attack(Main.getPlayer());
@@ -208,21 +214,23 @@ public class Enemy extends Entity implements Moveable {
 
 			if (s instanceof PartialCollidable) {
 				
+				
 				if (damaged) {
 					setVelocity(0, 0);
 
 				}
 				damaged = false;
-				
 				switch (getIntercectingDirection(bounds.getBounds(), s.getPolygon().getBounds())) {
+				
 				case DOWN:
 					if(!((PartialCollidable)s).getCollidableDirections().contains(Direction.DOWN)) break;
 					if (!jumping && (bounds.intersects(s.getPolygon().getBounds()))) {
 						y = s.getY() - getHeight() + 1;
-						onground = true;
+						temp_down = true;
 					}
 					break;
 				case LEFT:
+					
 					if(!((PartialCollidable)s).getCollidableDirections().contains(Direction.LEFT)) break;
 					if(follow){
 						jump();
@@ -260,6 +268,7 @@ public class Enemy extends Entity implements Moveable {
 
 			}
 			if (s instanceof Collidable && ((Collidable)s).isColliding()) {
+				
 				if (damaged) {
 					setVelocity(0, 0);
 
@@ -307,7 +316,7 @@ public class Enemy extends Entity implements Moveable {
 		if (velocity.y <= 0)
 			onground = false;
 
-		if (onground) {
+		if (true) {
 			if(follow){
 				if (x > Main.getPlayer().x) {
 					setVelocity(-1, "");
@@ -338,6 +347,8 @@ public class Enemy extends Entity implements Moveable {
 		// Utils.debug("X: " + velocity.x + "\nY: " + velocity.y);
 		if (onground)
 			setVelocity("", 0);
+		
+		onground = temp_down;
 
 	}
 
@@ -377,11 +388,11 @@ public class Enemy extends Entity implements Moveable {
 		}
 		if (new Random().nextInt(100) <= 10) {
 			if(type.equals(EntityType.KNIGHT)){
-				Main.addSprite(new Armour(x, y, ToolType.NONE, Armour.IRON));
+				Main.addSprite(new Armour((int)x, (int)y, ToolType.NONE, Armour.IRON));
 			}
 		}
 		if(type.equals(EntityType.DARK_KNIGHT)){
-			Main.addSprite(new Flag(x, y, Flag.FLAG));
+			Main.addSprite(new Flag((int)x, (int)y, Flag.FLAG));
 		}
 		super.kill(reason);
 	}
@@ -398,14 +409,14 @@ public class Enemy extends Entity implements Moveable {
 			loadImage(standing);
 		if (direction == Direction.RIGHT) {
 
-			g.drawImage(getImage(), x, y, width, height, null);
-			g.drawImage(tool.getImage(), x + 20, y, tool.getWidth(), tool.getHeight(), null);
+			g.drawImage(getImage(), (int)x,(int) y, width, height, null);
+			g.drawImage(tool.getImage(),(int) x + 20, (int)y, tool.getWidth(), tool.getHeight(), null);
 		} else {
-			g.drawImage(getImage(), x + width, y, -(width), height, null);
-			g.drawImage(tool.getImage(), x + 7, y, -tool.getWidth(), tool.getHeight(), null);
+			g.drawImage(getImage(),(int)x + width, (int)y, -(width), height, null);
+			g.drawImage(tool.getImage(),(int) x + 7,(int) y, -tool.getWidth(), tool.getHeight(), null);
 		}
 
-		drawHealthBar(g, x - 50 + (width / 2), y - 20, 100, 5);
+		drawHealthBar(g,(int) x - 50 + (width / 2),(int) y - 20, 100, 5);
 
 	}
 

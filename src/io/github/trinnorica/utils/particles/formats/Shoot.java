@@ -16,22 +16,24 @@ public class Shoot implements ParticleFormat {
 	public void run(Point p, ParticleType t, Direction d, Entity shooter) {
 		int a = p.x;
 		int b = p.y;
-		int r = new java.util.Random().nextInt(70)+30;
-		int g = 5;
+		int r = new java.util.Random().nextInt(40)+30;
+		double g = 0;
+		double h = 5;
 		
 		for(int i=0;i!=r;i++){
 			boolean f = new java.util.Random().nextBoolean();
-			boolean e = new java.util.Random().nextBoolean();
-			if(f)a=p.x-new java.util.Random().nextInt(10+i)+10;
-			else a=p.x+new java.util.Random().nextInt(10+i)+10;
-			if(e)b=p.y-new java.util.Random().nextInt(10+i)+10;
-			else b=p.y+new java.util.Random().nextInt(10+i)+10;
+			if(f)g=-new java.util.Random().nextDouble();
+			else g=new java.util.Random().nextDouble();
+			
+			
 			
 			if(d.equals(Direction.LEFT)) {
-				if(g>0)g=-g;
+				h = -new java.util.Random().nextInt(5)-new java.util.Random().nextDouble()-2;
+			} else {
+				h = new java.util.Random().nextInt(5)+new java.util.Random().nextDouble()+2;
 			}
 			
-			Main.addSprite(new Particle(new Point(a,b),t,new Velocity(g, 0),false,10,true,shooter));
+			Main.addSprite(new Particle(new Point(a,b),t,new Velocity(h, g/2),false,10,true,shooter));
 		}
 	}
 

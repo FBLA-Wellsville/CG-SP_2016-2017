@@ -11,8 +11,8 @@ import res.ExternalFile;
 
 public class Sprite {
 
-	public int x;
-	public int y;
+	public double x;
+	public double y;
 	public int bw = 0;
 	public int bh = 0;
 	public int width;
@@ -26,7 +26,7 @@ public class Sprite {
 	protected boolean exists = false;
 	public Direction direction = Direction.RIGHT;
 
-	public Sprite(int x, int y) {
+	public Sprite(double x, double y) {
 		this.sprite = this;
 		this.x = x;
 		this.y = y;
@@ -35,7 +35,7 @@ public class Sprite {
 
 	}
 
-	public Sprite(int x, int y, Image image, int width, int height) {
+	public Sprite(double x, double y, Image image, int width, int height) {
 		this.sprite = this;
 		this.x = x;
 		this.y = y;
@@ -112,11 +112,11 @@ public class Sprite {
 		return image;
 	}
 
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 
@@ -129,7 +129,7 @@ public class Sprite {
 	}
 
 	public Polygon getPolygon() {
-		bounds = new Polygon(new int[] { x, x + width, x + width, x }, new int[] { y + height, y + height, y, y }, 4);
+		bounds = new Polygon(new int[] { (int) x, (int) (x + width), (int) (x + width), (int) x }, new int[] { (int) (y + height), (int) (y + height), (int) y, (int) y }, 4);
 		return bounds;
 	}
 
@@ -155,9 +155,9 @@ public class Sprite {
 
 	public void draw(Graphics g) {
 		if (direction == Direction.RIGHT) {
-			g.drawImage(getImage(), x, y, width, height, null);
+			g.drawImage(getImage(),(int) x, (int)y, width, height, null);
 		} else {
-			g.drawImage(getImage(), x + width, y, -(width), height, null);
+			g.drawImage(getImage(), (int)x + width,(int) y, -(width), height, null);
 		}
 	}
 

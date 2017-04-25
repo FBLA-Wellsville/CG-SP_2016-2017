@@ -15,6 +15,7 @@ public class IceDagger extends Tool {
 	public IceDagger(int x, int y,ToolType type) {
 		super(x, y, type);
 		initSword();
+		cooldown = 0;
 	}
 	
 	private void initSword(){

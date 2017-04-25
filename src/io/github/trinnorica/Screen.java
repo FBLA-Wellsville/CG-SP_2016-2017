@@ -687,31 +687,31 @@ public class Screen extends JPanel implements ActionListener {
 			
 			if(board == Board.GAME){
 				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_I)){
-					Main.addSprite(new Armour(Main.getPlayer().getX(), Main.getPlayer().getY()-10, ToolType.NONE, Armour.IRON));
+					Main.addSprite(new Armour((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY()-10, ToolType.NONE, Armour.IRON));
 				}
 				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_G)){
-					Main.addSprite(new Armour(Main.getPlayer().getX(), Main.getPlayer().getY()-10, ToolType.NONE, Armour.GOLD));
+					Main.addSprite(new Armour((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY()-10, ToolType.NONE, Armour.GOLD));
 				}
 				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_1)){
-					Main.addSprite(new Sword(Main.getPlayer().getX(), Main.getPlayer().getY(),ToolType.MELEE));
+					Main.addSprite(new Sword((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY(),ToolType.MELEE));
 				}
 				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_2)){
-					Main.addSprite(new Stick(Main.getPlayer().getX(), Main.getPlayer().getY(),ToolType.MELEE));
+					Main.addSprite(new Stick((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY(),ToolType.MELEE));
 				}
 				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_3)){
-					Main.addSprite(new Bow(Main.getPlayer().getX(), Main.getPlayer().getY(),ToolType.PROJECTILE));
+					Main.addSprite(new Bow((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY(),ToolType.PROJECTILE));
 				}
 				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_4)){
-					Main.addSprite(new FireStaff(Main.getPlayer().getX(), Main.getPlayer().getY(),ToolType.PROJECTILE));
+					Main.addSprite(new FireStaff((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY(),ToolType.PROJECTILE));
 				}
 				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_5)){
-					Main.addSprite(new IceStaff(Main.getPlayer().getX(), Main.getPlayer().getY(),ToolType.PROJECTILE));
+					Main.addSprite(new IceStaff((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY(),ToolType.PROJECTILE));
 				}
 				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_6)){
-					Main.addSprite(new FireDagger(Main.getPlayer().getX(), Main.getPlayer().getY(),ToolType.DIRECTIONAL));
+					Main.addSprite(new FireDagger((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY(),ToolType.DIRECTIONAL));
 				}
 				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_7)){
-					Main.addSprite(new IceDagger(Main.getPlayer().getX(), Main.getPlayer().getY(),ToolType.DIRECTIONAL));
+					Main.addSprite(new IceDagger((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY(),ToolType.DIRECTIONAL));
 				}
 				if(Utils.codeEquals("flyme")){
 					Main.getPlayer().flying = true;

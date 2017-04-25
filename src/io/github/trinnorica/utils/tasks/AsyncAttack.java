@@ -24,7 +24,7 @@ public class AsyncAttack implements Runnable {
 	public void run() {
 
 		if (attacker.getTool().getToolType().equals(ToolType.MELEE)) {
-			if(Utils.getDistanceX(attacker, entity) <= 30 && Utils.getDistanceY(attacker, entity) <= 30) attacker.tool.use(attacker.x, attacker.y);
+			if(Utils.getDistanceX(attacker, entity) <= 30 && Utils.getDistanceY(attacker, entity) <= 30) attacker.tool.use((int)attacker.x, (int)attacker.y);
 			((Enemy)attacker).cooldown = true;
 			return;
 		}
@@ -33,18 +33,18 @@ public class AsyncAttack implements Runnable {
 			if (attacker.getTool().getToolType().equals(ToolType.DIRECTIONAL)) {
 				((Enemy)attacker).cooldown = true;
 				if (attacker.direction.equals(Direction.LEFT))
-					attacker.getTool().use(attacker.x, attacker.y, attacker.direction, new Shoot(), attacker);
+					attacker.getTool().use((int)attacker.x, (int)attacker.y, attacker.direction, new Shoot(), attacker);
 				if (attacker.direction.equals(Direction.RIGHT))
-					attacker.getTool().use(attacker.x, attacker.y, attacker.direction, new Shoot(), attacker);
+					attacker.getTool().use((int)attacker.x,(int) attacker.y, attacker.direction, new Shoot(), attacker);
 				
 				return;
 			}
 			if (attacker.getTool().getToolType().equals(ToolType.PROJECTILE)) {
 				((Enemy)attacker).cooldown = true;
 				if (attacker.direction.equals(Direction.LEFT))
-					attacker.getTool().use(attacker.x, attacker.y, new Velocity(-10, -5), attacker);
+					attacker.getTool().use((int)attacker.x,(int) attacker.y, new Velocity(-10, -5), attacker);
 				if (attacker.direction.equals(Direction.RIGHT))
-					attacker.getTool().use(attacker.x, attacker.y, new Velocity(10, -5), attacker);
+					attacker.getTool().use((int)attacker.x,(int) attacker.y, new Velocity(10, -5), attacker);
 				
 				return;
 			}
@@ -55,7 +55,7 @@ public class AsyncAttack implements Runnable {
 
 	public boolean hasLineOfSight(Entity a, Entity entity) {
 
-		int s = attacker.x;
+		int s =(int) attacker.x;
 		if (attacker.direction.equals(Direction.LEFT)) {
 			while (s > 0) {
 				s = s - 1;

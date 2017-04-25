@@ -66,7 +66,7 @@ public class Particle extends Sprite implements Moveable {
 	}
 	
 	public void draw(Graphics g){
-		g.drawImage(getImage(), x, y, getWidth(), getHeight(), null);
+		g.drawImage(getImage(),(int) x,(int) y, getWidth(), getHeight(), null);
 		lifetime = lifetime-1;
 	}
 
@@ -79,8 +79,8 @@ public class Particle extends Sprite implements Moveable {
 //		y=y-1;
 		if(g)v.y = v.y + Main.gravity;
 		if(g) v.x = v.x *0.6;
-		x = (int) (x + v.x);
-		y = (int) (y + v.y);
+		x = (x + v.x);
+		y = (y + v.y);
 		if(d){
 			Utils.debug("1");
 			if(!(shooter instanceof Player)){

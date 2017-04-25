@@ -408,11 +408,11 @@ public class Player extends Entity implements Moveable, Keyable {
 
 	@Override
 	public void draw(Graphics g) {
-		drawHealthBar(g, x - (100 / 2) + (width / 2), y - 20, 100, 5);
+		drawHealthBar(g,(int) x - (100 / 2) + (width / 2), (int)y - 20, 100, 5);
 		if (cooldown > 0)
 			cooldown = cooldown - 1;
 		if (direction == Direction.RIGHT) {
-			g.drawImage(getImage(), x, y, width, height, null);
+			g.drawImage(getImage(), (int)x, (int)y, width, height, null);
 
 			if (utool && cooldown == 0) {
 				utoolt = utoolt - 1;
@@ -421,26 +421,26 @@ public class Player extends Entity implements Moveable, Keyable {
 				} else {
 
 					if (!tool.getClass().getSimpleName().equalsIgnoreCase("Bow"))
-						g.drawImage(ExternalFile.loadTexture("swipe.gif"), x + 30 + tool.width, y, 7 * 2, 15 * 2, null);
-					g.drawImage(tool.getImage(), x + 20, y, tool.getWidth(), tool.getHeight(), null);
+						g.drawImage(ExternalFile.loadTexture("swipe.gif"),(int) x + 30 + tool.width,(int) y, 7 * 2, 15 * 2, null);
+					g.drawImage(tool.getImage(),(int) x + 20,(int) y, tool.getWidth(), tool.getHeight(), null);
 				}
 
 			}
 			if(hasArmour()){
-				g.drawImage(armour.getImage(), x, y, width-1, height, null);
+				g.drawImage(armour.getImage(),(int) x, (int)y, width-1, height, null);
 			}
 			// if(tool != null) g.drawImage(Images.rotate(tool.getImage(), 0.0),
 			// x+20, y, tool.getWidth(), tool.getHeight(), null);
 		} else {
-			g.drawImage(getImage(), x + width, y, -(width), height, null);
+			g.drawImage(getImage(),(int) x + width,(int) y, -(width), height, null);
 			if (utool && cooldown == 0) {
 				utoolt = utoolt - 1;
 				if (utoolt == 0)
 					utool = false;
 				else {
 					if (!tool.getClass().getSimpleName().equalsIgnoreCase("Bow"))
-						g.drawImage(ExternalFile.loadTexture("swipe.gif"), x + (7 * 2) - 30, y, -(7 * 2), 15 * 2, null);
-					g.drawImage(tool.getImage(), x + tool.getWidth() - 20, y, -tool.getWidth(), tool.getHeight(), null);
+						g.drawImage(ExternalFile.loadTexture("swipe.gif"),(int) x + (7 * 2) - 30,(int) y, -(7 * 2), 15 * 2, null);
+					g.drawImage(tool.getImage(), (int)x + tool.getWidth() - 20, (int)y, -tool.getWidth(), tool.getHeight(), null);
 				}
 
 				// g.drawImage(ExternalFile.loadTexture("swipe.gif"),
@@ -448,7 +448,7 @@ public class Player extends Entity implements Moveable, Keyable {
 			}
 			
 			if(hasArmour()){
-				g.drawImage(armour.getImage(), x + width, y, (-(width))+1, height, null);
+				g.drawImage(armour.getImage(),(int) x + width,(int) y, (-(width))+1, height, null);
 			}
 			
 			// if(tool != null) g.drawImage(Images.rotate(tool.getImage(), 0.0),
@@ -475,18 +475,18 @@ public class Player extends Entity implements Moveable, Keyable {
 
 		if (tool.getToolType().equals(ToolType.PROJECTILE)) {
 			if (direction.equals(Direction.LEFT)) {
-				tool.use(x, y, new Velocity(-8, -2), this);
+				tool.use((int)x, (int)y, new Velocity(-8, -2), this);
 			}
 			if (direction.equals(Direction.RIGHT)) {
-				tool.use(x, y, new Velocity(8, -2), this);
+				tool.use((int)x,(int) y, new Velocity(8, -2), this);
 			}
 
 		}
 		if (tool.getToolType().equals(ToolType.DIRECTIONAL)) {
-			tool.use(x, y, direction, new Shoot(), this);
+			tool.use((int)x,(int) y, direction, new Shoot(), this);
 		}
 		if (tool.getToolType().equals(ToolType.MELEE)) {
-			tool.use(x, y);
+			tool.use((int)x,(int) y);
 		}
 
 		// }
@@ -580,10 +580,10 @@ public class Player extends Entity implements Moveable, Keyable {
 	public Rectangle getStrikeRange() {
 
 		if (direction == Direction.LEFT) {
-			return new Rectangle(x - 30, y, 60, 30);
+			return new Rectangle((int)x - 30,(int) y, 60, 30);
 		}
 		if (direction == Direction.RIGHT) {
-			return new Rectangle(x, y, 60, 30);
+			return new Rectangle((int)x, (int)y, 60, 30);
 		}
 		return null;
 	}
