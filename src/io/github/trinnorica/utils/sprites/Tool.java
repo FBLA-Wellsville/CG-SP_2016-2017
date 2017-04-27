@@ -39,15 +39,16 @@ public class Tool extends Entity implements Moveable{
 		this.y = y;
 	}
 	public void use(int x, int y, Velocity velocity, Entity shooter) {
-		this.x = x;
-		this.y = y;
+		use(x,y);
 	}
 	public void use(int x, int y, Direction d, ParticleFormat f, Entity shooter) {
-		this.x = x;
-		this.y = y;
+		use(x,y);
 	}
 	
 	public Rectangle getStrikeRange() {
+		
+		this.x = user.x;
+		this.y = user.y;
 
 		if (user.direction == Direction.LEFT) {
 			return new Rectangle((int)x-30, (int)y, 60, 30);

@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +13,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.TimerTask;
@@ -88,6 +91,9 @@ public class Screen extends JPanel implements ActionListener {
 //	private Image ENEMY5 = ExternalFile.loadTexture("entity/knight/walk.gif");
 	private Image LOGO = ExternalFile.loadTexture("logos/logo-title.png");
 	private Image FBLA = ExternalFile.loadTexture("logos/fbla-logo.png");
+	
+	private Map<Rectangle, Integer> rectangles = new HashMap<>();
+	private List<Rectangle> rectangles_remove = new ArrayList<>();
 	
 	
 	
@@ -508,6 +514,20 @@ public class Screen extends JPanel implements ActionListener {
 			for(Message message : Utils.getLevelMessages()){
 				message.draw(g);
 			}
+			
+			for(Entry<Rectangle,Integer> entry : rectangles.entrySet()){
+				entry.setValue(entry.getValue()-1);
+				if(entry.getValue() >= 0){
+					rectangles_remove.add(entry.getKey());
+				}
+				g.drawRect(entry.getKey().x, entry.getKey().y, entry.getKey().width, entry.getKey().height);
+			}
+			
+			for(Rectangle rec : rectangles_remove){
+				rectangles.remove(rec);
+			}
+			rectangles_remove.clear();
+			
 
 			// Draw Leaderboard
 
@@ -917,6 +937,10 @@ public class Screen extends JPanel implements ActionListener {
 
 	public void addSprites(Sprite sprite) {
 		objects_temp.add(sprite);
+	}
+
+	public void addRectangle(Rectangle rectangle) {
+		rectangles.put(rectangle, 10000);
 	}
 
 }

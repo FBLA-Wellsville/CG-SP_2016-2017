@@ -33,6 +33,7 @@ public class FireDagger extends Tool {
 	
 	@Override
 	public void use(int x, int y, Direction d, ParticleFormat f, Entity shooter){
+		super.use(x,y);
 		Utils.runParticles(new Point(x,y), f, ParticleType.FIRE,d,shooter);
 	}
 

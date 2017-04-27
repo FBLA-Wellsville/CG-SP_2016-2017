@@ -290,6 +290,8 @@ public class Entity extends Sprite implements Moveable {
 		g.setColor(Color.BLACK);
 		//
 		g.drawRect(x, y, width, height);
+		g.setColor(Color.GRAY);
+		g.fillRect(x, y, width, height);
 		//
 		if ((int) (health / maxhealth * 100) > 66)
 			g.setColor(Color.green);

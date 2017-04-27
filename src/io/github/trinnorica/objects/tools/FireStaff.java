@@ -30,6 +30,7 @@ public class FireStaff extends Tool {
 	
 	@Override
 	public void use(int x, int y, Velocity velocity, Entity shooter){
+		super.use(x,y);
 		Main.addSprite(new Fireball((int)x,(int)y,velocity, shooter));
 	}
 	

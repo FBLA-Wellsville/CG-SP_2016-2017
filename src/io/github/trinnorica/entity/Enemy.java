@@ -1,5 +1,6 @@
 package io.github.trinnorica.entity;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
@@ -362,8 +363,12 @@ public class Enemy extends Entity implements Moveable {
 	}
 
 	private void attack(Entity e) {
+		
+		
+		
 		if(Main.getPlayer() == null) return;
 		if(!cooldown){
+			
 			cooldown = true;
 			new Thread(new AsyncAttack(this, e)).start();
 			new java.util.Timer().schedule(new java.util.TimerTask() {

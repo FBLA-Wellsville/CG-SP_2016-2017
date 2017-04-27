@@ -34,6 +34,7 @@ public class IceDagger extends Tool {
 	
 	@Override
 	public void use(int x, int y, Direction d, ParticleFormat f, Entity shooter){
+		super.use(x,y);
 		Utils.runParticles(new Point(x,y), f, ParticleType.ICE,d,shooter);
 	}
 

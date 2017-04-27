@@ -36,6 +36,7 @@ public class Bow extends Tool {
 	
 	@Override
 	public void use(int x, int y, Velocity velocity, Entity shooter){
+		super.use(x,y);
 		Main.addSprite(new Arrow(x,y,velocity, shooter));
 	}
 	

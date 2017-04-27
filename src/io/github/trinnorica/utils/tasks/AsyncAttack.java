@@ -1,5 +1,7 @@
 package io.github.trinnorica.utils.tasks;
 
+import java.awt.Color;
+
 import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.Enemy;
 import io.github.trinnorica.entity.Entity;
@@ -8,6 +10,7 @@ import io.github.trinnorica.utils.Direction;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.particles.formats.Shoot;
+import io.github.trinnorica.utils.sprites.Sprite;
 import io.github.trinnorica.utils.sprites.ToolType;
 
 public class AsyncAttack implements Runnable {
@@ -22,10 +25,16 @@ public class AsyncAttack implements Runnable {
 
 	@Override
 	public void run() {
-
+		
 		if (attacker.getTool().getToolType().equals(ToolType.MELEE)) {
-			if(Utils.getDistanceX(attacker, entity) <= 30 && Utils.getDistanceY(attacker, entity) <= 30) attacker.tool.use((int)attacker.x, (int)attacker.y);
-			((Enemy)attacker).cooldown = true;
+			Main.getGraphics().drawRect(attacker.tool.getStrikeRange().x, attacker.tool.getStrikeRange().y, attacker.tool.getStrikeRange().width, attacker.tool.getStrikeRange().height);
+			if(attacker.tool.getStrikeRange().intersects(entity.getPolygon().getBounds())){
+				Utils.addStaticMessage("Attack", (int)attacker.x, (int)attacker.y, Color.WHITE, Color.BLACK, 2, 4);
+				attacker.tool.use((int)attacker.x, (int)attacker.y);
+				((Enemy)attacker).cooldown = true;
+				
+			}
+			
 			return;
 		}
 
