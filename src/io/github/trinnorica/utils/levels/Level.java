@@ -131,48 +131,61 @@ public class Level {
 				case SWITCH_1:
 					if(!LevelFactory.decode(c[i-1]).equals(LevelFactory.AIR)){
 						sprites.add(new Switch(x*30,y*30+15/2,1,Rotation.LEFT));
+						break;
 					}
 					if(!LevelFactory.decode(c[i+1]).equals(LevelFactory.AIR)){
 						sprites.add(new Switch(x*30+15,y*30+15/2,1,Rotation.RIGHT));
+						break;
 					}
 					if(!LevelFactory.decode(c[i+width]).equals(LevelFactory.AIR)){
 						sprites.add(new Switch(x*30+15/2,y*30+15,1,Rotation.UP));
+						break;
 					}
 					if(!LevelFactory.decode(c[i-width]).equals(LevelFactory.AIR)){
 						sprites.add(new Switch(x*30+15/2,y*30,1,Rotation.DOWN));
+						break;
 					}
 					break;
 				case SWITCH_2:
 					if(!LevelFactory.decode(c[i-1]).equals(LevelFactory.AIR)){
 						sprites.add(new Switch(x*30,y*30+15/2,2,Rotation.LEFT));
+						break;
 					}
 					if(!LevelFactory.decode(c[i+1]).equals(LevelFactory.AIR)){
 						sprites.add(new Switch(x*30+15,y*30+15/2,2,Rotation.RIGHT));
+						break;
 					}
 					if(!LevelFactory.decode(c[i+width]).equals(LevelFactory.AIR)){
 						sprites.add(new Switch(x*30+15/2,y*30+15,2,Rotation.UP));
+						break;
 					}
 					if(!LevelFactory.decode(c[i-width]).equals(LevelFactory.AIR)){
 						sprites.add(new Switch(x*30+15/2,y*30,2,Rotation.DOWN));
+						break;
 					}
 					break;
 				case SWITCH_3:
 					if(!LevelFactory.decode(c[i-1]).equals(LevelFactory.AIR)){
 						sprites.add(new Switch(x*30,y*30+15/2,3,Rotation.LEFT));
+						break;
 					}
 					if(!LevelFactory.decode(c[i+1]).equals(LevelFactory.AIR)){
 						sprites.add(new Switch(x*30+15,y*30+15/2,3,Rotation.RIGHT));
+						break;
 					}
 					if(!LevelFactory.decode(c[i+width]).equals(LevelFactory.AIR)){
 						sprites.add(new Switch(x*30+15/2,y*30+15,3,Rotation.UP));
+						break;
 					}
 					if(!LevelFactory.decode(c[i-width]).equals(LevelFactory.AIR)){
 						sprites.add(new Switch(x*30+15/2,y*30,3,Rotation.DOWN));
+						break;
 					}
 					break;
 				case SWITCH_4:
 					if(!LevelFactory.decode(c[i-1]).equals(LevelFactory.AIR)){
 						sprites.add(new Switch(x*30,y*30+15/2,4,Rotation.LEFT));
+						
 						break;
 					}
 					if(!LevelFactory.decode(c[i+1]).equals(LevelFactory.AIR)){
@@ -230,6 +243,22 @@ public class Level {
 				break;
 			case BOW:
 				entities.add(new Bow(x*30, y*30,ToolType.PROJECTILE));
+				break;
+				
+			case CASTLE_BLOCK:
+				sprites.add(new Sprite(x*30, y*30, ExternalFile.loadTexture("objects/background/gray-brick.png"), 30, 30));
+				break;
+			case CASTLE_FLOOR:
+				sprites.add(new Floor(x*30, y*30, Floor.CASTLE_FLOOR));
+				break;
+			case CASTLE_BLOCK_BACKGROUND:
+				sprites.add(new Sprite(x*30, y*30, ExternalFile.loadTexture("objects/background/gray-brick-background.png"), 30, 30));
+				break;
+			case EVIL_FLAG:
+				sprites.add(new Sprite(x*30, y*30, ExternalFile.loadTexture("objects/background/evil-flag.png"), 30, 30));
+				break;
+			case CASTLE_BLOCK_VINES:
+				sprites.add(new Ladder(x*30, y*30, Ladder.VINE));
 				break;
 		
 			case DIRT:
@@ -340,7 +369,7 @@ public class Level {
 				
 				break;
 			case LADDER:
-				sprites.add(new Ladder(x*30,y*30));
+				sprites.add(new Ladder(x*30,y*30, Ladder.LADDER));
 				break;
 			case STONE:
 				try{

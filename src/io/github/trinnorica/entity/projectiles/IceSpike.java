@@ -31,39 +31,8 @@ public class IceSpike extends Projectile {
 	
 	@Override
 	public void move(){
-		x=(int) (x+vector.x);
-		y=(int) (y+vector.y);
-		vector.y = vector.y+Main.gravity;
-		vector.x = vector.x-Main.wind;
-		
-		if(!(shooter instanceof Player)){
-			if(bounds.intersects(Main.getPlayer().getPolygon().getBounds())){
-				Main.getPlayer().damage(power,DamageReason.PROJECTILE, this, new Velocity(vector.x/3,-3));
-				Main.removeSprite(this);
-			}
-		}
-		
-		else for(Sprite s : Main.getScreen().objects){
-			if(!bounds.intersects(s.getPolygon().getBounds())) continue;
-			if(s instanceof Projectile || s instanceof Particle || s instanceof Tool || s instanceof Cloud) continue;
-			if(shooter instanceof Player && s instanceof Player) continue;
-			if(!(shooter instanceof Player) && !(s instanceof Player)) continue;
-				
-			if(s instanceof Entity){
-				((Entity)s).damage(power,DamageReason.PROJECTILE, this, new Velocity(vector.x/3,-3));
-				Main.removeSprite(this);
-				return;
-			}
-					
-			if(s instanceof PartialCollidable){
-				Main.removeSprite(this);
-			}
-			
-			
-			
-		}
-		
-		Main.addSprite(new Particle(new Point((int)x + (new Random().nextInt(15)),(int) y + (new Random().nextInt(15))), ParticleType.ICE, new Velocity(0, 0), false));
+		super.move();
+		Main.addSprite(new Particle(new Point((int)x + (new Random().nextInt(15)),(int) y + (new Random().nextInt(15))), ParticleType.ICE, new Velocity(0, 1), false));
 		
 	}
 	

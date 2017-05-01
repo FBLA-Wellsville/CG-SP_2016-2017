@@ -14,6 +14,7 @@ public class Floor extends PartialCollidable {
 	public static final int DIRT_WALL_RIGHT = 5;
 	public static final int DIRT_WALL_LEFT = 6;
 	public static final int DIRT_WALL_BOTH = 7;
+	public static final int CASTLE_FLOOR = 8;
 	
 	private int type;
 	
@@ -26,6 +27,9 @@ public class Floor extends PartialCollidable {
 	private void init(int type) {
 		loadImage(ExternalFile.loadTexture("objects/floor/floor-" + type + ".png"));
 		switch(type){
+		case CASTLE_FLOOR:
+			addCollidableDirection(Direction.DOWN);
+			break;
 		case DIRT:
 			addCollidableDirection(Direction.DOWN);
 			break;

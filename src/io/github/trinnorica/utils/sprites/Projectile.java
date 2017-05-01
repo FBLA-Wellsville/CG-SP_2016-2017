@@ -6,6 +6,7 @@ import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.entity.Player;
 import io.github.trinnorica.objects.Cloud;
+import io.github.trinnorica.objects.Switch;
 import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Images;
 import io.github.trinnorica.utils.Velocity;
@@ -30,18 +31,23 @@ public class Projectile extends Entity implements Moveable{
 		vector.y = vector.y+Main.gravity;
 		vector.x = vector.x-Main.wind;
 		
-		if(!(shooter instanceof Player)){
-			if(bounds.intersects(Main.getPlayer().getPolygon().getBounds())){
-				Main.getPlayer().damage(power,DamageReason.PROJECTILE, this, new Velocity(vector.x/3,-3));
-				Main.removeSprite(this);
-			}
-		}
+//		if(!(shooter instanceof Player)){
+//			if(bounds.intersects(Main.getPlayer().getPolygon().getBounds())){
+//				Main.getPlayer().damage(power,DamageReason.PROJECTILE, this, new Velocity(vector.x/3,-3));
+//				Main.removeSprite(this);
+//			}
+//		}
 		
-		else for(Sprite s : Main.getScreen().objects){
+		for(Sprite s : Main.getScreen().objects){
 			if(!bounds.intersects(s.getPolygon().getBounds())) continue;
 			if(s instanceof Projectile || s instanceof Particle || s instanceof Tool || s instanceof Cloud) continue;
 			if(shooter instanceof Player && s instanceof Player) continue;
 			if(!(shooter instanceof Player) && !(s instanceof Player)) continue;
+			
+			if(s instanceof Switch){
+				((Switch)s).toggle();
+				Main.removeSprite(this);
+			}
 				
 			if(s instanceof Entity){
 				((Entity)s).damage(power,DamageReason.PROJECTILE, this, new Velocity(vector.x/3,-3));

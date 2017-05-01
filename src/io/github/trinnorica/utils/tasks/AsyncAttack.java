@@ -28,7 +28,6 @@ public class AsyncAttack implements Runnable {
 		
 		
 		if (attacker.getTool().getToolType().equals(ToolType.MELEE)) {
-			Main.getGraphics().drawRect(attacker.tool.getStrikeRange().x, attacker.tool.getStrikeRange().y, attacker.tool.getStrikeRange().width, attacker.tool.getStrikeRange().height);
 			if(attacker.tool.getStrikeRange().intersects(entity.getPolygon().getBounds())){
 				attacker.tool.use((int)attacker.x, (int)attacker.y);
 				((Enemy)attacker).cooldown = true;

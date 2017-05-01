@@ -14,6 +14,7 @@ public enum LevelFactory {
 	FALLING_FLOOR('H',SpriteType.FALLING_FLOOR),
 	INVISIBLE_WALL('I',SpriteType.WALL),
 	DARK_GRAY('J',SpriteType.DIRT),
+	
 	//For all doors, type Alt 100<door ID>
 	
 	DOOR_1('Θ',SpriteType.DOOR),
@@ -69,6 +70,11 @@ public enum LevelFactory {
 	GATE('K',SpriteType.GATE),
 	CAVE('L',SpriteType.GATE),
 	LADDER('M',SpriteType.LADDER),
+	CASTLE_BLOCK('O',SpriteType.CASTLE_BLOCK),
+	EVIL_FLAG('P',SpriteType.EVIL_FLAG),
+	CASTLE_BLOCK_VINES('Q',SpriteType.CASTLE_BLOCK_VINES),
+	CASTLE_BLOCK_BACKGROUND('R',SpriteType.CASTLE_BLOCK_BACKGROUND),
+	CASTLE_BLOCK_FLOOR('S',SpriteType.CASTLE_BLOCK_FLOOR),
 	AIR('X',SpriteType.AIR);
 	
 	

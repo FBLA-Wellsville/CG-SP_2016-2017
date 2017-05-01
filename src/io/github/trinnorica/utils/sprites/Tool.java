@@ -54,10 +54,10 @@ public class Tool extends Entity implements Moveable{
 		this.y = user.y;
 
 		if (user.direction == Direction.LEFT) {
-			return new Rectangle((int)x-30, (int)y, 60, 30);
+			return new Rectangle((int)x-30, (int)y, 45, 30);
 		}
 		if (user.direction == Direction.RIGHT) {
-			return new Rectangle((int)x,(int) y, 60, 30);
+			return new Rectangle((int)x,(int) y, 45, 30);
 		}
 		return null;
 	}
