@@ -12,6 +12,7 @@ public class IceStaff extends Tool {
 	public IceStaff(int x, int y, ToolType type) {
 		super(x, y, type);
 		init();
+		cooldown = 30;
 	}
 	
 	private void init(){

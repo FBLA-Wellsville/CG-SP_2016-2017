@@ -26,10 +26,10 @@ public class AsyncAttack implements Runnable {
 	@Override
 	public void run() {
 		
+		
 		if (attacker.getTool().getToolType().equals(ToolType.MELEE)) {
 			Main.getGraphics().drawRect(attacker.tool.getStrikeRange().x, attacker.tool.getStrikeRange().y, attacker.tool.getStrikeRange().width, attacker.tool.getStrikeRange().height);
 			if(attacker.tool.getStrikeRange().intersects(entity.getPolygon().getBounds())){
-				Utils.addStaticMessage("Attack", (int)attacker.x, (int)attacker.y, Color.WHITE, Color.BLACK, 2, 4);
 				attacker.tool.use((int)attacker.x, (int)attacker.y);
 				((Enemy)attacker).cooldown = true;
 				
@@ -41,6 +41,7 @@ public class AsyncAttack implements Runnable {
 		if (hasLineOfSight(attacker, entity)) {
 			if (attacker.getTool().getToolType().equals(ToolType.DIRECTIONAL)) {
 				((Enemy)attacker).cooldown = true;
+				
 				if (attacker.direction.equals(Direction.LEFT))
 					attacker.getTool().use((int)attacker.x, (int)attacker.y, attacker.direction, new Shoot(), attacker);
 				if (attacker.direction.equals(Direction.RIGHT))

@@ -192,9 +192,9 @@ public class Utils {
 		Utils.level = level;
 	}
 
-	public static void debug(String message) {
-		if(Main.getScreen().debug) System.out.print("DEBUG:\n" + message + "\n");
-	}
+//	public static void debug(String message) {
+//		if(Main.getScreen().debug) System.out.print("DEBUG:\n" + message + "\n");
+//	}
 
 //	public static void sendToConfig(String score) {
 //		try {

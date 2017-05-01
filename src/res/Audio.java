@@ -125,7 +125,6 @@ public class Audio {
 					}
 				}
 			} catch(IOException exx){
-				Utils.debug("Stream closed.");
 			}
 			
 		}catch(Exception ex){

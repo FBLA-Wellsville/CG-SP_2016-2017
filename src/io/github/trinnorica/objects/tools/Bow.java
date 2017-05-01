@@ -18,6 +18,7 @@ public class Bow extends Tool {
 	public Bow(int x, int y,ToolType type) {
 		super(x, y, type);
 		init();
+		cooldown = 5;
 	}
 	
 	private void init(){

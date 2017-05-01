@@ -49,7 +49,7 @@ public class Enemy extends Entity implements Moveable {
 			walking = ExternalFile.loadTexture("entity/wizard/walking.gif");
 			standing = ExternalFile.loadTexture("entity/wizard/standing.png");
 			maxhealth = 100;
-			setTool(new FireStaff(0, 0, ToolType.DIRECTIONAL));
+			setTool(new FireStaff(0, 0, ToolType.PROJECTILE));
 			break;
 		case KNIGHT:
 			walking = ExternalFile.loadTexture("entity/knight/walk.gif");
@@ -248,7 +248,6 @@ public class Enemy extends Entity implements Moveable {
 				case RIGHT:
 					if(!((PartialCollidable)s).getCollidableDirections().contains(Direction.RIGHT)) break;
 					if(follow){
-						Utils.debug("Jump");
 						jump();
 					}
 					if (direction.equals(Direction.RIGHT)){

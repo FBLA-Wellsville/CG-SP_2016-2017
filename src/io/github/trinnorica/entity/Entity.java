@@ -387,7 +387,6 @@ public class Entity extends Sprite implements Moveable {
 				}
 			}
 		} catch (ConcurrentModificationException ex) {
-			Utils.debug("ConcurrentModificationException 1 (Entity)");
 		}
 
 		if (!onground)

@@ -1,10 +1,12 @@
 package io.github.trinnorica.utils.sprites;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.utils.Direction;
+import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.particles.ParticleFormat;
 
@@ -43,6 +45,7 @@ public class Tool extends Entity implements Moveable{
 	}
 	public void use(int x, int y, Direction d, ParticleFormat f, Entity shooter) {
 		use(x,y);
+		
 	}
 	
 	public Rectangle getStrikeRange() {

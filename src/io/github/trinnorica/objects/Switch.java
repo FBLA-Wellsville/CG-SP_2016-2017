@@ -11,7 +11,7 @@ import io.github.trinnorica.utils.sprites.Collidable;
 import io.github.trinnorica.utils.sprites.Sprite;
 import res.ExternalFile;
 
-public class Switch extends Collidable {
+public class Switch extends Sprite {
 	
 	private int id = 0;
 	private int status = 0;

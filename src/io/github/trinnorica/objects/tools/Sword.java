@@ -16,6 +16,7 @@ public class Sword extends Tool {
 	public Sword(int x, int y, ToolType type) {
 		super(x, y, type);
 		initSword();
+		cooldown = 3;
 	}
 
 	private void initSword() {

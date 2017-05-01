@@ -464,7 +464,6 @@ public class Screen extends JPanel implements ActionListener {
 					}
 				}
 			} catch (ConcurrentModificationException ex) {
-				Utils.debug("ConcurrentModificationException 2 (Screen)");
 			}
 
 			Main.getPlayer().getPolygon();

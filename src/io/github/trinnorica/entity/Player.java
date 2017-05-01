@@ -310,7 +310,6 @@ public class Player extends Entity implements Moveable, Keyable {
 				}
 			}
 		} catch (ConcurrentModificationException ex) {
-			Utils.debug("ConcurrentModificationException 1 (Player)");
 		}
 
 		// velocity.x = velocity.x*0.2;
@@ -411,6 +410,7 @@ public class Player extends Entity implements Moveable, Keyable {
 		drawHealthBar(g,(int) x - (100 / 2) + (width / 2), (int)y - 20, 100, 5);
 		if (cooldown > 0)
 			cooldown = cooldown - 1;
+		
 		if (direction == Direction.RIGHT) {
 			g.drawImage(getImage(), (int)x, (int)y, width, height, null);
 
@@ -647,7 +647,6 @@ public class Player extends Entity implements Moveable, Keyable {
 		try {
 			Main.removeSprite(this);
 		} catch (NullPointerException ex) {
-			Utils.debug("TESTIMG");
 		}
 	}
 
