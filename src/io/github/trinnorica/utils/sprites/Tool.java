@@ -1,12 +1,14 @@
 package io.github.trinnorica.utils.sprites;
 
-import java.awt.Color;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.utils.Direction;
-import io.github.trinnorica.utils.Utils;
+import io.github.trinnorica.utils.Enchantment;
+import io.github.trinnorica.utils.EnchantmentEnum;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.particles.ParticleFormat;
 
@@ -17,12 +19,21 @@ public class Tool extends Entity implements Moveable{
 	private Rectangle xbounds;
 	private ToolType tooltype;
 	protected Entity user = null;
+	private List<Enchantment> enchantments = new ArrayList<>();
+	
 
 	public Tool(int x, int y, ToolType type) {
 		super(x, y);
 		this.tooltype = type;
 		xbounds = new Rectangle(x, y, width, height+2);
 		health = Integer.MAX_VALUE;
+	}
+	
+	public void addEnchantment(EnchantmentEnum enchantment, int strength){
+		enchantments.add(new Enchantment(enchantment, strength));
+	}
+	public List<Enchantment> getEnchantments(){
+		return enchantments;
 	}
 
 	public void registerXBounds(){

@@ -705,11 +705,19 @@ public class Screen extends JPanel implements ActionListener {
 			}
 			
 			if(board == Board.GAME){
+				
+				//Cheat Codes
 				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_I)){
 					Main.addSprite(new Armour((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY()-10, ToolType.NONE, Armour.IRON));
 				}
 				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_G)){
 					Main.addSprite(new Armour((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY()-10, ToolType.NONE, Armour.GOLD));
+				}
+				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_D)){
+					Main.addSprite(new Armour((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY()-10, ToolType.NONE, Armour.DARK));
+				}
+				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_F)){
+					Main.addSprite(new Armour((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY()-10, ToolType.NONE, Armour.FIRE));
 				}
 				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_1)){
 					Main.addSprite(new Sword((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY(),ToolType.MELEE));

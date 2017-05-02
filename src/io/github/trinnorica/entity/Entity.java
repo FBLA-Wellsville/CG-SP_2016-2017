@@ -5,8 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.util.ConcurrentModificationException;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Random;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.utils.DamageReason;
@@ -15,15 +14,11 @@ import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.Velocity;
 import io.github.trinnorica.utils.particles.Particle;
 import io.github.trinnorica.utils.particles.ParticleType;
-import io.github.trinnorica.utils.particles.formats.Explode;
 import io.github.trinnorica.utils.particles.formats.Ghost;
-import io.github.trinnorica.utils.particles.formats.Stay;
 import io.github.trinnorica.utils.sprites.Collidable;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
-import io.github.trinnorica.utils.sprites.SpriteType;
 import io.github.trinnorica.utils.sprites.Tool;
-import io.github.trinnorica.utils.tasks.CheckLanding;
 import res.ExternalFile;
 
 public class Entity extends Sprite implements Moveable {
@@ -50,6 +45,7 @@ public class Entity extends Sprite implements Moveable {
 	protected boolean moving = false;
 	protected Image standing = ExternalFile.loadTexture("entity/player/player.png");
 	protected Image walking = ExternalFile.loadTexture("entity/player/walk.gif");
+	public int fireTicks = 0;
 
 	public Entity(int x, int y) {
 		super(x, y);
@@ -111,7 +107,8 @@ public class Entity extends Sprite implements Moveable {
 				setVelocity(new Velocity(-2, -3));
 		else if (this instanceof Player) {
 			if(((Player)this).hasArmour()){
-				i = i /( ((Player)this).getArmour().getProtection());
+				
+				i = ((Player)this).getArmour().protect(i, damager);
 			}
 			if (damaged)
 				return;
@@ -338,6 +335,40 @@ public class Entity extends Sprite implements Moveable {
 		g.setColor(c);
 
 	}
+	
+	public void doFireTicks(){
+		if(fireTicks > 0){
+			fireTicks = fireTicks-1;
+			burn(1);
+		}
+	}
+	
+	public void burn(int damage){
+		int x = (int) (this.x+(width/2));
+		int y = (int) (this.y+(height/2));
+		for(int a=0;a!=new Random().nextInt(10);a++){
+			if(new Random().nextBoolean()){
+				if(new Random().nextBoolean()){
+					Main.addSprite(new Particle(new Point(x+new Random().nextInt(width/2),y+new Random().nextInt(height/2)), ParticleType.FIRE, new Velocity(0, 1), false));
+				} else {
+					Main.addSprite(new Particle(new Point(x-new Random().nextInt(width/2),y+new Random().nextInt(height/2)), ParticleType.FIRE, new Velocity(0, 1), false));
+				}
+				
+			} else {
+				if(new Random().nextBoolean()){
+					Main.addSprite(new Particle(new Point(x+new Random().nextInt(width/2),y-new Random().nextInt(height/2)), ParticleType.FIRE, new Velocity(0, 1), false));
+				} else {
+					Main.addSprite(new Particle(new Point(x-new Random().nextInt(width/2),y+new Random().nextInt(height/2)), ParticleType.FIRE, new Velocity(0, 1), false));
+				}
+			}
+			
+		}
+		health = health-damage;
+		if(health > 0){
+			kill(DamageReason.ENEMY);
+		}
+	}
+	
 
 	@Override
 	public void move() {
