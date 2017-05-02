@@ -1,8 +1,16 @@
 package io.github.trinnorica.objects.tools;
 
+import java.awt.Graphics;
+import java.awt.Point;
+import java.util.Random;
+
+import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.utils.Enchantment;
 import io.github.trinnorica.utils.EnchantmentEnum;
+import io.github.trinnorica.utils.Velocity;
+import io.github.trinnorica.utils.particles.Particle;
+import io.github.trinnorica.utils.particles.ParticleType;
 import io.github.trinnorica.utils.sprites.Tool;
 import io.github.trinnorica.utils.sprites.ToolType;
 import res.ExternalFile;
@@ -53,6 +61,20 @@ public class Armour extends Tool {
 	}
 	public int getHeight(){
 		return 27;
+		
+	}
+	
+	@Override
+	public void draw(Graphics g){
+		super.draw(g);
+		
+		for(Enchantment ench : getEnchantments()){
+			if(ench.getType().equals(EnchantmentEnum.FLAME)){
+				if(new Random().nextInt(100) < 5){
+					Main.addSprite(new Particle(new Point((((int)x) + new Random().nextInt(width)), ((int)y)+new Random().nextInt(height)), ParticleType.FIRE, new Velocity(0, -1), false));
+				}
+			}
+		}
 		
 	}
 	

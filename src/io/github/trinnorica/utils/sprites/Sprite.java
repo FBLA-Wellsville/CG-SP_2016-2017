@@ -6,7 +6,7 @@ import java.awt.Polygon;
 import java.awt.Rectangle;
 
 import io.github.trinnorica.utils.Direction;
-import io.github.trinnorica.utils.Utils;
+import io.github.trinnorica.utils.particles.Particle;
 import res.ExternalFile;
 
 public class Sprite {
@@ -18,7 +18,7 @@ public class Sprite {
 	public int width;
 	public int height;
 	protected boolean vis;
-	private Image image;
+	public Image image;
 	public String imagePath = "";
 	@SuppressWarnings("unused")
 	private Sprite sprite;
@@ -154,6 +154,9 @@ public class Sprite {
 	}
 
 	public void draw(Graphics g) {
+		if(this instanceof Particle){
+			System.out.println(this.getClass().getSimpleName());
+		}
 		if (direction == Direction.RIGHT) {
 			g.drawImage(getImage(),(int) x, (int)y, width, height, null);
 		} else {

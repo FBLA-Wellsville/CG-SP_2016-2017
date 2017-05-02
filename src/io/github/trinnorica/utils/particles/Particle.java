@@ -68,6 +68,9 @@ public class Particle extends Sprite implements Moveable {
 	public void draw(Graphics g){
 		g.drawImage(getImage(),(int) x,(int) y, getWidth(), getHeight(), null);
 		lifetime = lifetime-1;
+		if(lifetime < 0){
+			Main.removeSprite(this);
+		}
 	}
 
 	public int getLifetime() {

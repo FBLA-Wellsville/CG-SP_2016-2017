@@ -135,6 +135,8 @@ public class Player extends Entity implements Moveable, Keyable {
 
 	@Override
 	public void move() {
+		
+		doFireTicks();
 		if (velocity.x != 0) {
 			if (moving == false) {
 				moving = true;
@@ -426,9 +428,7 @@ public class Player extends Entity implements Moveable, Keyable {
 				}
 
 			}
-			if(hasArmour()){
-				g.drawImage(armour.getImage(),(int) x, (int)y, width-1, height, null);
-			}
+			
 			// if(tool != null) g.drawImage(Images.rotate(tool.getImage(), 0.0),
 			// x+20, y, tool.getWidth(), tool.getHeight(), null);
 		} else {
@@ -447,13 +447,19 @@ public class Player extends Entity implements Moveable, Keyable {
 				// x+30+tool.width, y, 7*2 * - tool.width, 15*2, null);
 			}
 			
-			if(hasArmour()){
-				g.drawImage(armour.getImage(),(int) x + width,(int) y, (-(width))+1, height, null);
-			}
+			
 			
 			// if(tool != null) g.drawImage(Images.rotate(tool.getImage(), 0.0),
 			// x+tool.getWidth()-20, y, - tool.getWidth(), tool.getHeight(),
 			// null);
+		}
+		if(hasArmour()){
+			armour.width = width;
+			armour.x = x;
+			armour.y = y;
+			armour.height = height;
+			armour.direction = direction;
+			armour.draw(g);
 		}
 	}
 

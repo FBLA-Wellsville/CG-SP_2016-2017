@@ -110,7 +110,7 @@ public class Enemy extends Entity implements Moveable {
 		
 		boolean temp_down = false;
 
-
+		doFireTicks();
 		
 		
 		

@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
@@ -36,6 +38,7 @@ import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.Backgrounds;
 import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.Images;
+import io.github.trinnorica.utils.ReflectionUtils;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.levels.LevelBuilder;
 import io.github.trinnorica.utils.levels.LevelUtils;
@@ -446,22 +449,33 @@ public class Screen extends JPanel implements ActionListener {
 					if (sprite instanceof Moveable) {
 						((Moveable) sprite).move();
 					}
-					if (!(sprite instanceof Particle))
-						sprite.draw(g);
+//					if (!(sprite instanceof Particle))
+//						sprite.draw(g);
 
 					if (sprite.x < -100 || sprite.x > 2000) {
 						objects_remove.add(sprite);
 					}
 					if (sprite.y > 600)
 						objects_remove.add(sprite);
+					
+					sprite.draw(g);
+					
+//					try {
+//						Method method = ReflectionUtils.getMethod(Class.forName(sprite.getClass().getName()), "draw", Graphics.class);
+//						method.setAccessible(true);
+//						method.invoke(sprite, g);
+//					} catch (NoSuchMethodException | ClassNotFoundException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
 
-					if (sprite instanceof Particle) {
-						Particle p = (Particle) sprite;
-						p.draw(g);
-						if (p.getLifetime() <= 0) {
-							objects_remove.add(p);
-						}
-					}
+//					if (sprite instanceof Particle) {
+//						Particle p = (Particle) sprite;
+//						p.draw(g);
+//						if (p.getLifetime() <= 0) {
+//							objects_remove.add(p);
+//						}
+//					}
 				}
 			} catch (ConcurrentModificationException ex) {
 			}

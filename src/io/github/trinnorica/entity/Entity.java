@@ -344,23 +344,8 @@ public class Entity extends Sprite implements Moveable {
 	}
 	
 	public void burn(int damage){
-		int x = (int) (this.x+(width/2));
-		int y = (int) (this.y+(height/2));
 		for(int a=0;a!=new Random().nextInt(10);a++){
-			if(new Random().nextBoolean()){
-				if(new Random().nextBoolean()){
-					Main.addSprite(new Particle(new Point(x+new Random().nextInt(width/2),y+new Random().nextInt(height/2)), ParticleType.FIRE, new Velocity(0, 1), false));
-				} else {
-					Main.addSprite(new Particle(new Point(x-new Random().nextInt(width/2),y+new Random().nextInt(height/2)), ParticleType.FIRE, new Velocity(0, 1), false));
-				}
-				
-			} else {
-				if(new Random().nextBoolean()){
-					Main.addSprite(new Particle(new Point(x+new Random().nextInt(width/2),y-new Random().nextInt(height/2)), ParticleType.FIRE, new Velocity(0, 1), false));
-				} else {
-					Main.addSprite(new Particle(new Point(x-new Random().nextInt(width/2),y+new Random().nextInt(height/2)), ParticleType.FIRE, new Velocity(0, 1), false));
-				}
-			}
+			Main.addSprite(new Particle(new Point(((int)x)+new Random().nextInt(width),((int)y)+new Random().nextInt(height)), ParticleType.FIRE, new Velocity(0, -1), false));
 			
 		}
 		health = health-damage;
@@ -373,7 +358,7 @@ public class Entity extends Sprite implements Moveable {
 	@Override
 	public void move() {
 		
-		
+		doFireTicks();
 
 		onground = false;
 
