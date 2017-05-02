@@ -248,7 +248,7 @@ public class Level {
 			case CASTLE_BLOCK:
 				sprites.add(new Sprite(x*30, y*30, ExternalFile.loadTexture("objects/background/gray-brick.png"), 30, 30));
 				break;
-			case CASTLE_FLOOR:
+			case CASTLE_BLOCK_FLOOR:
 				sprites.add(new Floor(x*30, y*30, Floor.CASTLE_FLOOR));
 				break;
 			case CASTLE_BLOCK_BACKGROUND:
