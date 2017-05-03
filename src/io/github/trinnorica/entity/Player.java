@@ -416,7 +416,7 @@ public class Player extends Entity implements Moveable, Keyable {
 		if (direction == Direction.RIGHT) {
 			g.drawImage(getImage(), (int)x, (int)y, width, height, null);
 
-			if (utool && cooldown == 0) {
+			if (utool) {
 				utoolt = utoolt - 1;
 				if (utoolt == 0) {
 					utool = false;
@@ -433,7 +433,7 @@ public class Player extends Entity implements Moveable, Keyable {
 			// x+20, y, tool.getWidth(), tool.getHeight(), null);
 		} else {
 			g.drawImage(getImage(),(int) x + width,(int) y, -(width), height, null);
-			if (utool && cooldown == 0) {
+			if (utool) {
 				utoolt = utoolt - 1;
 				if (utoolt == 0)
 					utool = false;
@@ -464,6 +464,7 @@ public class Player extends Entity implements Moveable, Keyable {
 	}
 
 	void useTool() {
+		if(cooldown != 0) return;
 		utool = true;
 		cooldown = tool.getCooldown();
 		utoolt = 10;

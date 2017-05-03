@@ -26,6 +26,7 @@ import java.util.regex.Pattern;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import io.github.trinnorica.entity.Enemy;
 import io.github.trinnorica.entity.Player;
 import io.github.trinnorica.objects.tools.Armour;
 import io.github.trinnorica.objects.tools.Bow;
@@ -44,6 +45,7 @@ import io.github.trinnorica.utils.levels.LevelBuilder;
 import io.github.trinnorica.utils.levels.LevelUtils;
 import io.github.trinnorica.utils.particles.Particle;
 import io.github.trinnorica.utils.sprites.Empty;
+import io.github.trinnorica.utils.sprites.EntityType;
 import io.github.trinnorica.utils.sprites.Keyable;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
@@ -753,6 +755,29 @@ public class Screen extends JPanel implements ActionListener {
 				}
 				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_7)){
 					Main.addSprite(new IceDagger((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY(),ToolType.DIRECTIONAL));
+				}
+				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_LEFT + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_RIGHT + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_1)){
+					Main.addSprite(new Enemy((int)Main.getPlayer().x+100, (int)Main.getPlayer().getY(), EntityType.OGRE));
+				}
+				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_LEFT + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_RIGHT + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_2)){
+					Main.addSprite(new Enemy((int)Main.getPlayer().x+100, (int)Main.getPlayer().getY(), EntityType.MEGA_OGRE));
+				}
+				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_LEFT + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_RIGHT + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_3)){
+					Main.addSprite(new Enemy((int)Main.getPlayer().x+100, (int)Main.getPlayer().getY(), EntityType.DARK_KNIGHT));
+				}
+				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_LEFT + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_RIGHT + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_4)){
+					Main.addSprite(new Enemy((int)Main.getPlayer().x+100, (int)Main.getPlayer().getY(), EntityType.KNIGHT));
+				}
+				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_LEFT + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_RIGHT + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_5)){
+					Main.addSprite(new Enemy((int)Main.getPlayer().x+100, (int)Main.getPlayer().getY(), EntityType.SKELETON));
+				}
+				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_LEFT + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_RIGHT + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_6)){
+					Enemy entity = new Enemy((int)Main.getPlayer().x+100, (int)Main.getPlayer().getY(), EntityType.WIZARD);
+					entity.fireTicks = 10;
+					Main.addSprite(entity);
+				}
+				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_4 + "-" + KeyEvent.VK_RIGHT)){
+					Main.score += 1000;
 				}
 				if(Utils.codeEquals("flyme")){
 					Main.getPlayer().flying = true;

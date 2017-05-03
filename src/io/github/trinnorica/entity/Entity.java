@@ -93,12 +93,12 @@ public class Entity extends Sprite implements Moveable {
 			return;
 		}
 		
-
+		if(this instanceof Player && ((Player)this).hasArmour()){
+			i = ((Player)this).getArmour().protect(i,damager);
+		}
 		if (damager.x - x >= 0)
 			if (this instanceof Player) {
-				if(((Player)this).hasArmour()){
-					i = i /( ((Player)this).getArmour().getProtection());
-				}
+				
 				if (damaged)
 					return;
 				damaged = true;
@@ -106,10 +106,7 @@ public class Entity extends Sprite implements Moveable {
 			} else
 				setVelocity(new Velocity(-2, -3));
 		else if (this instanceof Player) {
-			if(((Player)this).hasArmour()){
-				
-				i = ((Player)this).getArmour().protect(i, damager);
-			}
+			
 			if (damaged)
 				return;
 			damaged = true;
@@ -139,12 +136,12 @@ public class Entity extends Sprite implements Moveable {
 	}
 
 	public void damage(int i, DamageReason reason, Particle damager) {
-
+		if(this instanceof Player && ((Player)this).hasArmour()){
+			i = ((Player)this).getArmour().protect(i,null);
+		}
 		if (damager.x - x >= 0)
 			if (this instanceof Player) {
-				if(((Player)this).hasArmour()){
-					i = i /( ((Player)this).getArmour().getProtection());
-				}
+				
 				if (damaged)
 					return;
 				damaged = true;
@@ -152,9 +149,7 @@ public class Entity extends Sprite implements Moveable {
 			} else
 				setVelocity(new Velocity(-2, -3));
 		else if (this instanceof Player) {
-			if(((Player)this).hasArmour()){
-				i = i /( ((Player)this).getArmour().getProtection());
-			}
+			
 			if (damaged)
 				return;
 			damaged = true;
@@ -176,8 +171,8 @@ public class Entity extends Sprite implements Moveable {
 	}
 
 	public void damage(int i, DamageReason reason, Entity damager, Velocity v) {
-		if(((Player)this).hasArmour()){
-			i = i /( ((Player)this).getArmour().getProtection());
+		if(this instanceof Player && ((Player)this).hasArmour()){
+			i = ((Player)this).getArmour().protect(i,damager);
 		}
 		health = health - i;
 		setVelocity(v);
@@ -283,6 +278,8 @@ public class Entity extends Sprite implements Moveable {
 		g.setFont(Main.getFont().deriveFont(5f));
 
 		Color c = g.getColor();
+		
+//		System.out.println("Entity: " + this.getClass().getSimpleName() + "\nHealth: " + health);
 
 		g.setColor(Color.BLACK);
 		//

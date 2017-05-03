@@ -86,7 +86,7 @@ public class Armour extends Tool {
 		damage = damage/protection;
 		for(Enchantment ench : getEnchantments()){
 			if(ench.getType().equals(EnchantmentEnum.FLAME)){
-				damager.fireTicks = ench.getStrength()*2;
+				if(damager!=null)damager.fireTicks = ench.getStrength()*2;
 			}
 		}
 		return damage;
