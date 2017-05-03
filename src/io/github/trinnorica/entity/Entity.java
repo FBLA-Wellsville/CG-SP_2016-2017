@@ -1,6 +1,7 @@
 package io.github.trinnorica.entity;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -92,10 +93,12 @@ public class Entity extends Sprite implements Moveable {
 		if (!(dplayer) && !player) {
 			return;
 		}
+		
 
 		if (this instanceof Player && ((Player) this).hasArmour()) {
 			i = ((Player) this).getArmour().protect(i, damager);
 		}
+		Utils.addStaticMessage(health + "/" + maxhealth + "\n-" + i, (int)x, (int)y, Color.RED, Color.BLACK, 1, 3,10);
 		if (damager.x - x >= 0)
 			if (this instanceof Player) {
 
@@ -137,6 +140,7 @@ public class Entity extends Sprite implements Moveable {
 		if (this instanceof Player && ((Player) this).hasArmour()) {
 			i = ((Player) this).getArmour().protect(i, null);
 		}
+		Utils.addStaticMessage(health + "/" + maxhealth + "\n-" + i, (int)x, (int)y, Color.RED, Color.BLACK, 1, 3,10);
 		if (damager.x - x >= 0)
 			if (this instanceof Player) {
 
@@ -172,6 +176,7 @@ public class Entity extends Sprite implements Moveable {
 		if (this instanceof Player && ((Player) this).hasArmour()) {
 			i = ((Player) this).getArmour().protect(i, damager);
 		}
+		Utils.addStaticMessage(health + "/" + maxhealth + "\n-" + i, (int)x, (int)y, Color.RED, Color.BLACK, 1, 3,10);
 		health = health - i;
 		setVelocity(v);
 		// Utils.displayMessage(new Random().nextInt(), "-" + i, x, y, 100,
@@ -336,9 +341,10 @@ public class Entity extends Sprite implements Moveable {
 		final Timer t = new Timer();
 		final Entity thisE = this;
 		t.scheduleAtFixedRate(new TimerTask() {
-
+			
 			@Override
 			public void run() {
+				System.out.println(dead);
 				if(thisE instanceof Enemy){
 					System.out.println(((Enemy)thisE).getEntityType() + ": " + fireTicks);
 				} else {
@@ -359,7 +365,8 @@ public class Entity extends Sprite implements Moveable {
 	}
 
 	public void burn(int damage) {
-		for (int a = 0; a != new Random().nextInt(20); a++) {
+		for (int a = 0; a != new Random().nextInt(5)+5; a++) {
+			if(a > 10) break;
 			Main.addSprite(new Particle(
 					new Point(((int) x) + new Random().nextInt(width), ((int) y) + new Random().nextInt(height)),
 					ParticleType.FIRE, new Velocity(0, -1), false));
@@ -367,6 +374,7 @@ public class Entity extends Sprite implements Moveable {
 		}
 		System.out.println("Health before: " + health);
 		health = health - damage;
+		Utils.addStaticMessage(health + "/" + maxhealth + "\n-" + damage, (int)x, (int)y, Color.RED, Color.BLACK, 1, 3,15);
 		System.out.println("Health after: " + health);
 		
 		if (health <= 0) {
@@ -376,6 +384,7 @@ public class Entity extends Sprite implements Moveable {
 
 	@Override
 	public void move() {
+		
 
 		onground = false;
 

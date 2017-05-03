@@ -664,4 +664,9 @@ public class Player extends Entity implements Moveable, Keyable {
 		return key;
 	}
 
+	public void setMaxLives(int i) {
+		MAXLIVES = i;
+		lives = i;
+	}
+
 }

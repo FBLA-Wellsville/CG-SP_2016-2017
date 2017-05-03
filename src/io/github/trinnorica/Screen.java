@@ -11,10 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +36,6 @@ import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.Backgrounds;
 import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.Images;
-import io.github.trinnorica.utils.ReflectionUtils;
 import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.levels.LevelBuilder;
 import io.github.trinnorica.utils.levels.LevelUtils;
@@ -49,6 +45,7 @@ import io.github.trinnorica.utils.sprites.EntityType;
 import io.github.trinnorica.utils.sprites.Keyable;
 import io.github.trinnorica.utils.sprites.Moveable;
 import io.github.trinnorica.utils.sprites.Sprite;
+import io.github.trinnorica.utils.sprites.Tool;
 import io.github.trinnorica.utils.sprites.ToolType;
 import io.github.trinnorica.utils.ui.Message;
 import res.ExternalFile;
@@ -417,15 +414,12 @@ public class Screen extends JPanel implements ActionListener {
 
 			}
 
-			try {
-
-				if (!adding) {
-					for (Sprite sprite : objects_temp) {
-						objects.add(sprite);
-					}
-					objects_temp.clear();
+			if (!adding) {
+				for (Sprite sprite : objects_temp) {
+					objects.add(sprite);
 				}
-
+				objects_temp.clear();
+			}
 				for (Sprite sprite : objects) {
 
 					if (sprite instanceof Player) {
@@ -472,109 +466,108 @@ public class Screen extends JPanel implements ActionListener {
 					// }
 				}
 
-				Main.getPlayer().getPolygon();
-				Main.getPlayer().move();
-				Main.getPlayer().draw(g);
+			Main.getPlayer().getPolygon();
+			Main.getPlayer().move();
+			Main.getPlayer().draw(g);
 
-				try {
-					for (int i = 0; i != Main.getPlayer().getMaxLives(); i++) {
-						if (i < Main.getPlayer().getLives()) {
-							g.drawImage(ExternalFile.loadTexture("heart.png"), i * 30, 0, 30, 30, this);
-						} else {
-							g.drawImage(ExternalFile.loadTexture("broken-heart.png"), i * 30, 0, 30, 30, this);
-						}
+			try {
+				for (int i = 0; i != Main.getPlayer().getMaxLives(); i++) {
+					if (i < Main.getPlayer().getLives()) {
+						g.drawImage(ExternalFile.loadTexture("heart.png"), i * 30, 0, 30, 30, this);
+					} else {
+						g.drawImage(ExternalFile.loadTexture("broken-heart.png"), i * 30, 0, 30, 30, this);
 					}
-				} catch (NullPointerException ex) {
 				}
-
-				for (Sprite sprite : objects_remove) {
-					objects.remove(sprite);
-				}
-
-				objects_remove.clear();
-
-				// Draw Info
-				g.setFont(Main.getFont().deriveFont(15f));
-				Utils.drawOutlineString(g, "Level: " + Utils.getLevel(),
-						getWidth() - (g.getFontMetrics().stringWidth("Level: " + Utils.getLevel())), 20,
-						Color.decode("#99db45"), Color.WHITE, 1);
-				Utils.drawOutlineString(g, "Score: " + Main.score,
-						getWidth() - (g.getFontMetrics().stringWidth("Score: " + Main.score)), 42,
-						Color.decode("#99db45"), Color.white, 1);
-				try {
-					if (Main.getPlayer().hasKey()) {
-						Utils.drawOutlineString(g, "Key: ", getWidth() - (g.getFontMetrics().stringWidth("Key: ")) - 40,
-								64, Color.decode("#99db45"), Color.white, 1);
-						g.drawImage(Main.getPlayer().getKey().getImage(), getWidth() - 35, 64 - 15, this);
-					}
-				} catch (NullPointerException ex) {
-				}
-
-				// Draw messages
-
-				for (Entry<Integer, Message> entry : Utils.getMessages().entrySet()) {
-					entry.getValue().draw(g);
-				}
-				for (Message message : Utils.getLevelMessages()) {
-					message.draw(g);
-				}
-
-				for (Entry<Rectangle, Integer> entry : rectangles.entrySet()) {
-					entry.setValue(entry.getValue() - 1);
-					if (entry.getValue() >= 0) {
-						rectangles_remove.add(entry.getKey());
-					}
-					g.drawRect(entry.getKey().x, entry.getKey().y, entry.getKey().width, entry.getKey().height);
-				}
-
-				for (Rectangle rec : rectangles_remove) {
-					rectangles.remove(rec);
-				}
-				rectangles_remove.clear();
-
-				// Draw Leaderboard
-
-				if (leaderboard) {
-					g.drawImage(
-							Images.makeImageTranslucent(
-									Images.toBufferedImage(Images.createColorImage(Color.decode("#000000"))), 0.5),
-							getWidth() - 200, getHeight() / 3, 200, 110, this);
-					g.setFont(Main.getFont().deriveFont(10f));
-
-					Utils.drawOutlineString(g, "Leaderboard",
-							(getWidth() - 100) - (g.getFontMetrics().stringWidth("Leaderboard") / 2),
-							getHeight() / 3 + (Main.getFont().getSize() * 12), Color.YELLOW, Color.WHITE, 0);
-
-					for (Entry<String, Integer> entry : Utils.getHighScores().entrySet()) {
-
-						if (s > 5)
-							continue;
-
-						Utils.drawOutlineString(g, entry.getKey(), (getWidth() - 190),
-								(getHeight() / 3 + (Main.getFont().getSize() * 12))
-										+ (((Main.getFont().getSize() * 12) * (s + 1)) + (s * 4)),
-								Color.WHITE, Color.black, 1);
-						Utils.drawOutlineString(g, entry.getValue() + "",
-								getWidth() - g.getFontMetrics().stringWidth(entry.getValue() + ""),
-								((getHeight() / 3 + (Main.getFont().getSize() * 12))
-										+ (((Main.getFont().getSize() * 12) * (s + 1)) + (s * 4))),
-								Color.WHITE, Color.BLACK, 1);
-
-						s = s + 1;
-					}
-					s = 0;
-					// for(int i=0;i!=Utils.getHighScores().size();i++){
-					// Utils.drawOutlineString(g,
-					// Utils.getHighScores(),(getWidth()
-					// - 100) - (g.getFontMetrics().stringWidth(highscores[l]) /
-					// 2),(getHeight() / 3 + (Main.getFont().getSize() * 12))+
-					// (((Main.getFont().getSize() * 12) * (l + 1)) + (l * 4)),
-					// Color.WHITE, Color.WHITE, 0);
-					// }
-
-				}
-			} catch (ConcurrentModificationException ex) {
+			} catch (NullPointerException ex) {
 			}
+
+			for (Sprite sprite : objects_remove) {
+				objects.remove(sprite);
+			}
+
+			objects_remove.clear();
+
+			// Draw Info
+			g.setFont(Main.getFont().deriveFont(15f));
+			Utils.drawOutlineString(g, "Level: " + Utils.getLevel(),
+					getWidth() - (g.getFontMetrics().stringWidth("Level: " + Utils.getLevel())), 20,
+					Color.decode("#99db45"), Color.WHITE, 1);
+			Utils.drawOutlineString(g, "Score: " + Main.score,
+					getWidth() - (g.getFontMetrics().stringWidth("Score: " + Main.score)), 42, Color.decode("#99db45"),
+					Color.white, 1);
+			try {
+				if (Main.getPlayer().hasKey()) {
+					Utils.drawOutlineString(g, "Key: ", getWidth() - (g.getFontMetrics().stringWidth("Key: ")) - 40, 64,
+							Color.decode("#99db45"), Color.white, 1);
+					g.drawImage(Main.getPlayer().getKey().getImage(), getWidth() - 35, 64 - 15, this);
+				}
+			} catch (NullPointerException ex) {
+			}
+
+			// Draw messages
+
+			for (Entry<Integer, Message> entry : Utils.getMessages().entrySet()) {
+				entry.getValue().draw(g);
+			}
+			for (Message message : Utils.getLevelMessages()) {
+				message.draw(g);
+			}
+
+			for (Entry<Rectangle, Integer> entry : rectangles.entrySet()) {
+				entry.setValue(entry.getValue() - 1);
+				if (entry.getValue() >= 0) {
+					rectangles_remove.add(entry.getKey());
+				}
+				g.drawRect(entry.getKey().x, entry.getKey().y, entry.getKey().width, entry.getKey().height);
+			}
+
+			for (Rectangle rec : rectangles_remove) {
+				rectangles.remove(rec);
+			}
+			rectangles_remove.clear();
+
+			// Draw Leaderboard
+
+			if (leaderboard) {
+				g.drawImage(
+						Images.makeImageTranslucent(
+								Images.toBufferedImage(Images.createColorImage(Color.decode("#000000"))), 0.5),
+						getWidth() - 200, getHeight() / 3, 200, 110, this);
+				g.setFont(Main.getFont().deriveFont(10f));
+
+				Utils.drawOutlineString(g, "Leaderboard",
+						(getWidth() - 100) - (g.getFontMetrics().stringWidth("Leaderboard") / 2),
+						getHeight() / 3 + (Main.getFont().getSize() * 12), Color.YELLOW, Color.WHITE, 0);
+
+				for (Entry<String, Integer> entry : Utils.getHighScores().entrySet()) {
+
+					if (s > 5)
+						continue;
+
+					Utils.drawOutlineString(g, entry.getKey(), (getWidth() - 190),
+							(getHeight() / 3 + (Main.getFont().getSize() * 12))
+									+ (((Main.getFont().getSize() * 12) * (s + 1)) + (s * 4)),
+							Color.WHITE, Color.black, 1);
+					Utils.drawOutlineString(g, entry.getValue() + "",
+							getWidth() - g.getFontMetrics().stringWidth(entry.getValue() + ""),
+							((getHeight() / 3 + (Main.getFont().getSize() * 12))
+									+ (((Main.getFont().getSize() * 12) * (s + 1)) + (s * 4))),
+							Color.WHITE, Color.BLACK, 1);
+
+					s = s + 1;
+				}
+				s = 0;
+				// for(int i=0;i!=Utils.getHighScores().size();i++){
+				// Utils.drawOutlineString(g,
+				// Utils.getHighScores(),(getWidth()
+				// - 100) - (g.getFontMetrics().stringWidth(highscores[l]) /
+				// 2),(getHeight() / 3 + (Main.getFont().getSize() * 12))+
+				// (((Main.getFont().getSize() * 12) * (l + 1)) + (l * 4)),
+				// Color.WHITE, Color.WHITE, 0);
+				// }
+
+			}
+
 		}
 
 		// This is what shows when the player loses all of their lives.
@@ -798,6 +791,12 @@ public class Screen extends JPanel implements ActionListener {
 					entity.fireTicks = 10;
 					Main.addSprite(entity);
 				}
+				if (Utils.codeEqualsRaw(KeyEvent.VK_NUMPAD5 + "-" + KeyEvent.VK_NUMPAD5 + "-" + KeyEvent.VK_NUMPAD2)){
+					Main.getPlayer().setMaxLives(Main.getPlayer().getMaxLives()-1);
+				}
+				if (Utils.codeEqualsRaw(KeyEvent.VK_NUMPAD5 + "-" + KeyEvent.VK_NUMPAD5 + "-" + KeyEvent.VK_NUMPAD8)){
+					Main.getPlayer().setMaxLives(Main.getPlayer().getMaxLives()+1);
+				}
 				if (Utils.codeEqualsRaw(
 						KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_4 + "-" + KeyEvent.VK_RIGHT)) {
 					Main.score += 1000;
@@ -810,6 +809,20 @@ public class Screen extends JPanel implements ActionListener {
 				}
 				if (Utils.codeEquals("fly")) {
 					Main.getPlayer().flying = !Main.getPlayer().flying;
+				}
+				if (Utils.codeEquals("clear")) {
+					for (Sprite s : objects) {
+						if (s instanceof Tool) {
+							Main.removeSprite(s);
+						}
+						if (s instanceof Enemy) {
+							((Enemy) s).dead = true;
+							Main.removeSprite(s);
+						}
+						if (s instanceof Particle) {
+							Main.removeSprite(s);
+						}
+					}
 				}
 			}
 

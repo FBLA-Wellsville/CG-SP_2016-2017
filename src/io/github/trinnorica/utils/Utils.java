@@ -356,6 +356,16 @@ public class Utils {
 			}
 		}, seconds*1000);
 	}
+	public static void addStaticMessage(String message, int x, int y, Color text, Color outline, int thickness, int seconds, float size){
+		final int id = new Random().nextInt();
+		staticMessages.put(id, new Message(message,x,y,text,outline,thickness,size));
+		java.util.Timer t = new java.util.Timer();
+		t.schedule(new TimerTask() {
+			public void run() {
+				staticMessages.remove(id);
+			}
+		}, seconds*1000);
+	}
 	public static void addStaticLevelMessage(String message, int x, int y, Color text, Color outline, int thickness) {
 		levelMessages.add(new Message(message,x,y,text,outline,thickness));
 	}
