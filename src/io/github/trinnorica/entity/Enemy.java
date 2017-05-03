@@ -102,6 +102,7 @@ public class Enemy extends Entity implements Moveable {
 	private void initEntity() {
 		loadImage(standing);
 		setImageDimensions(27 + s, 30 + s);
+		doFireTicks();
 
 	}
 
@@ -110,7 +111,7 @@ public class Enemy extends Entity implements Moveable {
 		
 		boolean temp_down = false;
 
-		doFireTicks();
+		
 		
 		
 		
@@ -349,6 +350,8 @@ public class Enemy extends Entity implements Moveable {
 			setVelocity("", 0);
 		
 		onground = temp_down;
+		
+		
 
 	}
 
@@ -423,6 +426,8 @@ public class Enemy extends Entity implements Moveable {
 		drawHealthBar(g,(int) x - 50 + (width / 2),(int) y - 20, 100, 5);
 
 	}
+
+	public EntityType getEntityType() {return this.type;}
 
 	
 

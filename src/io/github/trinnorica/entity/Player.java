@@ -136,7 +136,6 @@ public class Player extends Entity implements Moveable, Keyable {
 	@Override
 	public void move() {
 		
-		doFireTicks();
 		if (velocity.x != 0) {
 			if (moving == false) {
 				moving = true;

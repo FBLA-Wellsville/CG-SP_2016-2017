@@ -6,6 +6,8 @@ import java.awt.Image;
 import java.awt.Point;
 import java.util.ConcurrentModificationException;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import io.github.trinnorica.Main;
 import io.github.trinnorica.utils.DamageReason;
@@ -25,7 +27,7 @@ public class Entity extends Sprite implements Moveable {
 
 	public double health;
 	public double maxhealth;
-	protected boolean dead = false;
+	public boolean dead = false;
 	public boolean invisible = false;
 	boolean onground = false;
 	boolean falling = false;
@@ -35,6 +37,7 @@ public class Entity extends Sprite implements Moveable {
 	double dy = 0;
 	boolean left = false;
 	boolean right = false;
+	boolean ticks = false;
 
 	// protected Tool tool;
 	public boolean walkingb;
@@ -58,7 +61,6 @@ public class Entity extends Sprite implements Moveable {
 	public int getMaxHealth() {
 		return (int) maxhealth;
 	}
-	
 
 	// public Direction getFacingDirection(){
 	// return facing;
@@ -82,23 +84,21 @@ public class Entity extends Sprite implements Moveable {
 	// }
 
 	public void damage(int i, DamageReason reason, Entity damager, boolean dplayer, boolean player) {
-		
-		
-		
-		if(dplayer && player){
+
+		if (dplayer && player) {
 			return;
 		}
-		
-		if(!(dplayer) && !player){
+
+		if (!(dplayer) && !player) {
 			return;
 		}
-		
-		if(this instanceof Player && ((Player)this).hasArmour()){
-			i = ((Player)this).getArmour().protect(i,damager);
+
+		if (this instanceof Player && ((Player) this).hasArmour()) {
+			i = ((Player) this).getArmour().protect(i, damager);
 		}
 		if (damager.x - x >= 0)
 			if (this instanceof Player) {
-				
+
 				if (damaged)
 					return;
 				damaged = true;
@@ -106,7 +106,7 @@ public class Entity extends Sprite implements Moveable {
 			} else
 				setVelocity(new Velocity(-2, -3));
 		else if (this instanceof Player) {
-			
+
 			if (damaged)
 				return;
 			damaged = true;
@@ -121,13 +121,11 @@ public class Entity extends Sprite implements Moveable {
 		// getMaxHealth(), x, y - 15, 100, "#FF0000",
 		// 15,Bridge.getGame().getFont());
 		//
-		
-		
-		
-//		Utils.addMovingMessage();
-		
+
+		// Utils.addMovingMessage();
+
 		if (health <= 0) {
-			if(damager instanceof Player){
+			if (damager instanceof Player) {
 				Main.score = Main.score + 5;
 			}
 			this.kill(reason);
@@ -136,12 +134,12 @@ public class Entity extends Sprite implements Moveable {
 	}
 
 	public void damage(int i, DamageReason reason, Particle damager) {
-		if(this instanceof Player && ((Player)this).hasArmour()){
-			i = ((Player)this).getArmour().protect(i,null);
+		if (this instanceof Player && ((Player) this).hasArmour()) {
+			i = ((Player) this).getArmour().protect(i, null);
 		}
 		if (damager.x - x >= 0)
 			if (this instanceof Player) {
-				
+
 				if (damaged)
 					return;
 				damaged = true;
@@ -149,7 +147,7 @@ public class Entity extends Sprite implements Moveable {
 			} else
 				setVelocity(new Velocity(-2, -3));
 		else if (this instanceof Player) {
-			
+
 			if (damaged)
 				return;
 			damaged = true;
@@ -171,8 +169,8 @@ public class Entity extends Sprite implements Moveable {
 	}
 
 	public void damage(int i, DamageReason reason, Entity damager, Velocity v) {
-		if(this instanceof Player && ((Player)this).hasArmour()){
-			i = ((Player)this).getArmour().protect(i,damager);
+		if (this instanceof Player && ((Player) this).hasArmour()) {
+			i = ((Player) this).getArmour().protect(i, damager);
 		}
 		health = health - i;
 		setVelocity(v);
@@ -208,21 +206,19 @@ public class Entity extends Sprite implements Moveable {
 	public void kill(DamageReason reason) {
 		// Utils.runParticles(new Point(x,y), new Explode(4),
 		// ParticleType.BLOOD, null);
-		Utils.runParticles(new Point((int)x, (int)y), new Ghost(), ParticleType.GHOST, null, 100);
+		Utils.runParticles(new Point((int) x, (int) y), new Ghost(), ParticleType.GHOST, null, 100);
 		Main.removeSprite(this);
 		Main.score += 15;
-		// dead = true;
+		dead = true;
 		// Utils.debug("DEATH");
 		// interact();
 	}
-	
+
 	public void setTool(Tool tool) {
 		this.tool = tool;
 		tool.setUser(this);
 		Main.removeSprite(tool);
 	}
-	
-	
 
 	// public Tool getTool() {
 	// return tool;
@@ -278,8 +274,9 @@ public class Entity extends Sprite implements Moveable {
 		g.setFont(Main.getFont().deriveFont(5f));
 
 		Color c = g.getColor();
-		
-//		System.out.println("Entity: " + this.getClass().getSimpleName() + "\nHealth: " + health);
+
+		// System.out.println("Entity: " + this.getClass().getSimpleName() +
+		// "\nHealth: " + health);
 
 		g.setColor(Color.BLACK);
 		//
@@ -332,30 +329,53 @@ public class Entity extends Sprite implements Moveable {
 		g.setColor(c);
 
 	}
-	
-	public void doFireTicks(){
-		if(fireTicks > 0){
-			fireTicks = fireTicks-1;
-			burn(1);
-		}
+
+	public void doFireTicks() {
+		if(ticks) return;
+		if(this instanceof Tool) return;
+		final Timer t = new Timer();
+		final Entity thisE = this;
+		t.scheduleAtFixedRate(new TimerTask() {
+
+			@Override
+			public void run() {
+				if(thisE instanceof Enemy){
+					System.out.println(((Enemy)thisE).getEntityType() + ": " + fireTicks);
+				} else {
+					System.out.println(thisE.getClass().getSimpleName() + ": " + fireTicks);
+				}
+				
+				if (dead){
+					t.cancel();
+				} else
+					if (fireTicks > 0) {
+						fireTicks = fireTicks - 1;
+						burn(1);
+					}
+			}
+		}, 1000, 500);
+		ticks = true;
+
 	}
-	
-	public void burn(int damage){
-		for(int a=0;a!=new Random().nextInt(10);a++){
-			Main.addSprite(new Particle(new Point(((int)x)+new Random().nextInt(width),((int)y)+new Random().nextInt(height)), ParticleType.FIRE, new Velocity(0, -1), false));
-			
+
+	public void burn(int damage) {
+		for (int a = 0; a != new Random().nextInt(20); a++) {
+			Main.addSprite(new Particle(
+					new Point(((int) x) + new Random().nextInt(width), ((int) y) + new Random().nextInt(height)),
+					ParticleType.FIRE, new Velocity(0, -1), false));
+
 		}
-		health = health-damage;
-		if(health > 0){
+		System.out.println("Health before: " + health);
+		health = health - damage;
+		System.out.println("Health after: " + health);
+		
+		if (health <= 0) {
 			kill(DamageReason.ENEMY);
 		}
 	}
-	
 
 	@Override
 	public void move() {
-		
-		doFireTicks();
 
 		onground = false;
 
@@ -367,7 +387,7 @@ public class Entity extends Sprite implements Moveable {
 					continue;
 				if (!bounds.intersects(s.getPolygon().getBounds()))
 					continue;
-				if (s instanceof Collidable && ((Collidable)s).isColliding()) {
+				if (s instanceof Collidable && ((Collidable) s).isColliding()) {
 					if (damaged) {
 						setVelocity(0, 0);
 

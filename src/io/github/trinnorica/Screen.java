@@ -80,7 +80,8 @@ public class Screen extends JPanel implements ActionListener {
 	private boolean loading = true;
 	private boolean paused = false;
 	private Image DIRT = ExternalFile.loadTexture("objects/background/dirt.png");
-	private Image DARK = Images.makeImageTranslucent(Images.toBufferedImage(Images.createColorImage(Color.decode("#000000"))), 0.5);
+	private Image DARK = Images
+			.makeImageTranslucent(Images.toBufferedImage(Images.createColorImage(Color.decode("#000000"))), 0.5);
 	private boolean playing = false;
 	private Pattern alphanumeric = Pattern.compile("[^a-zA-Z0-9]");
 	private String name = "___";
@@ -93,15 +94,14 @@ public class Screen extends JPanel implements ActionListener {
 	private Image ENEMY2 = ExternalFile.loadTexture("entity/knight/dark/walk.gif");
 	private Image ENEMY3 = ExternalFile.loadTexture("entity/skeleton/walk.gif");
 	private Image ENEMY4 = ExternalFile.loadTexture("entity/ogre/walk.gif");
-//	private Image ENEMY5 = ExternalFile.loadTexture("entity/knight/walk.gif");
+	// private Image ENEMY5 =
+	// ExternalFile.loadTexture("entity/knight/walk.gif");
 	private Image LOGO = ExternalFile.loadTexture("logos/logo-title.png");
 	private Image FBLA = ExternalFile.loadTexture("logos/fbla-logo.png");
-	
+
 	private Map<Rectangle, Integer> rectangles = new HashMap<>();
 	private List<Rectangle> rectangles_remove = new ArrayList<>();
-	
-	
-	
+
 	private boolean level = false;
 	public boolean confirm;
 
@@ -143,8 +143,8 @@ public class Screen extends JPanel implements ActionListener {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
-		if(level){
+
+		if (level) {
 			drawLevelDebug(g);
 			return;
 		}
@@ -161,24 +161,22 @@ public class Screen extends JPanel implements ActionListener {
 		}
 		Toolkit.getDefaultToolkit().sync();
 	}
-	
+
 	public void drawLevelDebug(Graphics g) {
-		
-		if(Utils.getLevel() == 0){
+
+		if (Utils.getLevel() == 0) {
 			Utils.setLevel(1);
 		}
-		
-		if(Utils.getLevel() > Utils.getLevels()){
+
+		if (Utils.getLevel() > Utils.getLevels()) {
 			Utils.setLevel(Utils.getLevels());
 		}
-		
-		
 
 		Utils.removeLevelMessages();
 		Main.clearObjects();
 		objects_temp.clear();
 		LevelBuilder l = new LevelBuilder();
-		switch(Utils.getLevelType(Utils.getLevel())){
+		switch (Utils.getLevelType(Utils.getLevel())) {
 		case GROUND:
 			g.drawImage(Backgrounds.GRASS.getImage(), 0, 0, getWidth(), getHeight(), this);
 			break;
@@ -194,52 +192,42 @@ public class Screen extends JPanel implements ActionListener {
 		case BOSS:
 			g.drawImage(Backgrounds.BOSS.getImage(), 0, 0, getWidth(), getHeight(), this);
 			break;
-		
+
 		}
-		
+
 		int level = Utils.getLevel();
-		if(level == 1){
-			Utils.addStaticLevelMessage("Your son has been taken by the Dark Knight of Eldiseth!\nYou must travel away from your village and\nsave your son from the Dark Castle.\nYou have never left your\nvillage before, and you do not know what to expect!",
-					getWidth()/2,
-					70, 
-					Color.BLACK,
-					Color.WHITE, 
-					1);
+		if (level == 1) {
+			Utils.addStaticLevelMessage(
+					"Your son has been taken by the Dark Knight of Eldiseth!\nYou must travel away from your village and\nsave your son from the Dark Castle.\nYou have never left your\nvillage before, and you do not know what to expect!",
+					getWidth() / 2, 70, Color.BLACK, Color.WHITE, 1);
 		}
-		if(level == 6){
-			Utils.addStaticLevelMessage("This is your first enemy! Grab that sword to defend yourself.\nIf you have forgotten how to use weapons, press F1!",
-					getWidth()/2,
-					70, 
-					Color.decode("#99db45"), 
-					Color.WHITE, 
-					1);
+		if (level == 6) {
+			Utils.addStaticLevelMessage(
+					"This is your first enemy! Grab that sword to defend yourself.\nIf you have forgotten how to use weapons, press F1!",
+					getWidth() / 2, 70, Color.decode("#99db45"), Color.WHITE, 1);
 		}
-		if(level == 7){
-			Utils.addStaticLevelMessage("Don not forget you can sprint!\nIf you ever get stuck on a level, try pressing F1.",
-					getWidth()/2,
-					70, 
-					Color.decode("#99db45"), 
-					Color.WHITE, 
-					1);
+		if (level == 7) {
+			Utils.addStaticLevelMessage(
+					"Don not forget you can sprint!\nIf you ever get stuck on a level, try pressing F1.",
+					getWidth() / 2, 70, Color.decode("#99db45"), Color.WHITE, 1);
 		}
-		if(level == 10){
-			Utils.addStaticLevelMessage("Keys work like weapons. They can be used by pressing SHIFT.\nKeys and doors are color coded.",
-					getWidth()/2,
-					70, 
-					Color.decode("#99db45"), 
-					Color.WHITE, 
-					1);
+		if (level == 10) {
+			Utils.addStaticLevelMessage(
+					"Keys work like weapons. They can be used by pressing SHIFT.\nKeys and doors are color coded.",
+					getWidth() / 2, 70, Color.decode("#99db45"), Color.WHITE, 1);
 		}
-		l.buildLevel(LevelUtils.getLevelBlueprint(level),LevelUtils.getLevelWidth(level),LevelUtils.getLevelHeight(level));
-		
-		for(Sprite sprite : objects_temp){
+		l.buildLevel(LevelUtils.getLevelBlueprint(level), LevelUtils.getLevelWidth(level),
+				LevelUtils.getLevelHeight(level));
+
+		for (Sprite sprite : objects_temp) {
 			sprite.draw(g);
 		}
-		
+
 		g.setFont(new Font("Helvetica", Font.PLAIN, 25));
 		g.setColor(Color.WHITE);
-		g.drawString("Level: " + Utils.getLevel(), getWidth()/2 - g.getFontMetrics().stringWidth("Level: " + Utils.getLevel()), 30);
-	
+		g.drawString("Level: " + Utils.getLevel(),
+				getWidth() / 2 - g.getFontMetrics().stringWidth("Level: " + Utils.getLevel()), 30);
+
 	}
 
 	public void drawHelp(Graphics g) {
@@ -258,11 +246,11 @@ public class Screen extends JPanel implements ActionListener {
 
 		Utils.drawOutlineString(g, "This is an enemy.\n\nThe only way to damage them is with a weapon.",
 				getWidth() - 200, 50, Utils.getGreenColor(), Color.WHITE, 0);
-		g.drawImage(ENEMY1, getWidth() - (200-30*1), 50, 30, 30, this);
-		g.drawImage(ENEMY2, getWidth() - (200-30*0), 50, 30, 30, this);
-		g.drawImage(ENEMY3, getWidth() - (200+30*1), 50, 30, 30, this);
-		g.drawImage(ENEMY4, getWidth() - (200+30*2), 50, 30, 30, this);
-//		g.drawImage(ENEMY5, getWidth() - (200+30*2), 50, 30, 30, this);
+		g.drawImage(ENEMY1, getWidth() - (200 - 30 * 1), 50, 30, 30, this);
+		g.drawImage(ENEMY2, getWidth() - (200 - 30 * 0), 50, 30, 30, this);
+		g.drawImage(ENEMY3, getWidth() - (200 + 30 * 1), 50, 30, 30, this);
+		g.drawImage(ENEMY4, getWidth() - (200 + 30 * 2), 50, 30, 30, this);
+		// g.drawImage(ENEMY5, getWidth() - (200+30*2), 50, 30, 30, this);
 		g.setFont(new Font("Helvetica", Font.PLAIN, 14));
 		Utils.drawOutlineString(g,
 				"Controls\n" + "W or Up Arrow - Climb up\n" + "A or Left Arrow - Move Left\n"
@@ -410,7 +398,7 @@ public class Screen extends JPanel implements ActionListener {
 				drawHelp(g);
 				return;
 			}
-			switch(Utils.getLevelType(Utils.getLevel())){
+			switch (Utils.getLevelType(Utils.getLevel())) {
 			case GROUND:
 				g.drawImage(Backgrounds.GRASS.getImage(), 0, 0, getWidth(), getHeight(), this);
 				break;
@@ -426,18 +414,18 @@ public class Screen extends JPanel implements ActionListener {
 			case BOSS:
 				g.drawImage(Backgrounds.BOSS.getImage(), 0, 0, getWidth(), getHeight(), this);
 				break;
-			
-			}
-			
 
-			
-
-			for (Sprite sprite : objects_temp) {
-				objects.add(sprite);
 			}
-			objects_temp.clear();
 
 			try {
+
+				if (!adding) {
+					for (Sprite sprite : objects_temp) {
+						objects.add(sprite);
+					}
+					objects_temp.clear();
+				}
+
 				for (Sprite sprite : objects) {
 
 					if (sprite instanceof Player) {
@@ -451,139 +439,142 @@ public class Screen extends JPanel implements ActionListener {
 					if (sprite instanceof Moveable) {
 						((Moveable) sprite).move();
 					}
-//					if (!(sprite instanceof Particle))
-//						sprite.draw(g);
+					// if (!(sprite instanceof Particle))
+					// sprite.draw(g);
 
 					if (sprite.x < -100 || sprite.x > 2000) {
 						objects_remove.add(sprite);
 					}
 					if (sprite.y > 600)
 						objects_remove.add(sprite);
-					
-					sprite.draw(g);
-					
-//					try {
-//						Method method = ReflectionUtils.getMethod(Class.forName(sprite.getClass().getName()), "draw", Graphics.class);
-//						method.setAccessible(true);
-//						method.invoke(sprite, g);
-//					} catch (NoSuchMethodException | ClassNotFoundException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
 
-//					if (sprite instanceof Particle) {
-//						Particle p = (Particle) sprite;
-//						p.draw(g);
-//						if (p.getLifetime() <= 0) {
-//							objects_remove.add(p);
-//						}
-//					}
+					sprite.draw(g);
+
+					// try {
+					// Method method =
+					// ReflectionUtils.getMethod(Class.forName(sprite.getClass().getName()),
+					// "draw", Graphics.class);
+					// method.setAccessible(true);
+					// method.invoke(sprite, g);
+					// } catch (NoSuchMethodException | ClassNotFoundException |
+					// IllegalArgumentException | IllegalAccessException |
+					// InvocationTargetException e) {
+					// // TODO Auto-generated catch block
+					// e.printStackTrace();
+					// }
+
+					// if (sprite instanceof Particle) {
+					// Particle p = (Particle) sprite;
+					// p.draw(g);
+					// if (p.getLifetime() <= 0) {
+					// objects_remove.add(p);
+					// }
+					// }
+				}
+
+				Main.getPlayer().getPolygon();
+				Main.getPlayer().move();
+				Main.getPlayer().draw(g);
+
+				try {
+					for (int i = 0; i != Main.getPlayer().getMaxLives(); i++) {
+						if (i < Main.getPlayer().getLives()) {
+							g.drawImage(ExternalFile.loadTexture("heart.png"), i * 30, 0, 30, 30, this);
+						} else {
+							g.drawImage(ExternalFile.loadTexture("broken-heart.png"), i * 30, 0, 30, 30, this);
+						}
+					}
+				} catch (NullPointerException ex) {
+				}
+
+				for (Sprite sprite : objects_remove) {
+					objects.remove(sprite);
+				}
+
+				objects_remove.clear();
+
+				// Draw Info
+				g.setFont(Main.getFont().deriveFont(15f));
+				Utils.drawOutlineString(g, "Level: " + Utils.getLevel(),
+						getWidth() - (g.getFontMetrics().stringWidth("Level: " + Utils.getLevel())), 20,
+						Color.decode("#99db45"), Color.WHITE, 1);
+				Utils.drawOutlineString(g, "Score: " + Main.score,
+						getWidth() - (g.getFontMetrics().stringWidth("Score: " + Main.score)), 42,
+						Color.decode("#99db45"), Color.white, 1);
+				try {
+					if (Main.getPlayer().hasKey()) {
+						Utils.drawOutlineString(g, "Key: ", getWidth() - (g.getFontMetrics().stringWidth("Key: ")) - 40,
+								64, Color.decode("#99db45"), Color.white, 1);
+						g.drawImage(Main.getPlayer().getKey().getImage(), getWidth() - 35, 64 - 15, this);
+					}
+				} catch (NullPointerException ex) {
+				}
+
+				// Draw messages
+
+				for (Entry<Integer, Message> entry : Utils.getMessages().entrySet()) {
+					entry.getValue().draw(g);
+				}
+				for (Message message : Utils.getLevelMessages()) {
+					message.draw(g);
+				}
+
+				for (Entry<Rectangle, Integer> entry : rectangles.entrySet()) {
+					entry.setValue(entry.getValue() - 1);
+					if (entry.getValue() >= 0) {
+						rectangles_remove.add(entry.getKey());
+					}
+					g.drawRect(entry.getKey().x, entry.getKey().y, entry.getKey().width, entry.getKey().height);
+				}
+
+				for (Rectangle rec : rectangles_remove) {
+					rectangles.remove(rec);
+				}
+				rectangles_remove.clear();
+
+				// Draw Leaderboard
+
+				if (leaderboard) {
+					g.drawImage(
+							Images.makeImageTranslucent(
+									Images.toBufferedImage(Images.createColorImage(Color.decode("#000000"))), 0.5),
+							getWidth() - 200, getHeight() / 3, 200, 110, this);
+					g.setFont(Main.getFont().deriveFont(10f));
+
+					Utils.drawOutlineString(g, "Leaderboard",
+							(getWidth() - 100) - (g.getFontMetrics().stringWidth("Leaderboard") / 2),
+							getHeight() / 3 + (Main.getFont().getSize() * 12), Color.YELLOW, Color.WHITE, 0);
+
+					for (Entry<String, Integer> entry : Utils.getHighScores().entrySet()) {
+
+						if (s > 5)
+							continue;
+
+						Utils.drawOutlineString(g, entry.getKey(), (getWidth() - 190),
+								(getHeight() / 3 + (Main.getFont().getSize() * 12))
+										+ (((Main.getFont().getSize() * 12) * (s + 1)) + (s * 4)),
+								Color.WHITE, Color.black, 1);
+						Utils.drawOutlineString(g, entry.getValue() + "",
+								getWidth() - g.getFontMetrics().stringWidth(entry.getValue() + ""),
+								((getHeight() / 3 + (Main.getFont().getSize() * 12))
+										+ (((Main.getFont().getSize() * 12) * (s + 1)) + (s * 4))),
+								Color.WHITE, Color.BLACK, 1);
+
+						s = s + 1;
+					}
+					s = 0;
+					// for(int i=0;i!=Utils.getHighScores().size();i++){
+					// Utils.drawOutlineString(g,
+					// Utils.getHighScores(),(getWidth()
+					// - 100) - (g.getFontMetrics().stringWidth(highscores[l]) /
+					// 2),(getHeight() / 3 + (Main.getFont().getSize() * 12))+
+					// (((Main.getFont().getSize() * 12) * (l + 1)) + (l * 4)),
+					// Color.WHITE, Color.WHITE, 0);
+					// }
+
 				}
 			} catch (ConcurrentModificationException ex) {
 			}
-
-			Main.getPlayer().getPolygon();
-			Main.getPlayer().move();
-			Main.getPlayer().draw(g);
-
-			try {
-				for (int i = 0; i != Main.getPlayer().getMaxLives(); i++) {
-					if (i < Main.getPlayer().getLives()) {
-						g.drawImage(ExternalFile.loadTexture("heart.png"), i * 30, 0, 30, 30, this);
-					} else {
-						g.drawImage(ExternalFile.loadTexture("broken-heart.png"), i * 30, 0, 30, 30, this);
-					}
-				}
-			} catch (NullPointerException ex) {
-			}
-
-			for (Sprite sprite : objects_remove) {
-				objects.remove(sprite);
-			}
-
-			objects_remove.clear();
-
-			// Draw Info
-			g.setFont(Main.getFont().deriveFont(15f));
-			Utils.drawOutlineString(g, "Level: " + Utils.getLevel(),
-					getWidth() - (g.getFontMetrics().stringWidth("Level: " + Utils.getLevel())), 20,
-					Color.decode("#99db45"), Color.WHITE, 1);
-			Utils.drawOutlineString(g, "Score: " + Main.score,
-					getWidth() - (g.getFontMetrics().stringWidth("Score: " + Main.score)), 42, Color.decode("#99db45"),
-					Color.white, 1);
-			try{
-				if(Main.getPlayer().hasKey()){
-					Utils.drawOutlineString(g, "Key: ",
-							getWidth() - (g.getFontMetrics().stringWidth("Key: "))-40, 64, Color.decode("#99db45"),
-							Color.white, 1);
-					g.drawImage(Main.getPlayer().getKey().getImage(), getWidth()-35, 64-15, this);
-				}
-			} catch (NullPointerException ex){}
-			
-			
-			//Draw messages
-			
-			for(Entry<Integer,Message> entry : Utils.getMessages().entrySet()){
-				entry.getValue().draw(g);
-			}
-			for(Message message : Utils.getLevelMessages()){
-				message.draw(g);
-			}
-			
-			for(Entry<Rectangle,Integer> entry : rectangles.entrySet()){
-				entry.setValue(entry.getValue()-1);
-				if(entry.getValue() >= 0){
-					rectangles_remove.add(entry.getKey());
-				}
-				g.drawRect(entry.getKey().x, entry.getKey().y, entry.getKey().width, entry.getKey().height);
-			}
-			
-			for(Rectangle rec : rectangles_remove){
-				rectangles.remove(rec);
-			}
-			rectangles_remove.clear();
-			
-
-			// Draw Leaderboard
-
-			if (leaderboard) {
-				g.drawImage(
-						Images.makeImageTranslucent(Images.toBufferedImage(Images.createColorImage(Color.decode("#000000"))), 0.5),
-						getWidth() - 200, getHeight() / 3, 200, 110, this);
-				g.setFont(Main.getFont().deriveFont(10f));
-
-				Utils.drawOutlineString(g, "Leaderboard",
-						(getWidth() - 100) - (g.getFontMetrics().stringWidth("Leaderboard") / 2),
-						getHeight() / 3 + (Main.getFont().getSize() * 12), Color.YELLOW, Color.WHITE, 0);
-
-				for (Entry<String, Integer> entry : Utils.getHighScores().entrySet()) {
-
-					if (s > 5)
-						continue;
-
-					Utils.drawOutlineString(g, entry.getKey(), (getWidth() - 190),
-							(getHeight() / 3 + (Main.getFont().getSize() * 12))
-									+ (((Main.getFont().getSize() * 12) * (s + 1)) + (s * 4)),
-							Color.WHITE, Color.black, 1);
-					Utils.drawOutlineString(g, entry.getValue() + "",
-							getWidth() - g.getFontMetrics().stringWidth(entry.getValue() + ""),
-							((getHeight() / 3 + (Main.getFont().getSize() * 12))
-									+ (((Main.getFont().getSize() * 12) * (s + 1)) + (s * 4))),
-							Color.WHITE, Color.BLACK, 1);
-
-					s = s + 1;
-				}
-				s = 0;
-				// for(int i=0;i!=Utils.getHighScores().size();i++){
-				// Utils.drawOutlineString(g, Utils.getHighScores(),(getWidth()
-				// - 100) - (g.getFontMetrics().stringWidth(highscores[l]) /
-				// 2),(getHeight() / 3 + (Main.getFont().getSize() * 12))+
-				// (((Main.getFont().getSize() * 12) * (l + 1)) + (l * 4)),
-				// Color.WHITE, Color.WHITE, 0);
-				// }
-
-			}
-
 		}
 
 		// This is what shows when the player loses all of their lives.
@@ -678,20 +669,17 @@ public class Screen extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-        long beforeTime = System.nanoTime();
-        Main.now=System.currentTimeMillis(); 
-        Main.framesCount++; 
-        if(Main.now-Main.framesTimer>1000){
-        	Main.framesTimer=Main.now; 
-        	Main.framesCountAvg=Main.framesCount; 
-        	Main.framesCount=0;
-        }
-        
-        
-        repaint();
+		long beforeTime = System.nanoTime();
+		Main.now = System.currentTimeMillis();
+		Main.framesCount++;
+		if (Main.now - Main.framesTimer > 1000) {
+			Main.framesTimer = Main.now;
+			Main.framesCountAvg = Main.framesCount;
+			Main.framesCount = 0;
+		}
+
+		repaint();
 	}
-	
-	
 
 	private class TAdapter extends KeyAdapter {
 
@@ -712,97 +700,131 @@ public class Screen extends JPanel implements ActionListener {
 		public void keyPressed(KeyEvent e) {
 			int key = e.getKeyCode();
 			Utils.pressKey(key);
-			
-			if(board == Board.MAIN){
-				if(Utils.codeEquals("level")){
+
+			if (board == Board.MAIN) {
+				if (Utils.codeEquals("level")) {
 					level = true;
 				}
-				
+
 			}
-			
-			if(board == Board.GAME){
-				
-				//Cheat Codes
-				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_I)){
-					Main.addSprite(new Armour((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY()-10, ToolType.NONE, Armour.IRON));
+
+			if (board == Board.GAME) {
+
+				// Cheat Codes
+				if (Utils.codeEqualsRaw(
+						KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_I)) {
+					Main.addSprite(new Armour((int) Main.getPlayer().getX(), (int) Main.getPlayer().getY() - 10,
+							ToolType.NONE, Armour.IRON));
 				}
-				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_G)){
-					Main.addSprite(new Armour((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY()-10, ToolType.NONE, Armour.GOLD));
+				if (Utils.codeEqualsRaw(
+						KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_G)) {
+					Main.addSprite(new Armour((int) Main.getPlayer().getX(), (int) Main.getPlayer().getY() - 10,
+							ToolType.NONE, Armour.GOLD));
 				}
-				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_D)){
-					Main.addSprite(new Armour((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY()-10, ToolType.NONE, Armour.DARK));
+				if (Utils.codeEqualsRaw(
+						KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_D)) {
+					Main.addSprite(new Armour((int) Main.getPlayer().getX(), (int) Main.getPlayer().getY() - 10,
+							ToolType.NONE, Armour.DARK));
 				}
-				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_F)){
-					Main.addSprite(new Armour((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY()-10, ToolType.NONE, Armour.FIRE));
+				if (Utils.codeEqualsRaw(
+						KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_F)) {
+					Main.addSprite(new Armour((int) Main.getPlayer().getX(), (int) Main.getPlayer().getY() - 10,
+							ToolType.NONE, Armour.FIRE));
 				}
-				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_1)){
-					Main.addSprite(new Sword((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY(),ToolType.MELEE));
+				if (Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-"
+						+ KeyEvent.VK_DOWN + "-" + KeyEvent.VK_1)) {
+					Main.addSprite(
+							new Sword((int) Main.getPlayer().getX(), (int) Main.getPlayer().getY(), ToolType.MELEE));
 				}
-				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_2)){
-					Main.addSprite(new Stick((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY(),ToolType.MELEE));
+				if (Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-"
+						+ KeyEvent.VK_DOWN + "-" + KeyEvent.VK_2)) {
+					Main.addSprite(
+							new Stick((int) Main.getPlayer().getX(), (int) Main.getPlayer().getY(), ToolType.MELEE));
 				}
-				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_3)){
-					Main.addSprite(new Bow((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY(),ToolType.PROJECTILE));
+				if (Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-"
+						+ KeyEvent.VK_DOWN + "-" + KeyEvent.VK_3)) {
+					Main.addSprite(
+							new Bow((int) Main.getPlayer().getX(), (int) Main.getPlayer().getY(), ToolType.PROJECTILE));
 				}
-				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_4)){
-					Main.addSprite(new FireStaff((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY(),ToolType.PROJECTILE));
+				if (Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-"
+						+ KeyEvent.VK_DOWN + "-" + KeyEvent.VK_4)) {
+					Main.addSprite(new FireStaff((int) Main.getPlayer().getX(), (int) Main.getPlayer().getY(),
+							ToolType.PROJECTILE));
 				}
-				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_5)){
-					Main.addSprite(new IceStaff((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY(),ToolType.PROJECTILE));
+				if (Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-"
+						+ KeyEvent.VK_DOWN + "-" + KeyEvent.VK_5)) {
+					Main.addSprite(new IceStaff((int) Main.getPlayer().getX(), (int) Main.getPlayer().getY(),
+							ToolType.PROJECTILE));
 				}
-				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_6)){
-					Main.addSprite(new FireDagger((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY(),ToolType.DIRECTIONAL));
+				if (Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-"
+						+ KeyEvent.VK_DOWN + "-" + KeyEvent.VK_6)) {
+					Main.addSprite(new FireDagger((int) Main.getPlayer().getX(), (int) Main.getPlayer().getY(),
+							ToolType.DIRECTIONAL));
 				}
-				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_7)){
-					Main.addSprite(new IceDagger((int)Main.getPlayer().getX(), (int)Main.getPlayer().getY(),ToolType.DIRECTIONAL));
+				if (Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_DOWN + "-"
+						+ KeyEvent.VK_DOWN + "-" + KeyEvent.VK_7)) {
+					Main.addSprite(new IceDagger((int) Main.getPlayer().getX(), (int) Main.getPlayer().getY(),
+							ToolType.DIRECTIONAL));
 				}
-				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_LEFT + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_RIGHT + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_1)){
-					Main.addSprite(new Enemy((int)Main.getPlayer().x+100, (int)Main.getPlayer().getY(), EntityType.OGRE));
+				if (Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_LEFT + "-" + KeyEvent.VK_DOWN + "-"
+						+ KeyEvent.VK_RIGHT + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_1)) {
+					Main.addSprite(
+							new Enemy((int) Main.getPlayer().x + 100, (int) Main.getPlayer().getY(), EntityType.OGRE));
 				}
-				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_LEFT + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_RIGHT + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_2)){
-					Main.addSprite(new Enemy((int)Main.getPlayer().x+100, (int)Main.getPlayer().getY(), EntityType.MEGA_OGRE));
+				if (Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_LEFT + "-" + KeyEvent.VK_DOWN + "-"
+						+ KeyEvent.VK_RIGHT + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_2)) {
+					Main.addSprite(new Enemy((int) Main.getPlayer().x + 100, (int) Main.getPlayer().getY(),
+							EntityType.MEGA_OGRE));
 				}
-				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_LEFT + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_RIGHT + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_3)){
-					Main.addSprite(new Enemy((int)Main.getPlayer().x+100, (int)Main.getPlayer().getY(), EntityType.DARK_KNIGHT));
+				if (Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_LEFT + "-" + KeyEvent.VK_DOWN + "-"
+						+ KeyEvent.VK_RIGHT + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_3)) {
+					Main.addSprite(new Enemy((int) Main.getPlayer().x + 100, (int) Main.getPlayer().getY(),
+							EntityType.DARK_KNIGHT));
 				}
-				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_LEFT + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_RIGHT + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_4)){
-					Main.addSprite(new Enemy((int)Main.getPlayer().x+100, (int)Main.getPlayer().getY(), EntityType.KNIGHT));
+				if (Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_LEFT + "-" + KeyEvent.VK_DOWN + "-"
+						+ KeyEvent.VK_RIGHT + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_4)) {
+					Main.addSprite(new Enemy((int) Main.getPlayer().x + 100, (int) Main.getPlayer().getY(),
+							EntityType.KNIGHT));
 				}
-				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_LEFT + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_RIGHT + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_5)){
-					Main.addSprite(new Enemy((int)Main.getPlayer().x+100, (int)Main.getPlayer().getY(), EntityType.SKELETON));
+				if (Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_LEFT + "-" + KeyEvent.VK_DOWN + "-"
+						+ KeyEvent.VK_RIGHT + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_5)) {
+					Main.addSprite(new Enemy((int) Main.getPlayer().x + 100, (int) Main.getPlayer().getY(),
+							EntityType.SKELETON));
 				}
-				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_LEFT + "-" + KeyEvent.VK_DOWN + "-" + KeyEvent.VK_RIGHT + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_6)){
-					Enemy entity = new Enemy((int)Main.getPlayer().x+100, (int)Main.getPlayer().getY(), EntityType.WIZARD);
+				if (Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_LEFT + "-" + KeyEvent.VK_DOWN + "-"
+						+ KeyEvent.VK_RIGHT + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_6)) {
+					Enemy entity = new Enemy((int) Main.getPlayer().x + 100, (int) Main.getPlayer().getY(),
+							EntityType.WIZARD);
 					entity.fireTicks = 10;
 					Main.addSprite(entity);
 				}
-				if(Utils.codeEqualsRaw(KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_4 + "-" + KeyEvent.VK_RIGHT)){
+				if (Utils.codeEqualsRaw(
+						KeyEvent.VK_UP + "-" + KeyEvent.VK_UP + "-" + KeyEvent.VK_4 + "-" + KeyEvent.VK_RIGHT)) {
 					Main.score += 1000;
 				}
-				if(Utils.codeEquals("flyme")){
+				if (Utils.codeEquals("flyme")) {
 					Main.getPlayer().flying = true;
 				}
-				if(Utils.codeEquals("land")){
+				if (Utils.codeEquals("land")) {
 					Main.getPlayer().flying = false;
 				}
-				if(Utils.codeEquals("fly")){
+				if (Utils.codeEquals("fly")) {
 					Main.getPlayer().flying = !Main.getPlayer().flying;
 				}
 			}
-			
-			if(level){
-				if(key == KeyEvent.VK_UP){
-					Utils.setLevel(Utils.getLevel()+1);
+
+			if (level) {
+				if (key == KeyEvent.VK_UP) {
+					Utils.setLevel(Utils.getLevel() + 1);
 				}
-				if(key == KeyEvent.VK_DOWN){
-					Utils.setLevel(Utils.getLevel()-1);
+				if (key == KeyEvent.VK_DOWN) {
+					Utils.setLevel(Utils.getLevel() - 1);
 				}
 			}
-			
 
 			if (key == KeyEvent.VK_ESCAPE) {
-				
-				if(board == Board.MAIN){
+
+				if (board == Board.MAIN) {
 					Main.close();
 				}
 
@@ -879,13 +901,13 @@ public class Screen extends JPanel implements ActionListener {
 					Main.setBoard(Board.GAME);
 					Utils.setLevel(0);
 				}
-				if(Main.getBoard() == Board.NAME){
+				if (Main.getBoard() == Board.NAME) {
 					return;
 				}
 				if (!(Main.getBoard() == Board.GAME)) {
 					Utils.setLevel(Utils.getLevel() + 1);
 					Main.setBoard(Board.GAME);
-					
+
 					playing = true;
 				}
 
@@ -981,8 +1003,12 @@ public class Screen extends JPanel implements ActionListener {
 		}
 	}
 
-	public void addSprites(Sprite sprite) {
-		objects_temp.add(sprite);
+	public void addSprites(Sprite... sprites) {
+		adding = true;
+		for (Sprite s : sprites) {
+			objects_temp.add(s);
+		}
+		adding = false;
 	}
 
 	public void addRectangle(Rectangle rectangle) {

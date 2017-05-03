@@ -7,6 +7,7 @@ import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.entity.Player;
 import io.github.trinnorica.utils.Board;
 import io.github.trinnorica.utils.Clickable;
@@ -76,9 +77,13 @@ public class Main {
 		
 		
 		
-		clickables.clear();
 		Main.board = board;
 		screen.board = board;
+		for(Sprite s : screen.objects){
+			if(s instanceof Entity){
+				((Entity)s).dead = true;
+			}
+		}
 		screen.objects.clear();
 		if(board == Board.MAIN){
 			
