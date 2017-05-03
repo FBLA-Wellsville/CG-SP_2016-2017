@@ -39,16 +39,16 @@ public class Armour extends Tool {
 			break;
 		case GOLD:
 			loadImage(ExternalFile.loadTexture("objects/tools/armour/gold-armour.png"));
-			protection = 5;
+			protection = 3;
 			break;
 		case DARK:
 			loadImage(ExternalFile.loadTexture("objects/tools/armour/dark-armour.png"));
-			protection = 10;
+			protection = 4;
 			break;
 		case FIRE:
 			loadImage(ExternalFile.loadTexture("objects/tools/armour/fire-armour.png"));
 			addEnchantment(EnchantmentEnum.FLAME, 1);
-			protection = 5;
+			protection = 3;
 			break;
 		}
 		
@@ -83,7 +83,7 @@ public class Armour extends Tool {
 	}
 	
 	public int protect(int damage, Entity damager){
-		damage = damage/protection;
+		damage = (int) (((double)damage)/((double)protection));
 		for(Enchantment ench : getEnchantments()){
 			if(ench.getType().equals(EnchantmentEnum.FLAME)){
 				if(damager!=null)damager.fireTicks = ench.getStrength()*2;

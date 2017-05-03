@@ -1,6 +1,5 @@
 package io.github.trinnorica.entity;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
@@ -8,13 +7,12 @@ import io.github.trinnorica.Main;
 import io.github.trinnorica.objects.Flag;
 import io.github.trinnorica.objects.tools.Armour;
 import io.github.trinnorica.objects.tools.Bow;
-import io.github.trinnorica.objects.tools.FireDagger;
+import io.github.trinnorica.objects.tools.DarkSword;
 import io.github.trinnorica.objects.tools.FireStaff;
 import io.github.trinnorica.objects.tools.Stick;
 import io.github.trinnorica.objects.tools.Sword;
 import io.github.trinnorica.utils.DamageReason;
 import io.github.trinnorica.utils.Direction;
-import io.github.trinnorica.utils.Utils;
 import io.github.trinnorica.utils.sprites.Collidable;
 import io.github.trinnorica.utils.sprites.EntityType;
 import io.github.trinnorica.utils.sprites.Moveable;
@@ -60,7 +58,7 @@ public class Enemy extends Entity implements Moveable {
 			walking = ExternalFile.loadTexture("entity/knight/dark/walk.gif");
 			standing = ExternalFile.loadTexture("entity/knight/dark/bobbing.gif");
 			maxhealth = 100;
-			setTool(new FireDagger(0, 0, ToolType.DIRECTIONAL));
+			setTool(new DarkSword(0, 0, ToolType.MELEE));
 			break;
 		case OGRE:
 			follow = false;

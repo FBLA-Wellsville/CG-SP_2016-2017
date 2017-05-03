@@ -101,7 +101,7 @@ public class Entity extends Sprite implements Moveable {
 		jumping = true;
 		damaged = true;
 		if (this instanceof Player && ((Player) this).hasArmour()) {
-			Utils.addStaticMessage("+" + (i-(i/((Player) this).getArmour().getProtection())) + "\n", (int)x, (int)y-10, Color.decode("#99DB45"), Color.BLACK, 1, 15);
+			Utils.addStaticMessage("+" + ((i/((Player) this).getArmour().getProtection())) + "\n", (int)x, (int)y-10, Color.decode("#99DB45"), Color.BLACK, 1, 2,15);
 			i = ((Player) this).getArmour().protect(i, damager);
 		}
 		
@@ -130,7 +130,7 @@ public class Entity extends Sprite implements Moveable {
 
 	public void damage(int i, DamageReason reason, Particle damager) {
 		if (this instanceof Player && ((Player) this).hasArmour()) {
-			Utils.addStaticMessage("+" + (i-(i/((Player) this).getArmour().getProtection())) + "\n", (int)x, (int)y-10, Color.decode("#99DB45"), Color.BLACK, 1, 15);
+			Utils.addStaticMessage("+" + ((i/((Player) this).getArmour().getProtection())) + "\n", (int)x, (int)y-10, Color.decode("#99DB45"), Color.BLACK, 1, 2,15);
 			i = ((Player) this).getArmour().protect(i, null);
 		}
 		if(damaged){
@@ -158,7 +158,7 @@ public class Entity extends Sprite implements Moveable {
 
 	public void damage(int i, DamageReason reason, Entity damager, Velocity v) {
 		if (this instanceof Player && ((Player) this).hasArmour()) {
-			Utils.addStaticMessage("+" + (i-(i/((Player) this).getArmour().getProtection())) + "\n", (int)x, (int)y-10, Color.decode("#99DB45"), Color.BLACK, 1, 15);
+			Utils.addStaticMessage("+" + ((i/((Player) this).getArmour().getProtection())) + "\n", (int)x, (int)y-10, Color.decode("#99DB45"), Color.BLACK, 1, 2,15);
 			i = ((Player) this).getArmour().protect(i, damager);
 		}
 		if(damaged){
