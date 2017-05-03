@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import io.github.trinnorica.Main;
 import io.github.trinnorica.entity.Entity;
 import io.github.trinnorica.entity.Player;
+import io.github.trinnorica.entity.projectiles.Fireball;
 import io.github.trinnorica.objects.Cloud;
 import io.github.trinnorica.objects.Switch;
 import io.github.trinnorica.utils.DamageReason;
@@ -50,7 +51,23 @@ public class Projectile extends Entity implements Moveable{
 			}
 				
 			if(s instanceof Entity){
-				((Entity)s).damage(power,DamageReason.PROJECTILE, this, new Velocity(vector.x/3,-3));
+				if(s instanceof Player){
+					if(getShooter() instanceof Player){
+						((Entity)s).damage(power,DamageReason.PROJECTILE, this.getShooter(), true, true);
+					} else {
+						if(this instanceof Fireball){
+							((Entity)s).fireTicks = 3;
+						}
+						((Entity)s).damage(power,DamageReason.PROJECTILE, this.getShooter(), false, true);
+					}
+				} else {
+					if(getShooter() instanceof Player){
+						((Entity)s).damage(power,DamageReason.PROJECTILE, this.getShooter(), true, false);
+					} else {
+						((Entity)s).damage(power,DamageReason.PROJECTILE, this.getShooter(), false, false);
+					}
+				}
+				
 				Main.removeSprite(this);
 				return;
 			}

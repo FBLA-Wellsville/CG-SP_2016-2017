@@ -31,7 +31,6 @@ public class Enemy extends Entity implements Moveable {
 	double dy = 0;
 	boolean falling = false;
 	public boolean onground = false;
-	public boolean jumping = false;
 	
 	private int s = 1;
 	private EntityType type;

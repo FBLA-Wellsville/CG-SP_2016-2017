@@ -3,6 +3,7 @@ package io.github.trinnorica.utils.ui;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import io.github.trinnorica.Main;
 import io.github.trinnorica.utils.Utils;
 
 public class Message {
@@ -29,7 +30,7 @@ public class Message {
 	}
 	
 	public void draw(Graphics g){
-		g.getFont().deriveFont(size);
+		g.setFont(Main.getFont().deriveFont(size));
 		Utils.drawOutlineString(g, message, x, y, text, outline, thickness);
 	}
 

@@ -638,6 +638,8 @@ public class Screen extends JPanel implements ActionListener {
 				Utils.drawOutlineString(g, "Right: " + Main.getPlayer().right, 0, 220, Color.WHITE, Color.BLACK, 1);
 				Utils.drawOutlineString(g, "Location: " + Main.getPlayer().getLocation(), 0, 240, Color.WHITE,
 						Color.BLACK, 1);
+				Utils.drawOutlineString(g, "Damaged: " + Main.getPlayer().damaged, 0, 260, Color.WHITE,
+						Color.BLACK, 1);
 				g.drawRect((int) Main.getPlayer().getPolygon().getBounds().getX(),
 						(int) Main.getPlayer().getPolygon().getBounds().getY(),
 						(int) Main.getPlayer().getPolygon().getBounds().getWidth(),

@@ -42,7 +42,6 @@ public class Player extends Entity implements Moveable, Keyable {
 	double dy = 0;
 	public boolean falling = false;
 	public boolean onground = false;
-	public boolean jumping = false;
 	public boolean flying = false;
 	public boolean climbing = false;
 	private Polygon xbounds;
@@ -135,6 +134,12 @@ public class Player extends Entity implements Moveable, Keyable {
 
 	@Override
 	public void move() {
+		if(onground){
+			if(damaged && !jumping){
+				setVelocity(0,0);
+				damaged = false;
+			}
+		}
 		
 		if (velocity.x != 0) {
 			if (moving == false) {
@@ -176,10 +181,6 @@ public class Player extends Entity implements Moveable, Keyable {
 					// TODO
 					Utils.sendScore(Main.score);
 					levelup();
-					if (damaged) {
-						setVelocity(0, 0);
-					}
-					damaged = false;
 					continue;
 				}
 				if (s instanceof Ladder) {
@@ -243,11 +244,7 @@ public class Player extends Entity implements Moveable, Keyable {
 
 				}
 				if (s instanceof PartialCollidable) {
-					if (damaged && !jumping) {
-						setVelocity(0, 0);
-
-					}
-					damaged = false;
+					
 
 					switch (getIntercectingDirection(xbounds.getBounds(), s.getPolygon().getBounds())) {
 					case DOWN:
@@ -261,7 +258,6 @@ public class Player extends Entity implements Moveable, Keyable {
 						if(!((PartialCollidable)s).getCollidableDirections().contains(Direction.LEFT)) break;
 						if (left)
 							velocity.x = 0;
-
 						break;
 					case RIGHT:
 						if(!((PartialCollidable)s).getCollidableDirections().contains(Direction.RIGHT)) break;
@@ -275,11 +271,6 @@ public class Player extends Entity implements Moveable, Keyable {
 				}
 
 				if (s instanceof Collidable && ((Collidable)s).isColliding()) {
-					if (damaged && !jumping) {
-						setVelocity(0, 0);
-
-					}
-					damaged = false;
 
 					switch (getIntercectingDirection(xbounds.getBounds(), s.getPolygon().getBounds())) {
 					case DOWN:

@@ -39,6 +39,7 @@ public class Entity extends Sprite implements Moveable {
 	boolean left = false;
 	boolean right = false;
 	boolean ticks = false;
+	public boolean jumping = false;
 
 	// protected Tool tool;
 	public boolean walkingb;
@@ -94,29 +95,20 @@ public class Entity extends Sprite implements Moveable {
 			return;
 		}
 		
-
+		if(damaged){
+			return;
+		}
+		jumping = true;
+		damaged = true;
 		if (this instanceof Player && ((Player) this).hasArmour()) {
+			Utils.addStaticMessage("+" + (i-(i/((Player) this).getArmour().getProtection())) + "\n", (int)x, (int)y-10, Color.decode("#99DB45"), Color.BLACK, 1, 15);
 			i = ((Player) this).getArmour().protect(i, damager);
 		}
-		Utils.addStaticMessage(health + "/" + maxhealth + "\n-" + i, (int)x, (int)y, Color.RED, Color.BLACK, 1, 3,10);
+		
 		if (damager.x - x >= 0)
-			if (this instanceof Player) {
-
-				if (damaged)
-					return;
-				damaged = true;
-				((Player) this).toss(Direction.LEFT);
-			} else
-				setVelocity(new Velocity(-2, -3));
-		else if (this instanceof Player) {
-
-			if (damaged)
-				return;
-			damaged = true;
-			((Player) this).toss(Direction.RIGHT);
-		} else
+			setVelocity(new Velocity(-2, -3));
+		else
 			setVelocity(new Velocity(2, -3));
-
 		health = health - i;
 		// Utils.displayMessage(new Random().nextInt(), "-" + i, x, y, 100,
 		// "#FF0000", 15,Bridge.getGame().getFont());
@@ -138,25 +130,17 @@ public class Entity extends Sprite implements Moveable {
 
 	public void damage(int i, DamageReason reason, Particle damager) {
 		if (this instanceof Player && ((Player) this).hasArmour()) {
+			Utils.addStaticMessage("+" + (i-(i/((Player) this).getArmour().getProtection())) + "\n", (int)x, (int)y-10, Color.decode("#99DB45"), Color.BLACK, 1, 15);
 			i = ((Player) this).getArmour().protect(i, null);
 		}
-		Utils.addStaticMessage(health + "/" + maxhealth + "\n-" + i, (int)x, (int)y, Color.RED, Color.BLACK, 1, 3,10);
+		if(damaged){
+			return;
+		}
+		damaged = true;
+		jumping=true;
 		if (damager.x - x >= 0)
-			if (this instanceof Player) {
-
-				if (damaged)
-					return;
-				damaged = true;
-				((Player) this).toss(Direction.LEFT);
-			} else
-				setVelocity(new Velocity(-2, -3));
-		else if (this instanceof Player) {
-
-			if (damaged)
-				return;
-			damaged = true;
-			((Player) this).toss(Direction.RIGHT);
-		} else
+			setVelocity(new Velocity(-2, -3));
+		else 
 			setVelocity(new Velocity(2, -3));
 
 		health = health - i;
@@ -174,9 +158,13 @@ public class Entity extends Sprite implements Moveable {
 
 	public void damage(int i, DamageReason reason, Entity damager, Velocity v) {
 		if (this instanceof Player && ((Player) this).hasArmour()) {
+			Utils.addStaticMessage("+" + (i-(i/((Player) this).getArmour().getProtection())) + "\n", (int)x, (int)y-10, Color.decode("#99DB45"), Color.BLACK, 1, 15);
 			i = ((Player) this).getArmour().protect(i, damager);
 		}
-		Utils.addStaticMessage(health + "/" + maxhealth + "\n-" + i, (int)x, (int)y, Color.RED, Color.BLACK, 1, 3,10);
+		if(damaged){
+			return;
+		}
+		damaged = true;
 		health = health - i;
 		setVelocity(v);
 		// Utils.displayMessage(new Random().nextInt(), "-" + i, x, y, 100,
@@ -339,24 +327,16 @@ public class Entity extends Sprite implements Moveable {
 		if(ticks) return;
 		if(this instanceof Tool) return;
 		final Timer t = new Timer();
-		final Entity thisE = this;
 		t.scheduleAtFixedRate(new TimerTask() {
 			
 			@Override
 			public void run() {
-				System.out.println(dead);
-				if(thisE instanceof Enemy){
-					System.out.println(((Enemy)thisE).getEntityType() + ": " + fireTicks);
-				} else {
-					System.out.println(thisE.getClass().getSimpleName() + ": " + fireTicks);
-				}
-				
 				if (dead){
 					t.cancel();
 				} else
 					if (fireTicks > 0) {
 						fireTicks = fireTicks - 1;
-						burn(1);
+						burn(5);
 					}
 			}
 		}, 1000, 500);
@@ -372,10 +352,8 @@ public class Entity extends Sprite implements Moveable {
 					ParticleType.FIRE, new Velocity(0, -1), false));
 
 		}
-		System.out.println("Health before: " + health);
 		health = health - damage;
-		Utils.addStaticMessage(health + "/" + maxhealth + "\n-" + damage, (int)x, (int)y, Color.RED, Color.BLACK, 1, 3,15);
-		System.out.println("Health after: " + health);
+		if(!(this instanceof Player))Utils.addStaticMessage(health + "/" + maxhealth + "\n-" + damage, (int)x, (int)y, Color.RED, Color.BLACK, 1, 3,15);
 		
 		if (health <= 0) {
 			kill(DamageReason.ENEMY);
